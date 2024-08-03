@@ -1,0 +1,31 @@
+Naming Conventions:
+	Variables - camelCase
+	Functions - PascalCase
+	Enums - UPPERFLATCASE
+	Files - snake_case
+	Struct/Class - PascalCase
+
+
+Setting Up Functions:
+	
+	- Have a comment at the top explaining your function in ~1 sentence
+	- Indent and tab parameters, use void if no parameters
+	- Brackets should be on a newline
+	- Only need in-function comments if this is a core function/is long
+		- If needed, keep them brief and only explain sections, not line by line
+
+	//Foos your bar for the main loop
+	void FooBar(
+		int fooBar,
+		Camera mainView)
+	{
+		return;
+	}
+
+	//Foos your bar for the main loop
+	void FooBar(
+		void)
+	{
+		return;
+	}
+
