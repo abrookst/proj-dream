@@ -1,87 +1,51 @@
 #include "raylib.h"
 
-#if defined(PLATFORM_WEB)
-#include <emscripten/emscripten.h>
-#endif
+#define MAX(a, b) ((a)>(b)? (a) : (b))
+#define MIN(a, b) ((a)<(b)? (a) : (b))
 
-//----------------------------------------------------------------------------------
-// Local Variables Definition (local to this module)
-//----------------------------------------------------------------------------------
-Camera camera = { 0 };
-Vector3 cubePosition = { 0 };
-
-//----------------------------------------------------------------------------------
-// Local Functions Declaration
-//----------------------------------------------------------------------------------
-static void UpdateDrawFrame(void);          // Update and draw one frame
-
-//----------------------------------------------------------------------------------
-// Main entry point
-//----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int lowRezWidth = 64;
+    const int lowRezHeight = 64;
+    const int screenWidth = 640;
+    const int screenHeight = 640;
 
-    InitWindow(screenWidth, screenHeight, "raylib");
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
+    InitWindow(screenWidth, screenHeight, "Proj Dream");
 
-    camera.position = (Vector3){ 10.0f, 10.0f, 8.0f };
-    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
-    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
-    camera.fovy = 60.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
+    int framesCounter = 0;
 
-    //--------------------------------------------------------------------------------------
+    RenderTexture2D target = LoadRenderTexture(lowRezWidth, lowRezHeight);
+    SetTextureFilter(target.texture, TEXTURE_FILTER_POINT);
 
-#if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
-#else
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+    SetTargetFPS(60);
 
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!WindowShouldClose())
     {
-        UpdateDrawFrame();
-    }
-#endif
+        float scale = MIN((float)GetScreenWidth() / lowRezWidth, (float)GetScreenHeight() / lowRezHeight);
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();                  // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+        BeginTextureMode(target);
+
+        ClearBackground(RAYWHITE);
+
+        DrawRectangle(0, 0, 64, 64, BLUE);
+        DrawCircle(32, 32, 32, RED);
+
+        EndTextureMode();
+
+        BeginDrawing();
+        ClearBackground(BLACK);
+
+        DrawTexturePro(target.texture, (Rectangle) { 0.0f, 0.0f, (float)target.texture.width, (float)-target.texture.height },
+            (Rectangle) {
+            (GetScreenWidth() - ((float)lowRezWidth * scale)) * 0.5f, (GetScreenHeight() - ((float)lowRezHeight * scale)) * 0.5f,
+                (float)lowRezWidth* scale, (float)lowRezHeight* scale
+        }, (Vector2) { 0, 0 }, 0.0f, WHITE);
+        EndDrawing();
+    }
+
+    CloseWindow();
 
     return 0;
-}
-
-// Update and draw game frame
-static void UpdateDrawFrame(void)
-{
-    // Update
-    //----------------------------------------------------------------------------------
-    UpdateCamera(&camera, CAMERA_ORBITAL);
-    //----------------------------------------------------------------------------------
-
-    // Draw
-    //----------------------------------------------------------------------------------
-    BeginDrawing();
-
-    ClearBackground(RAYWHITE);
-
-    BeginMode3D(camera);
-
-    DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
-    DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
-    DrawGrid(10, 1.0f);
-
-    EndMode3D();
-
-    DrawText("This is a raylib example", 10, 40, 20, DARKGRAY);
-
-    DrawFPS(10, 10);
-
-    EndDrawing();
-    //----------------------------------------------------------------------------------
 }
