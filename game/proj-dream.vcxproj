@@ -265,7 +265,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\raylib_game.c" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\raylib-master\raylib.vcxproj">
