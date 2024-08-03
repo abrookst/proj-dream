@@ -24,7 +24,6 @@ void renderScene(
             -static_cast<float>(targetScene.texture.height) 
         };
 
-        // Calculate the destination rectangle
         Rectangle destRect = {
             (GetScreenWidth() - (lowRezWidth * scale)) * 0.5f,
             (GetScreenHeight() - (lowRezHeight * scale)) * 0.5f,
@@ -32,14 +31,13 @@ void renderScene(
             lowRezHeight * scale
         };
 
-        // Draw the texture with the given parameters
         DrawTexturePro(
-            targetScene.texture,    // Texture to draw
-            sourceRect,       // Source rectangle from the texture
-            destRect,         // Destination rectangle on the screen
-            Vector2{ 0, 0 },    // Origin of the texture (relative to source rectangle)
-            0.0f,             // Rotation angle in degrees
-            WHITE             // Tint color
+            targetScene.texture,
+            sourceRect,
+            destRect,
+            Vector2{ 0, 0 },
+            0.0f,
+            WHITE
         );
     EndDrawing();
 }
@@ -52,7 +50,7 @@ int main(
 
     int framesCounter = 0;
 
-    //Font mainFont = LoadFont();
+    Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
@@ -68,14 +66,20 @@ int main(
 
             ClearBackground(RAYWHITE);
 
-            DrawRectangle(0, 0, 64, 64, BLUE);
-            DrawCircle(32, 32, 32, RED);
+            DrawRectangle(2, 46, 60, 16, BLACK);
+            DrawRectangle(0, 0, 1, 1, PURPLE);
+            
+
+            //DrawText("Test", 3, 48, 3, BLACK);
+            DrawTextEx(mainFont, "ABCDEFGHIJKLMN\nOPQRSTUVWXYZ", Vector2{ 3, 47 }, 6, 1, WHITE);
 
         EndTextureMode();
 
         renderScene(targetScene, scale);
         
     }
+
+    UnloadFont(mainFont);
 
     CloseWindow();
 
