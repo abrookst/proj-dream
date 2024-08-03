@@ -15,33 +15,106 @@
 --
 --  3. This notice may not be removed or altered from any source distribution.
 
-baseName = path.getbasename(os.getcwd());
+newoption
+{
+    trigger = "graphics",
+    value = "OPENGL_VERSION",
+    description = "version of OpenGL to build raylib against",
+    allowed = {
+        { "opengl11", "OpenGL 1.1"},
+        { "opengl21", "OpenGL 2.1"},
+        { "opengl33", "OpenGL 3.3"},
+        { "opengl43", "OpenGL 4.3"},
+        { "opengles2", "OpenGLES 2.0"},
+        { "opengles3", "OpenGLES 3.0"}
+    },
+    default = "opengl33"
+}
 
-project (baseName)
-    kind "ConsoleApp"
-    location "./"
-    targetdir "../bin/%{cfg.buildcfg}"
+function string.starts(String,Start)
+    return string.sub(String,1,string.len(Start))==Start
+end
 
-    filter "action:vs*"
-        debugdir "$(SolutionDir)"
+function link_to(lib)
+    links (lib)
+    includedirs ("../"..lib.."/include")
+    includedirs ("../"..lib.."/" )
+end
 
-    filter {"action:vs*", "configurations:Release"}
-        kind "WindowedApp"
-        entrypoint "mainCRTStartup"
+function download_progress(total, current)
+    local ratio = current / total;
+    ratio = math.min(math.max(ratio, 0), 1);
+    local percent = math.floor(ratio * 100);
+    print("Download progress (" .. percent .. "%/100%)")
+end
 
-    filter{}
+function check_raylib()
+    if(os.isdir("raylib") == false and os.isdir("raylib-master") == false) then
+        if(not os.isfile("raylib-master.zip")) then
+            print("Raylib not found, downloading from github")
+            local result_str, response_code = http.download("https://github.com/raysan5/raylib/archive/refs/heads/master.zip", "raylib-master.zip", {
+                progress = download_progress,
+                headers = { "From: Premake", "Referer: Premake" }
+            })
+        end
+        print("Unzipping to " ..  os.getcwd())
+        zip.extract("raylib-master.zip", os.getcwd())
+        os.remove("raylib-master.zip")
+    end
+end
 
-    vpaths 
-    {
-        ["Header Files/*"] = { "include/**.h",  "include/**.hpp", "src/**.h", "src/**.hpp", "**.h", "**.hpp"},
-        ["Source Files/*"] = {"src/**.c", "src/**.cpp","**.c", "**.cpp"},
-    }
-    files {"**.c", "**.cpp", "**.h", "**.hpp"}
-  
-    includedirs { "./" }
-    includedirs { "src" }
-    includedirs { "include" }
-    
-    link_raylib()
+workspaceName = path.getbasename(os.getcwd())
 
--- To link to a lib use link_to("LIB_FOLDER_NAME")
+if (string.lower(workspaceName) == "raylib") then
+    print("raylib is a reserved name. Name your project directory something else.")
+    -- Project generation will succeed, but compilation will definitely fail, so just abort here.
+    os.exit()
+end
+
+workspace (workspaceName)
+    configurations { "Debug", "Release"}
+    platforms { "x64", "x86", "ARM64"}
+
+    defaultplatform ("x64")
+
+    filter "configurations:Debug"
+        defines { "DEBUG" }
+        symbols "On"
+
+    filter "configurations:Release"
+        defines { "NDEBUG" }
+        optimize "On"
+
+    filter { "platforms:x64" }
+        architecture "x86_64"
+
+    filter { "platforms:Arm64" }
+        architecture "ARM64"
+
+    filter {}
+
+    targetdir "bin/%{cfg.buildcfg}/"
+
+    if(os.isdir("game")) then
+        startproject(workspaceName)
+    end
+
+cdialect "C99"
+cppdialect "C++17"
+check_raylib();
+
+include ("raylib_premake5.lua")
+
+if(os.isdir("game")) then
+    include ("game")
+end
+
+folders = os.matchdirs("*")
+for _, folderName in ipairs(folders) do
+    if (string.starts(folderName, "raylib") == false and string.starts(folderName, ".") == false) then
+        if (os.isfile(folderName .. "/premake5.lua")) then
+            print(folderName)
+            include (folderName)
+        end
+    end
+end
