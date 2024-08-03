@@ -44,7 +44,7 @@ void renderScene(
     EndDrawing();
 }
 
-int main (
+int main(
     void)
 {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
