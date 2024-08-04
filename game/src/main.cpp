@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "audio_engine.cpp"
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
@@ -47,15 +48,11 @@ int main(
 {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(screenWidth, screenHeight, "Proj Dream");
-    InitAudioDevice();
 
     int framesCounter = 0;
 
     Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
-
-    Sound testMp3 = LoadSound("./resources/audio/test.mp3");
-    // Sound testOgg = LoadSound("./resources/audio/test.ogg");
-    // Sound testWav = LoadSound("./resources/audio/test.wav");
+    AudioEngine engine;
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
@@ -67,10 +64,8 @@ int main(
     {
         float scale = MIN((float)GetScreenWidth() / lowRezWidth, (float)GetScreenHeight() / lowRezHeight);
 
-        if (IsKeyPressed(KEY_SPACE)) PlaySound(testMp3);
-        // if (IsKeyPressed(KEY_TWO)) PlaySound(testOgg);
-        // if (IsKeyPressed(KEY_THREE)) PlaySound(testWav);
-        // PlaySound(testMp3);
+        if (IsKeyPressed(KEY_SPACE)) engine.PlayMusic("test.mp3");
+        if (IsKeyPressed(KEY_P)) engine.Pause("test.mp3");
 
         BeginTextureMode(targetScene);
 
@@ -86,16 +81,13 @@ int main(
         EndTextureMode();
 
         renderScene(targetScene, scale);
+
+        engine.UpdateMusic();
         
     }
 
     UnloadFont(mainFont);
     
-    UnloadSound(testMp3);
-    // UnloadSound(testOgg);
-    // UnloadSound(testWav);
-    CloseAudioDevice();
-
     CloseWindow();
 
     return 0;
