@@ -6,29 +6,29 @@
 struct audioObject {
     Music music;
     Sound sound;
-    char* name;
+    const char* name;
     bool isMusic;
 };
 
-audioObject* find(char* file);
+audioObject* find(const char* file);
 
 class AudioEngine
 {
     std::vector<audioObject*> audioVector;
-    std::vector<char*> loadedCache;
+    std::vector<const char*> loadedCache;
 
-    audioObject* Find(char*);
+    audioObject* Find(const char*);
 
 public:
     AudioEngine();
     ~AudioEngine();
 
-    void PlayMusic(char*);
-    void PlaySfx(char*);
+    void PlayMusic(const char*);
+    void PlaySfx(const char*);
     void UpdateMusic();
-    void Pause(char*);
-    void Restart(char*);
-    void Stop(char*);
+    void Pause(const char*);
+    void Restart(const char*);
+    void Stop(const char*);
 
     int GetMusicVolume();
     void SetMusicVolume(int);
@@ -41,7 +41,7 @@ AudioEngine::AudioEngine() { InitAudioDevice(); }
 AudioEngine::~AudioEngine() 
 {
     CloseAudioDevice();
-    for (char* file : loadedCache)
+    for (const char* file : loadedCache)
     {
         audioObject* temp = Find(file);
         if (temp->isMusic)
@@ -57,36 +57,58 @@ AudioEngine::~AudioEngine()
 
 
 void AudioEngine::PlayMusic(
-        char* file)
+        const char* file)
 {
-    audioObject* temp = new audioObject{};
-    char fullPath[17+strlen(file)];
-    strcpy(fullPath, "./resources/audio/");
-    strcat(fullPath, file);
-    temp->music = LoadMusicStream(fullPath);
-    temp->isMusic = true;
-    temp->name = file;
-    PlayMusicStream(temp->music);
-    loadedCache.push_back(file);
-    audioVector.push_back(temp);
+    bool isCached = false;
+    for (int i = 0; i < loadedCache.size(); i++)
+    {
+        if (loadedCache[i] == file)
+        {
+            isCached = true;
+        }
+    }
+    
+    if (isCached) { PlayMusicStream(Find(file)->music); }
+    else
+    {
+        audioObject* temp = new audioObject{};
+        char fullPath[17+strlen(file)];
+        strcpy(fullPath, "./resources/audio/");
+        strcat(fullPath, file);
+        temp->music = LoadMusicStream(fullPath);
+        temp->isMusic = true;
+        temp->name = file;
+        PlayMusicStream(temp->music);
+        loadedCache.push_back(file);
+        audioVector.push_back(temp);
+    }
 }
 
 void AudioEngine::PlaySfx(
-        char* file)
+        const char* file)
 {
-    audioObject* temp = new audioObject{};
-    char fullPath[17+strlen(file)];
-    strcpy(fullPath, "./resources/audio/");
-    strcat(fullPath, file);
-    temp->sound = LoadSound(fullPath);
-    temp->name = file;
-    PlaySound(temp->sound);
-    audioVector.push_back(temp);
+    bool isCached = false;
+    for (int i = 0; i < loadedCache.size(); i++)
+    {
+        if (loadedCache[i] == file) { isCached = true; }
+    }
+    
+    if (isCached) { PlaySound(Find(file)->sound); }
+    else
+    {
+        audioObject* temp = new audioObject{};
+        char fullPath[17+strlen(file)];
+        strcpy(fullPath, "./resources/audio/");
+        strcat(fullPath, file);
+        temp->sound = LoadSound(fullPath);
+        temp->name = file;
+        PlaySound(temp->sound);
+        audioVector.push_back(temp);
+    }
 }
 
 void AudioEngine::UpdateMusic()
 {
-
     for (int i=0; i<loadedCache.size(); i++) 
     {
         UpdateMusicStream(Find(loadedCache[i])->music);
@@ -94,48 +116,46 @@ void AudioEngine::UpdateMusic()
 }
 
 void AudioEngine::Pause(
-        char* file)
+        const char* file)
 {
     audioObject* temp = Find(file);
     if (temp->isMusic)
     {
-        if (IsMusicStreamPlaying(temp->music))
-        {
-            PauseMusicStream(temp->music);
-        } 
-        else if (IsMusicReady(temp->music))
-        {
-            ResumeMusicStream(temp->music);
-        }
+        Music* mus = &temp->music; 
+        if (IsMusicStreamPlaying(*mus)) { PauseMusicStream(*mus); } 
+        else if (IsMusicReady(*mus)) { ResumeMusicStream(*mus); }
     }
     else
     {
-        if (IsSoundPlaying(temp->sound))
-        {
-            PauseSound(temp->sound);
-        } 
-        else if (IsSoundReady(temp->sound))
-        {
-            ResumeSound(temp->sound);
-        }
+        Sound* sou = &temp->sound; 
+        if (IsSoundPlaying(*sou)) { PauseSound(*sou); } 
+        else if (IsSoundReady(*sou)) { ResumeSound(*sou); }
     }
 }
 
-void AudioEngine::Stop(char* file)
+void AudioEngine::Stop(const char* file)
+{
+    audioObject* temp = Find(file);
+    if (temp->isMusic) { StopMusicStream(temp->music); }
+    else { StopSound(temp->sound); }
+}
+
+void AudioEngine::Restart(const char* file)
 {
     audioObject* temp = Find(file);
     if (temp->isMusic)
     {
         StopMusicStream(temp->music);
+        PlayMusicStream(temp->music);
     }
     else
     {
         StopSound(temp->sound);
+        PlaySound(temp->sound);
     }
 }
-
 audioObject* AudioEngine::Find(
-        char* file)
+        const char* file)
 {
     for (int i=0; i<audioVector.size(); i++) 
     {
@@ -146,10 +166,11 @@ audioObject* AudioEngine::Find(
     }
     return NULL;
 }
+
 /* Audio Engine Requirments:
  * x Play (multiple tracks)
  * x Pause
- * . Stop
+ * x Stop
  * . Restart
  * . Volume Control (fade and swell)
  * . Speed/Pitch Control (Option to have speed affect pitch) 
