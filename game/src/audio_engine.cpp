@@ -17,7 +17,7 @@ class AudioEngine
     std::vector<audioObject*> audioVector;
     std::vector<char*> loadedCache;
 
-    audioObject* find(char*);
+    audioObject* Find(char*);
 
 public:
     AudioEngine();
@@ -28,6 +28,7 @@ public:
     void UpdateMusic();
     void Pause(char*);
     void Restart(char*);
+    void Stop(char*);
 
     int GetMusicVolume();
     void SetMusicVolume(int);
@@ -42,7 +43,7 @@ AudioEngine::~AudioEngine()
     CloseAudioDevice();
     for (char* file : loadedCache)
     {
-        audioObject* temp = find(file);
+        audioObject* temp = Find(file);
         if (temp->isMusic)
         {
             UnloadMusicStream(temp->music);
@@ -88,14 +89,14 @@ void AudioEngine::UpdateMusic()
 
     for (int i=0; i<loadedCache.size(); i++) 
     {
-        UpdateMusicStream(find(loadedCache[i])->music);
+        UpdateMusicStream(Find(loadedCache[i])->music);
     }
 }
 
 void AudioEngine::Pause(
         char* file)
 {
-    audioObject* temp = find(file);
+    audioObject* temp = Find(file);
     if (temp->isMusic)
     {
         if (IsMusicStreamPlaying(temp->music))
@@ -120,7 +121,20 @@ void AudioEngine::Pause(
     }
 }
 
-audioObject* AudioEngine::find(
+void AudioEngine::Stop(char* file)
+{
+    audioObject* temp = Find(file);
+    if (temp->isMusic)
+    {
+        StopMusicStream(temp->music);
+    }
+    else
+    {
+        StopSound(temp->sound);
+    }
+}
+
+audioObject* AudioEngine::Find(
         char* file)
 {
     for (int i=0; i<audioVector.size(); i++) 
