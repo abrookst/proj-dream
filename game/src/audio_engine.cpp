@@ -7,7 +7,6 @@ struct audioObject {
     Music music;
     Sound sound;
     char* name;
-    bool isPlaying = false;
     bool isMusic;
 };
 
@@ -99,11 +98,25 @@ void AudioEngine::Pause(
     audioObject* temp = find(file);
     if (temp->isMusic)
     {
-        PauseMusicStream(temp->music);
+        if (IsMusicStreamPlaying(temp->music))
+        {
+            PauseMusicStream(temp->music);
+        } 
+        else if (IsMusicReady(temp->music))
+        {
+            ResumeMusicStream(temp->music);
+        }
     }
     else
     {
-        PauseSound(temp->sound);
+        if (IsSoundPlaying(temp->sound))
+        {
+            PauseSound(temp->sound);
+        } 
+        else if (IsSoundReady(temp->sound))
+        {
+            ResumeSound(temp->sound);
+        }
     }
 }
 
