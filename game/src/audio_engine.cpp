@@ -3,16 +3,32 @@
 #include <vector>
 #include <cstring>
 
-struct audioObject {
-    Music music;
-    Sound sound;
-    const char* name;
-    bool isMusic;
+struct volume 
+{
     float oldVolume = 0.5;
     float newVolume = 0.5;
     float volumeEasingTimePassed = 0;
     float volumeEasingTimeTotal = 0;
 };
+
+struct speed 
+{
+    float oldSpeed = 1;
+    float newSpeed = 1;
+    float speedEasingTimePassed = 0;
+    float speedEasingTimeTotal = 0;
+};
+
+struct audioObject 
+{
+    Music music;
+    Sound sound;
+    const char* name;
+    bool isMusic = false;
+    volume vol;
+    speed spd;
+};
+
 
 class AudioEngine
 {
@@ -37,6 +53,8 @@ public:
     void SetSoundVolume(const char*, float, float);
     void SetAllMusicVolume(float, float);
     void SetAllSfxVolume(float, float);
+
+    void SetSoundSpeed(const char*, float, float);
 };
 
 AudioEngine::AudioEngine() { InitAudioDevice(); }
@@ -113,19 +131,35 @@ void AudioEngine::UpdateAudio()
         {
             UpdateMusicStream(obj->music); 
         } 
-        if (obj->volumeEasingTimeTotal)
+        volume* vol = &obj->vol;
+        speed* spd = &obj->spd;
+        if (vol->volumeEasingTimeTotal)
         {
-            obj->volumeEasingTimePassed += GetFrameTime();
-            if (obj->volumeEasingTimePassed > obj->volumeEasingTimeTotal) {
-                obj->oldVolume = obj->newVolume;
-                obj->volumeEasingTimePassed = 0;
-                obj->volumeEasingTimeTotal = 0;
+            vol->volumeEasingTimePassed += GetFrameTime();
+            if (vol->volumeEasingTimePassed > vol->volumeEasingTimeTotal) {
+                vol->oldVolume = vol->newVolume;
+                vol->volumeEasingTimePassed = 0;
+                vol->volumeEasingTimeTotal = 0;
                 break;
             }
-            float vol = obj->oldVolume + 
-                ((obj->newVolume - obj->oldVolume) * 
-                 (obj->volumeEasingTimePassed / obj->volumeEasingTimeTotal));
-            if (obj->isMusic) { SetMusicVolume(obj->music, vol); }
+            float retVol = vol->oldVolume + 
+                ((vol->newVolume - vol->oldVolume) * 
+                 (vol->volumeEasingTimePassed / vol->volumeEasingTimeTotal));
+            if (obj->isMusic) { SetMusicVolume(obj->music, retVol); }
+        }
+        if (obj->spd.speedEasingTimeTotal)
+        {
+            obj->spd.speedEasingTimePassed += GetFrameTime();
+            if (spd->speedEasingTimePassed > spd->speedEasingTimeTotal) {
+                spd->oldSpeed = spd->newSpeed;
+                spd->speedEasingTimePassed = 0;
+                spd->speedEasingTimeTotal = 0;
+                break;
+            }
+            float retSpeed = spd->oldSpeed + 
+                ((spd->newSpeed - spd->oldSpeed) * 
+                 (spd->speedEasingTimePassed / spd->speedEasingTimeTotal));
+            if (obj->isMusic) { SetMusicSpeed(obj->music, retSpeed); }
         }
     }
 }
@@ -149,7 +183,8 @@ void AudioEngine::Pause(
     }
 }
 
-void AudioEngine::Stop(const char* file)
+void AudioEngine::Stop(
+        const char* file)
 {
     audioObject* temp = Find(file);
     if (!temp) { return; }
@@ -157,7 +192,8 @@ void AudioEngine::Stop(const char* file)
     else { StopSound(temp->sound); }
 }
 
-void AudioEngine::Restart(const char* file)
+void AudioEngine::Restart(
+        const char* file)
 {
     audioObject* temp = Find(file);
     if (!temp) { return; }
@@ -186,39 +222,47 @@ audioObject* AudioEngine::Find(
     return NULL;
 }
 
-void AudioEngine::SetSoundVolume(const char* file, float volume, float time)
+void AudioEngine::SetSoundVolume(
+        const char* file,
+        float volume, float time)
 {
     audioObject* temp = Find(file);
     if (!temp) { return; }
-    temp->newVolume = volume;
-    temp->volumeEasingTimeTotal = time;
+    temp->vol.newVolume = volume;
+    temp->vol.volumeEasingTimeTotal = time;
 }
 
-void AudioEngine::SetAllMusicVolume(float volume, float time)
+void AudioEngine::SetAllMusicVolume(
+        float volume,
+        float time)
 {
     for (audioObject* obj : audioVector)
     {
         if (!obj->isMusic) { continue; }
-        obj->newVolume = volume;
-        obj->volumeEasingTimeTotal = time;
+        obj->vol.newVolume = volume;
+        obj->vol.volumeEasingTimeTotal = time;
     }
 }
 
-void AudioEngine::SetAllSfxVolume(float volume, float time)
+void AudioEngine::SetAllSfxVolume(
+        float volume,
+        float time)
 {
     for (audioObject* obj : audioVector)
     {
         if (obj->isMusic) { continue; }
-        obj->newVolume = volume;
-        obj->volumeEasingTimeTotal = time;
+        obj->vol.newVolume = volume;
+        obj->vol.volumeEasingTimeTotal = time;
     }
 }
 
-/* Audio Engine Requirments:
- * X Play (multiple tracks)
- * X Pause
- * X Stop
- * X Restart
- * . Volume Control (fade and swell)
- * . Speed/Pitch Control (Option to have speed affect pitch) 
- */
+void AudioEngine::SetSoundSpeed(
+        const char* file,
+        float speed,
+        float time)
+{
+    audioObject* temp = Find(file);
+    if (!temp) { return; }
+    temp->spd.newSpeed = speed;
+    temp->spd.speedEasingTimeTotal = time;
+}
