@@ -10,8 +10,6 @@ struct audioObject {
     bool isMusic;
 };
 
-audioObject* find(const char* file);
-
 class AudioEngine
 {
     std::vector<audioObject*> audioVector;
@@ -30,10 +28,8 @@ public:
     void Restart(const char*);
     void Stop(const char*);
 
-    int GetMusicVolume();
-    void SetMusicVolume(int);
-    int GetSfxVolume();
-    void SetSfxVolume(int);
+    void SetMusicVolume(const char*, float);
+    void SetSfxVolume(const char*, float);
 };
 
 AudioEngine::AudioEngine() { InitAudioDevice(); }
@@ -154,6 +150,7 @@ void AudioEngine::Restart(const char* file)
         PlaySound(temp->sound);
     }
 }
+
 audioObject* AudioEngine::Find(
         const char* file)
 {
