@@ -68,6 +68,8 @@ int main(
         if (IsKeyPressed(KEY_P)) engine.Pause("test.mp3");
         if (IsKeyPressed(KEY_S)) engine.Stop("test.mp3");
         if (IsKeyPressed(KEY_R)) engine.Restart("test.mp3");
+        if (IsKeyPressed(KEY_EQUAL)) engine.SetSoundVolume("test.mp3", 1.0, 2.0);
+        if (IsKeyPressed(KEY_MINUS)) engine.SetSoundVolume("test.mp3", 0.0, 2.0);
 
         BeginTextureMode(targetScene);
 

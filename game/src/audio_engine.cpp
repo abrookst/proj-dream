@@ -8,9 +8,10 @@ struct audioObject {
     Sound sound;
     const char* name;
     bool isMusic;
-    float currentVolume = 0.5;
-    float wantedVolume = 0.5;
-    float volumeEasingTimeLeft;
+    float oldVolume = 0.5;
+    float newVolume = 0.5;
+    float volumeEasingTimePassed = 0;
+    float volumeEasingTimeTotal = 0;
 };
 
 class AudioEngine
@@ -45,6 +46,7 @@ AudioEngine::~AudioEngine()
     for (const char* file : loadedCache)
     {
         audioObject* temp = Find(file);
+        if (!temp) { return; }
         if (temp->isMusic) { UnloadMusicStream(temp->music); }
         else { UnloadSound(temp->sound); }
     }
@@ -56,9 +58,10 @@ void AudioEngine::PlayMusic(
         const char* file)
 {
     bool isCached = false;
-    for (int i = 0; i < loadedCache.size(); i++)
+    for (const char* name : loadedCache)
     {
-        if (loadedCache[i] == file) { isCached = true; }
+        if (name == file) { isCached = true; }
+        break;
     }
     
     if (isCached) { PlayMusicStream(Find(file)->music); }
@@ -81,9 +84,10 @@ void AudioEngine::PlaySfx(
         const char* file)
 {
     bool isCached = false;
-    for (int i = 0; i < loadedCache.size(); i++)
+    for (const char* name : loadedCache)
     {
-        if (loadedCache[i] == file) { isCached = true; }
+        if (name == file) { isCached = true; }
+        break;
     }
     
     if (isCached) { PlaySound(Find(file)->sound); }
@@ -108,6 +112,20 @@ void AudioEngine::UpdateAudio()
         {
             UpdateMusicStream(obj->music); 
         } 
+        if (obj->volumeEasingTimeTotal)
+        {
+            obj->volumeEasingTimePassed += GetFrameTime();
+            if (obj->volumeEasingTimePassed > obj->volumeEasingTimeTotal) {
+                obj->oldVolume = obj->newVolume;
+                obj->volumeEasingTimePassed = 0;
+                obj->volumeEasingTimeTotal = 0;
+                break;
+            }
+            float vol = obj->oldVolume + 
+                ((obj->newVolume - obj->oldVolume) * 
+                 (obj->volumeEasingTimePassed / obj->volumeEasingTimeTotal));
+            if (obj->isMusic) { SetMusicVolume(obj->music, vol); }
+        }
     }
 }
 
@@ -115,6 +133,7 @@ void AudioEngine::Pause(
         const char* file)
 {
     audioObject* temp = Find(file);
+    if (!temp) { return; }
     if (temp->isMusic)
     {
         Music* mus = &temp->music; 
@@ -132,6 +151,7 @@ void AudioEngine::Pause(
 void AudioEngine::Stop(const char* file)
 {
     audioObject* temp = Find(file);
+    if (!temp) { return; }
     if (temp->isMusic) { StopMusicStream(temp->music); }
     else { StopSound(temp->sound); }
 }
@@ -139,6 +159,7 @@ void AudioEngine::Stop(const char* file)
 void AudioEngine::Restart(const char* file)
 {
     audioObject* temp = Find(file);
+    if (!temp) { return; }
     if (temp->isMusic)
     {
         StopMusicStream(temp->music);
@@ -167,8 +188,9 @@ audioObject* AudioEngine::Find(
 void AudioEngine::SetSoundVolume(const char* file, float volume, float time)
 {
     audioObject* temp = Find(file);
-    temp->wantedVolume = volume;
-    temp->volumeEasingTimeLeft = time;
+    if (!temp) { return; }
+    temp->newVolume = volume;
+    temp->volumeEasingTimeTotal = time;
 }
 
 /* Audio Engine Requirments:
