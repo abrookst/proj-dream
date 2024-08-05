@@ -17,9 +17,12 @@ public:
     Monster(uint8_t, uint8_t, uint8_t, std::vector<Action>);
 
     std::vector<Action> GetActions() { return actions; }
-    ACTION RandomAction();
+    Action RandomAction();
 
     void SetHealth(uint8_t hp) { health = hp; }
+    void SetMaxHealth(uint8_t hp) { maxHealth = hp; }
+    void SetAttackPower(uint8_t ap) { attackPower = ap; }
+    void SetAccuracy(uint8_t acc) { accuracy = acc; }
     uint8_t GetHealth() { return health; }
     uint8_t GetMaxHealth() { return maxHealth; }
     uint8_t GetAttackPower() { return attackPower; }
