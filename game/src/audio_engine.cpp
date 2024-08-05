@@ -47,14 +47,8 @@ AudioEngine::~AudioEngine()
     for (const char* file : loadedCache)
     {
         audioObject* temp = Find(file);
-        if (temp->isMusic)
-        {
-            UnloadMusicStream(temp->music);
-        }
-        else 
-        {
-            UnloadSound(temp->sound);
-        }
+        if (temp->isMusic) { UnloadMusicStream(temp->music); }
+        else { UnloadSound(temp->sound); }
     }
     for (audioObject* obj : audioVector) { delete obj; }
 }
@@ -66,10 +60,7 @@ void AudioEngine::PlayMusic(
     bool isCached = false;
     for (int i = 0; i < loadedCache.size(); i++)
     {
-        if (loadedCache[i] == file)
-        {
-            isCached = true;
-        }
+        if (loadedCache[i] == file) { isCached = true; }
     }
     
     if (isCached) { PlayMusicStream(Find(file)->music); }
