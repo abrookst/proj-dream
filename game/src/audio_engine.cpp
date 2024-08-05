@@ -33,9 +33,10 @@ public:
     void Stop(const char*);
 
     void SetMasterVolume(float vol) { SetMasterVolume(vol); }
+    float SetMasterVolume() { return GetMasterVolume(); }
     void SetSoundVolume(const char*, float, float);
-    void SetAllMusicVolume(const char*, float, float);
-    void SetAllSfxVolume(const char*, float, float);
+    void SetAllMusicVolume(float, float);
+    void SetAllSfxVolume(float, float);
 };
 
 AudioEngine::AudioEngine() { InitAudioDevice(); }
@@ -191,6 +192,26 @@ void AudioEngine::SetSoundVolume(const char* file, float volume, float time)
     if (!temp) { return; }
     temp->newVolume = volume;
     temp->volumeEasingTimeTotal = time;
+}
+
+void AudioEngine::SetAllMusicVolume(float volume, float time)
+{
+    for (audioObject* obj : audioVector)
+    {
+        if (!obj->isMusic) { continue; }
+        obj->newVolume = volume;
+        obj->volumeEasingTimeTotal = time;
+    }
+}
+
+void AudioEngine::SetAllSfxVolume(float volume, float time)
+{
+    for (audioObject* obj : audioVector)
+    {
+        if (obj->isMusic) { continue; }
+        obj->newVolume = volume;
+        obj->volumeEasingTimeTotal = time;
+    }
 }
 
 /* Audio Engine Requirments:
