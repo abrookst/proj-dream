@@ -52,7 +52,7 @@ int main(
     int framesCounter = 0;
 
     Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
-    AudioEngine engine;
+    AudioEngine audioEngine;
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
