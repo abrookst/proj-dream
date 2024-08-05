@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include <cstdlib>
-#include <memory>
 #include <vector>
 #include <cstring>
 
@@ -104,9 +103,12 @@ void AudioEngine::PlaySfx(
 
 void AudioEngine::UpdateMusic()
 {
-    for (int i=0; i<loadedCache.size(); i++) 
+    for (audioObject* obj : audioVector) 
     {
-        UpdateMusicStream(Find(loadedCache[i])->music);
+        if (obj->isMusic && IsMusicStreamPlaying(obj->music))
+        {
+            UpdateMusicStream(obj->music); 
+        } 
     }
 }
 
