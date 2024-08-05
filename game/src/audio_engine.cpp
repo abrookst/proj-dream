@@ -26,7 +26,7 @@ public:
 
     void PlayMusic(const char*);
     void PlaySfx(const char*);
-    void UpdateMusic();
+    void UpdateAudio();
     void Pause(const char*);
     void Restart(const char*);
     void Stop(const char*);
@@ -35,7 +35,6 @@ public:
     void SetSoundVolume(const char*, float, float);
     void SetAllMusicVolume(const char*, float, float);
     void SetAllSfxVolume(const char*, float, float);
-    void UpdateVolume(const char*);
 };
 
 AudioEngine::AudioEngine() { InitAudioDevice(); }
@@ -101,7 +100,7 @@ void AudioEngine::PlaySfx(
     }
 }
 
-void AudioEngine::UpdateMusic()
+void AudioEngine::UpdateAudio()
 {
     for (audioObject* obj : audioVector) 
     {
@@ -170,11 +169,6 @@ void AudioEngine::SetSoundVolume(const char* file, float volume, float time)
     audioObject* temp = Find(file);
     temp->wantedVolume = volume;
     temp->volumeEasingTimeLeft = time;
-}
-
-void AudioEngine::UpdateVolume(const char*) 
-{
-
 }
 
 /* Audio Engine Requirments:
