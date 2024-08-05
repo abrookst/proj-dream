@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "typewrite.h"
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
@@ -57,6 +58,9 @@ int main(
 
     SetTargetFPS(60);
 
+    char text[256];
+    FormatStringToDialogue("Have you ever cut someone open?", text);
+
     // Main game loop
     while (!WindowShouldClose())
     {
@@ -71,7 +75,7 @@ int main(
             
 
             //DrawText("Test", 3, 48, 3, BLACK);
-            DrawTextEx(mainFont, "ABCDEFGHIJKLMN\nOPQRSTUVWXYZ", Vector2{ 3, 47 }, 6, 1, WHITE);
+            DrawTextEx(mainFont, text, Vector2{ 3, 47 }, 6, 1, RED);
 
         EndTextureMode();
 
