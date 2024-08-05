@@ -72,7 +72,7 @@ AudioEngine::~AudioEngine()
     for (audioObject* obj : audioVector) { delete obj; }
 }
 
-
+// Plays the audio from the specified file (format: "basename.ext" in resources/audio/)
 void AudioEngine::PlayMusic(
         const char* file)
 {
@@ -99,6 +99,7 @@ void AudioEngine::PlayMusic(
     }
 }
 
+// Plays the audio from the specified file (format: "basename.ext" in resources/audio/)
 void AudioEngine::PlaySfx(
         const char* file)
 {
@@ -123,6 +124,7 @@ void AudioEngine::PlaySfx(
     }
 }
 
+// Updates audio streams, volume, and speeds. Should be called every frame.
 void AudioEngine::UpdateAudio()
 {
     for (audioObject* obj : audioVector) 
@@ -164,6 +166,7 @@ void AudioEngine::UpdateAudio()
     }
 }
 
+// Pauses playback of the file given (format: "basename.ext" in resources/audio/)
 void AudioEngine::Pause(
         const char* file)
 {
@@ -183,6 +186,7 @@ void AudioEngine::Pause(
     }
 }
 
+// Stops playback of the file given (format: "basename.ext" in resources/audio/)
 void AudioEngine::Stop(
         const char* file)
 {
@@ -192,6 +196,7 @@ void AudioEngine::Stop(
     else { StopSound(temp->sound); }
 }
 
+// Restarts playback of the file given (format: "basename.ext" in resources/audio/)
 void AudioEngine::Restart(
         const char* file)
 {
@@ -209,6 +214,8 @@ void AudioEngine::Restart(
     }
 }
 
+// Internal function to retrieve the audioObject of the file given 
+// Format: "basename.ext" in resources/audio/
 audioObject* AudioEngine::Find(
         const char* file)
 {
@@ -222,6 +229,9 @@ audioObject* AudioEngine::Find(
     return NULL;
 }
 
+// Sets the sound volume of the file given (format: "basename.ext" in resources/audio/) 
+// with an argument for time for easing
+// Base volume is 0.5 with a range of 0.0 - 1.0
 void AudioEngine::SetSoundVolume(
         const char* file,
         float volume, float time)
@@ -232,6 +242,8 @@ void AudioEngine::SetSoundVolume(
     temp->vol.volumeEasingTimeTotal = time;
 }
 
+// Sets the sound volume of all music with an argument for time for easing
+// Base volume is 0.5 with a range of 0.0 - 1.0
 void AudioEngine::SetAllMusicVolume(
         float volume,
         float time)
@@ -244,6 +256,8 @@ void AudioEngine::SetAllMusicVolume(
     }
 }
 
+// Sets the sound volume of all SFX with an argument for time for easing
+// Base volume is 0.5 with a range of 0.0 - 1.0
 void AudioEngine::SetAllSfxVolume(
         float volume,
         float time)
@@ -256,6 +270,9 @@ void AudioEngine::SetAllSfxVolume(
     }
 }
 
+// Sets the sound speed of a given file (format: "basename.ext" in resources/audio/) 
+// with an argument for time for easing
+// Base speed is 1.0 with a minimum of 0.0
 void AudioEngine::SetSoundSpeed(
         const char* file,
         float speed,
