@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include <cstdlib>
+#include <memory>
 #include <vector>
 #include <cstring>
 
@@ -8,6 +9,9 @@ struct audioObject {
     Sound sound;
     const char* name;
     bool isMusic;
+    float currentVolume = 0.5;
+    float wantedVolume = 0.5;
+    float volumeEasingTimeLeft;
 };
 
 class AudioEngine
@@ -28,8 +32,11 @@ public:
     void Restart(const char*);
     void Stop(const char*);
 
-    void SetMusicVolume(const char*, float);
-    void SetSfxVolume(const char*, float);
+    void SetMasterVolume(float vol) { SetMasterVolume(vol); }
+    void SetSoundVolume(const char*, float, float);
+    void SetAllMusicVolume(const char*, float, float);
+    void SetAllSfxVolume(const char*, float, float);
+    void UpdateVolume(const char*);
 };
 
 AudioEngine::AudioEngine() { InitAudioDevice(); }
@@ -49,6 +56,7 @@ AudioEngine::~AudioEngine()
             UnloadSound(temp->sound);
         }
     }
+    for (audioObject* obj : audioVector) { delete obj; }
 }
 
 
@@ -164,11 +172,23 @@ audioObject* AudioEngine::Find(
     return NULL;
 }
 
+void AudioEngine::SetSoundVolume(const char* file, float volume, float time)
+{
+    audioObject* temp = Find(file);
+    temp->wantedVolume = volume;
+    temp->volumeEasingTimeLeft = time;
+}
+
+void AudioEngine::UpdateVolume(const char*) 
+{
+
+}
+
 /* Audio Engine Requirments:
- * x Play (multiple tracks)
- * x Pause
- * x Stop
- * . Restart
+ * X Play (multiple tracks)
+ * X Pause
+ * X Stop
+ * X Restart
  * . Volume Control (fade and swell)
  * . Speed/Pitch Control (Option to have speed affect pitch) 
  */
