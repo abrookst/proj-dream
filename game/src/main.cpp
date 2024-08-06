@@ -79,7 +79,7 @@ int main(
 
         renderScene(targetScene, scale);
 
-        engine.UpdateAudio();
+        audioEngine.UpdateAudio();
         
     }
 
