@@ -1,4 +1,5 @@
 #include "audio_engine.h"
+#include <raylib.h>
 
 AudioEngine::AudioEngine() { InitAudioDevice(); }
 
@@ -104,7 +105,7 @@ void AudioEngine::UpdateAudio()
             float retSpeed = spd->oldSpeed + 
                 ((spd->newSpeed - spd->oldSpeed) * 
                  (spd->speedEasingTimePassed / spd->speedEasingTimeTotal));
-            if (obj->isMusic) { SetMusicSpeed(obj->music, retSpeed); }
+            if (obj->isMusic) { SetMusicPitch(obj->music, retSpeed); }
         }
     }
 }
@@ -175,7 +176,7 @@ audioObject* AudioEngine::Find(
 // Sets the sound volume of the file given (format: "basename.ext" in resources/audio/) 
 // with an argument for time for easing
 // Base volume is 0.5 with a range of 0.0 - 1.0
-void AudioEngine::SetSoundVolume(
+void AudioEngine::SetVolumeSound(
         const char* file,
         float volume, float time)
 {
@@ -187,7 +188,7 @@ void AudioEngine::SetSoundVolume(
 
 // Sets the sound volume of all music with an argument for time for easing
 // Base volume is 0.5 with a range of 0.0 - 1.0
-void AudioEngine::SetAllMusicVolume(
+void AudioEngine::SetVolumeAllMusic(
         float volume,
         float time)
 {
@@ -201,7 +202,7 @@ void AudioEngine::SetAllMusicVolume(
 
 // Sets the sound volume of all SFX with an argument for time for easing
 // Base volume is 0.5 with a range of 0.0 - 1.0
-void AudioEngine::SetAllSfxVolume(
+void AudioEngine::SetVolumeAllSfx(
         float volume,
         float time)
 {
@@ -216,7 +217,7 @@ void AudioEngine::SetAllSfxVolume(
 // Sets the sound speed of a given file (format: "basename.ext" in resources/audio/) 
 // with an argument for time for easing
 // Base speed is 1.0 with a minimum of 0.0
-void AudioEngine::SetSoundSpeed(
+void AudioEngine::SetSpeedSound(
         const char* file,
         float speed,
         float time)

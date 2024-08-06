@@ -46,13 +46,13 @@ public:
     void Restart(const char*);
     void Stop(const char*);
 
-    void SetMasterVolume(float vol) { SetMasterVolume(vol); }
-    float SetMasterVolume() { return this->GetMasterVolume(); }
-    void SetSoundVolume(const char*, float, float);
-    void SetAllMusicVolume(float, float);
-    void SetAllSfxVolume(float, float);
+    void SetVolumeMaster(float vol) { SetMasterVolume(vol); }
+    float GetVolumeMaster() { return GetMasterVolume(); }
+    void SetVolumeSound(const char*, float, float);
+    void SetVolumeAllMusic(float, float);
+    void SetVolumeAllSfx(float, float);
 
-    void SetSoundSpeed(const char*, float, float);
+    void SetSpeedSound(const char*, float, float);
 
 private:
     std::vector<audioObject*> audioVector;
