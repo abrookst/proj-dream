@@ -1,26 +1,25 @@
-#include "encounter.cpp"
-#include "entity.cpp"
+#include "monster.h"
+
+#include "encounter.h"
+#include "entity.h"
 #include <cstdlib>
 
-class Monster : private Entity
+Monster::Monster(
+    void)
+    : Entity()
 {
-
-public:
-    Monster(uint8_t, uint8_t, uint8_t, std::vector<Action>);
-    Action RandomAction();
-};
+   
+}
 
 Monster::Monster(
-        uint8_t hp,
-        uint8_t ap,
-        uint8_t acc,
-        std::vector<Action> acts)
+    uint8_t hp,
+    uint8_t ap,
+    uint8_t acc,
+    std::vector<Action> acts,
+    Image spr)
+    : Entity(hp, ap, acc, acts)
 {
-    health = hp;
-    maxHealth = hp;
-    attackPower = ap;
-    accuracy = acc;
-    actions = acts;
+    sprite = spr;
 }
 
 Action Monster::RandomAction()

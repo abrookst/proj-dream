@@ -1,21 +1,15 @@
-#include "monster.cpp"
+#include "battle_encounter.h"
 
-class BattleEncounter : public Encounter
-{
-    Monster monster;
+#include "monster.h"
 
-public:
-    BattleEncounter(Monster);
-    void NextTurn();
-
-};
-
-BattleEncounter::BattleEncounter(Monster m)
+BattleEncounter::BattleEncounter(
+    Monster m)
 {
     monster = m;
 }
 
-void BattleEncounter::NextTurn()
+void BattleEncounter::NextTurn(
+    void)
 {
     Action monsterAction = monster.RandomAction();
     if (monsterAction == ATTACK)

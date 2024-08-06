@@ -1,20 +1,13 @@
-#include "entity.cpp"
+#include "player.h"
 
-class Player : private Entity
-{
-public:
-    Player(uint8_t, uint8_t, uint8_t, std::vector<Action>);
-};
+#include "entity.h"
 
 Player::Player(
         uint8_t hp,
         uint8_t ap,
         uint8_t acc,
         std::vector<Action> acts)
+    : Entity(hp, ap, acc, acts)
 {
-    health = hp;
-    maxHealth = hp;
-    attackPower = ap;
-    accuracy = acc;
-    actions = acts;
+    //init future player exclusive vars here
 }

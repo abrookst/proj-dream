@@ -1,21 +1,28 @@
-class Entity
+#include "entity.h"
+
+#include <cstdint>
+#include <vector>
+#include <raylib.h>
+
+
+Entity::Entity()
 {
-public:
-    uint8_t health;
-    uint8_t maxHealth;
-    uint8_t attackPower;
-    uint8_t accuracy;
+    health = 0;
+    maxHealth = 0;
+    attackPower = 0;
+    accuracy = 0;
+    actions = std::vector<Action>();
+}
 
-    std::vector<Action> actions;
-    Image sprite;
-
-    std::vector<Action> GetActions() { return actions; }
-    void SetHealth(uint8_t hp) { health = hp; }
-    void SetMaxHealth(uint8_t hp) { maxHealth = hp; }
-    void SetAttackPower(uint8_t ap) { attackPower = ap; }
-    void SetAccuracy(uint8_t acc) { accuracy = acc; }
-    uint8_t GetHealth() { return health; }
-    uint8_t GetMaxHealth() { return maxHealth; }
-    uint8_t GetAttackPower() { return attackPower; }
-    uint8_t GetAccuracy() { return accuracy; }
-};
+Entity::Entity(
+    uint8_t& hp,
+    uint8_t& ap,
+    uint8_t& acc,
+    std::vector<Action>& acts)
+{
+    health = hp;
+    maxHealth = hp;
+    attackPower = ap;
+    accuracy = acc;
+    actions = acts;
+}

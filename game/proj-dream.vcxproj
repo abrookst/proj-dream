@@ -265,12 +265,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\battle_encounter.cpp" />
+    <ClCompile Include="src\encounter.cpp" />
+    <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\monster.cpp" />
+    <ClCompile Include="src\player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\raylib-master\raylib.vcxproj">
       <Project>{8898EA18-743A-15EF-5DF5-284349369C3F}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="battle_encounter.h" />
+    <ClInclude Include="encounter.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="monster.h" />
+    <ClInclude Include="player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
