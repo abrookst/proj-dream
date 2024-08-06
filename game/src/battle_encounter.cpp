@@ -18,4 +18,8 @@ BattleEncounter::BattleEncounter(Monster m)
 void BattleEncounter::NextTurn()
 {
     Action monsterAction = monster.RandomAction();
+    if (monsterAction == ATTACK)
+    {
+
+    }
 }

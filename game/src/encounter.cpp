@@ -4,7 +4,7 @@
 enum Action
 {
     ATTACK,
-    DEFEND
+    BLOCK
 };
 
 class Encounter {};
