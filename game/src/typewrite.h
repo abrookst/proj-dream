@@ -12,11 +12,11 @@
  * This is only used for rendering one character per delay period and is
  * to be modified later
  * 
- * @param {char*} fullText      - the desired final text
+ * @param {char*} fullText      - the desired final text. to be formatted with FormatStringToDialogue
  * @param {char*} buffer        - the text output buffer. should be size 28
  * @param {char*} hidBuff       - hidden buffer without the added characters
  * @param {int&} frameCount     - counts how many frames has it taken to print
- * @param {int&} displacement   - counts how many extra characters have been added such as newlines
+ * @param {int&} lineState      - tracks which line the buffer is on [0 is first, 1 is second, 2 indicates pause]
  * @param {int&} pauseCount     - counts the frames before the text continues rendering. initialize to -1 outside
  * @param {int} [delay = 0]     - frames between when each character is drawn
  * @param {int} [pause = 0]     - delay count numbers between reset and drawing
@@ -41,11 +41,11 @@ bool Writer(
     char* buffer, 
     char* hidBuff, 
     int& frameCount, 
-    int& displacement, 
+    int& lineState, 
     int& pauseCount, 
     int delay = 0, 
     int pause = 0) 
-    {
+{
     if (delay && frameCount % delay) 
     {
         frameCount++;
@@ -54,41 +54,42 @@ bool Writer(
     if (strcmp(fullText, hidBuff)) 
     {
         int len = strlen(hidBuff);
-        if (len % 28 == 0 && frameCount > 0 && pauseCount >= 0) 
+        int bufferLen = strlen(buffer);
+        if (lineState == 2 && frameCount > 0 && pauseCount >= 0) 
         {
             pauseCount++;
             if (pause != 0 && !(pauseCount % pause)) 
             {
                 memset(buffer, 0, strlen(buffer));
                 pauseCount = -1;
-                displacement = 0;
+                lineState = 0;
             }
             return false;
         }
-        buffer[len % 28 + displacement] = fullText[len];
+        buffer[bufferLen] = fullText[len];
         hidBuff[len] = fullText[len];
-        //check to add newline or reset it all
-        //printf("char: %c\nlen: %d\nmod27: %d\nbuffer:  %s\nhidBuff: %s\n\n", fullText[len], len, len % 28, buffer, hidBuff);
-        if (len % 28 == 13 && strlen(buffer) != 0) 
+        if (len + 1 < strlen(fullText) && fullText[len + 1] == '\n') 
         {
-            buffer[(len % 28) + 1] = '\n';
-            buffer[(len % 28) + 2] = '\0';
-            displacement++;
-        }
-        if (!(len % 27) && frameCount > 0) 
-        {
-            pauseCount = 0;
+            buffer[bufferLen + 1] = '\n';
+            buffer[bufferLen + 2] = '\0';
+            hidBuff[len + 1] = '\n';
+            hidBuff[len + 2] = '\0';
+            if (lineState) 
+            {
+                pauseCount = 0;
+            }
+            lineState++;
         }
         else 
-        {
-            buffer[len + 1 + displacement] = '\0';
+        {  
+            buffer[bufferLen + 1] = '\0';
+            hidBuff[len + 1] = '\0';
         }
-        hidBuff[len + 1] = '\0';
         frameCount++;
         return false;
     }
     frameCount = 0;
-    displacement = 0;
+    lineState = 0;
     pauseCount = -1;
     return true;
 }
@@ -111,7 +112,7 @@ void FormatStringToDialogue(
 
     while (textStream >> temp) 
     {
-        printf("word: %s\ncurrWidth: %d\n", temp.c_str(), currWidth);
+        //printf("word: %s\ncurrWidth: %d\n", temp.c_str(), currWidth);
         while (temp != "") {
             if (temp.length() > 14 && currWidth == 0) 
             {

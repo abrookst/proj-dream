@@ -59,7 +59,13 @@ int main(
     SetTargetFPS(60);
 
     char text[256];
-    FormatStringToDialogue("Have you ever cut someone open?", text);
+    FormatStringToDialogue("hello pneumonoultramicroscopicsilicovolcanoconiosis.", text);
+    //Writer(text, buffer, hidBuff, frameCount, displacemeCount, pauseCount, 5, 20);
+    char buffer[30];
+    char hiddenBuffer[256];
+    int frames = 0;
+    int displacemeCount = 0;
+    int pauseCount = 60;
 
     // Main game loop
     while (!WindowShouldClose())
@@ -75,7 +81,8 @@ int main(
             
 
             //DrawText("Test", 3, 48, 3, BLACK);
-            DrawTextEx(mainFont, text, Vector2{ 3, 47 }, 6, 1, RED);
+            DrawTextEx(mainFont, buffer, Vector2{ 3, 47 }, 6, 1, RED);
+            Writer(text, buffer, hiddenBuffer, frames, displacemeCount, pauseCount, 5, 60);
 
         EndTextureMode();
 
