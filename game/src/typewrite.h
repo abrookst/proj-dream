@@ -44,26 +44,26 @@ bool Writer(
     int& lineState, 
     int& pauseCount, 
     int delay = 0, 
-    int pause = 0) 
+    int pause = 0,
+    bool entered = false) 
 {
-    if (delay && frameCount % delay) 
-    {
-        frameCount++;
-        return false;
-    }
     if (strcmp(fullText, hidBuff)) 
     {
+        if (delay && frameCount % delay) 
+        {
+            frameCount++;
+            return false;
+        }
         int len = strlen(hidBuff);
         int bufferLen = strlen(buffer);
-        if (lineState == 2 && frameCount > 0 && pauseCount >= 0) 
+        if (!entered && lineState == 2) {
+            return false;
+        }
+        if (lineState == 2 && frameCount > 0 && entered)
         {
-            pauseCount++;
-            if (pause != 0 && !(pauseCount % pause)) 
-            {
-                memset(buffer, 0, strlen(buffer));
-                pauseCount = -1;
-                lineState = 0;
-            }
+            memset(buffer, 0, strlen(buffer));
+            pauseCount = -1;
+            lineState = 0;
             return false;
         }
         buffer[bufferLen] = fullText[len];

@@ -82,6 +82,10 @@ int main(
 
             //DrawText("Test", 3, 48, 3, BLACK);
             DrawTextEx(mainFont, buffer, Vector2{ 3, 47 }, 6, 1, RED);
+            if (IsKeyPressed(KEY_ENTER)) 
+            {
+                Writer(text, buffer, hiddenBuffer, frames, displacemeCount, pauseCount, 5, 60, true);
+            }
             Writer(text, buffer, hiddenBuffer, frames, displacemeCount, pauseCount, 5, 60);
 
         EndTextureMode();
