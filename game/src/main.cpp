@@ -1,5 +1,7 @@
 #include "raylib.h"
 #include "typewrite.h"
+#include <stdio.h>
+#include <fstream>
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
@@ -58,14 +60,14 @@ int main(
 
     SetTargetFPS(60);
 
-    char text[256];
-    FormatStringToDialogue("hello pneumonoultramicroscopicsilicovolcanoconiosis.", text);
-    //Writer(text, buffer, hidBuff, frameCount, displacemeCount, pauseCount, 5, 20);
-    char buffer[30];
-    char hiddenBuffer[256];
+    std::string text = "hello pneumonoultramicroscopicsilicovolcanoconiosis.";
+    FormatStringToDialogue(text);
     int frames = 0;
     int displacemeCount = 0;
     int pauseCount = 60;
+    bool dialogueRenderOver = false;
+    std::string hb = "";
+    std::string buffer = "";
 
     // Main game loop
     while (!WindowShouldClose())
@@ -81,12 +83,24 @@ int main(
             
 
             //DrawText("Test", 3, 48, 3, BLACK);
-            DrawTextEx(mainFont, buffer, Vector2{ 3, 47 }, 6, 1, RED);
+            DrawTextEx(mainFont, buffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+            if (!dialogueRenderOver)
+            {
+                if (IsKeyPressed(KEY_ENTER)) 
+                {
+                    dialogueRenderOver = Writer(text, buffer, hb, frames, displacemeCount, pauseCount, 5, 60, true);
+                }
+                dialogueRenderOver = Writer(text, buffer, hb, frames, displacemeCount, pauseCount, 5, 60);
+            }
+            else if (IsKeyPressed(KEY_ENTER)) 
+            {
+                buffer = "";
+            }
+
             if (IsKeyPressed(KEY_ENTER)) 
             {
-                Writer(text, buffer, hiddenBuffer, frames, displacemeCount, pauseCount, 5, 60, true);
+                printf("PRESSED ENTER WHILE dialogueRenderOver = %d\n", dialogueRenderOver);
             }
-            Writer(text, buffer, hiddenBuffer, frames, displacemeCount, pauseCount, 5, 60);
 
         EndTextureMode();
 

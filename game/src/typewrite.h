@@ -12,14 +12,14 @@
  * This is only used for rendering one character per delay period and is
  * to be modified later
  * 
- * @param {char*} fullText      - the desired final text. to be formatted with FormatStringToDialogue
- * @param {char*} buffer        - the text output buffer. should be size 28
- * @param {char*} hidBuff       - hidden buffer without the added characters
- * @param {int&} frameCount     - counts how many frames has it taken to print
- * @param {int&} lineState      - tracks which line the buffer is on [0 is first, 1 is second, 2 indicates pause]
- * @param {int&} pauseCount     - counts the frames before the text continues rendering. initialize to -1 outside
- * @param {int} [delay = 0]     - frames between when each character is drawn
- * @param {int} [pause = 0]     - delay count numbers between reset and drawing
+ * @param {const std::string&} fullText - the desired final text. to be formatted with FormatStringToDialogue
+ * @param {std::string&} buffer         - the text output buffer. should be size 28
+ * @param {std::string&} hidBuff        - hidden buffer without the added characters
+ * @param {int&} frameCount             - counts how many frames has it taken to print
+ * @param {int&} lineState              - tracks which line the buffer is on [0 is first, 1 is second, 2 indicates pause]
+ * @param {int&} pauseCount             - counts the frames before the text continues rendering. initialize to -1 outside
+ * @param {int} [delay = 0]             - frames between when each character is drawn
+ * @param {int} [pause = 0]             - delay count numbers between reset and drawing
  * @return {bool} has the text finished rendering
  * 
  * Example:
@@ -29,17 +29,10 @@
  * 
  */
 
-//TODO: divide on word boundaries based on space or using a dash
-//      this could also be done via. us manually formatting text
-//      or some outside function which takes a string and formats it in the correct way
-//      so maybe the goal is make a reformat function for text
-//      which would depricate the need to add the newlines
-//TODO: make outside pause until propmpted + scroll outside. this is a base
-
 bool Writer(
-    char* fullText, 
-    char* buffer, 
-    char* hidBuff, 
+    const std::string& fullText, 
+    std::string& buffer, 
+    std::string& hidBuff, 
     int& frameCount, 
     int& lineState, 
     int& pauseCount, 
@@ -47,43 +40,36 @@ bool Writer(
     int pause = 0,
     bool entered = false) 
 {
-    if (strcmp(fullText, hidBuff)) 
+    if (fullText != hidBuff) 
     {
         if (delay && frameCount % delay) 
         {
             frameCount++;
             return false;
         }
-        int len = strlen(hidBuff);
-        int bufferLen = strlen(buffer);
+        int len = hidBuff.length();
+        int bufferLen = buffer.length();
         if (!entered && lineState == 2) {
             return false;
         }
         if (lineState == 2 && frameCount > 0 && entered)
         {
-            memset(buffer, 0, strlen(buffer));
+            buffer = "";
             pauseCount = -1;
             lineState = 0;
             return false;
         }
-        buffer[bufferLen] = fullText[len];
-        hidBuff[len] = fullText[len];
-        if (len + 1 < strlen(fullText) && fullText[len + 1] == '\n') 
+        buffer += fullText[len];
+        hidBuff += fullText[len];
+        if (len + 1 < fullText.length() && fullText[len + 1] == '\n') 
         {
-            buffer[bufferLen + 1] = '\n';
-            buffer[bufferLen + 2] = '\0';
-            hidBuff[len + 1] = '\n';
-            hidBuff[len + 2] = '\0';
+            buffer += '\n';
+            hidBuff += '\n';
             if (lineState) 
             {
                 pauseCount = 0;
             }
             lineState++;
-        }
-        else 
-        {  
-            buffer[bufferLen + 1] = '\0';
-            hidBuff[len + 1] = '\0';
         }
         frameCount++;
         return false;
@@ -97,13 +83,11 @@ bool Writer(
 /** 
  * Takes an existing string and reformats it so it has newlines and dashes where required
  * 
- * @param {char*} inputString   - the text to reformat
- * @param {char*} outputString  - the new string with correct newlines and dashes
+ * @param {std::string&} inputString    - the string to reformat
  * 
  */
 void FormatStringToDialogue(
-    char* inputString, 
-    char* outputString) 
+    std::string& inputString) 
 {
     std::stringstream textStream((std::string(inputString)));
     std::string output = "";
@@ -139,7 +123,9 @@ void FormatStringToDialogue(
             currWidth++;
         }
     }
-    strcpy(outputString, output.c_str());
+    output = output.substr(0, output.length() - 1);
+    //strcpy(outputString, output.c_str());
+    inputString = output;
 }
 
 #endif
