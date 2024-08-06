@@ -31,10 +31,11 @@ void AudioEngine::PlayMusic(
     else
     {
         audioObject* temp = new audioObject{};
-        char fullPath[17+strlen(file)];
+        char* fullPath = new char[sizeof("./resources/audio/")+strlen(file)];
         strcpy(fullPath, "./resources/audio/");
         strcat(fullPath, file);
         temp->music = LoadMusicStream(fullPath);
+        delete[] fullPath;
         temp->isMusic = true;
         temp->name = file;
         PlayMusicStream(temp->music);
@@ -58,10 +59,11 @@ void AudioEngine::PlaySfx(
     else
     {
         audioObject* temp = new audioObject{};
-        char fullPath[17+strlen(file)];
+        char* fullPath = new char[sizeof("./resources/audio/")+strlen(file)];
         strcpy(fullPath, "./resources/audio/");
         strcat(fullPath, file);
         temp->sound = LoadSound(fullPath);
+        delete[] fullPath;
         temp->name = file;
         PlaySound(temp->sound);
         audioVector.push_back(temp);

@@ -64,6 +64,8 @@ int main(
     {
         float scale = MIN((float)GetScreenWidth() / lowRezWidth, (float)GetScreenHeight() / lowRezHeight);
 
+        if (IsKeyPressed(KEY_SPACE)) { audioEngine.PlayMusic("test.mp3"); }
+
         BeginTextureMode(targetScene);
 
             ClearBackground(RAYWHITE);
