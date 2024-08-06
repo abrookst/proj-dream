@@ -1,5 +1,5 @@
 #ifndef BATTLE_ENCOUNTER_H
-#define BETTLE_ENCOUNTER_H
+#define BATTLE_ENCOUNTER_H
 
 #include "encounter.h"
 #include "monster.h"
