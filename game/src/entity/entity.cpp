@@ -24,4 +24,5 @@ Entity::Entity(
     maxHealth = hp;
     attackPower = ap;
     accuracy = acc;
+    actions = acts;
 }
