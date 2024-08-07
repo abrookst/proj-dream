@@ -4,7 +4,7 @@
 #include "action.h"
 #include "../entity/entity.h"
 
-class Block : protected Action
+class Block : public Action
 {
 public:
     void Preform(

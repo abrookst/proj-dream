@@ -4,7 +4,7 @@
 #include "../item.h"
 #include "../../entity/entity.h"
 
-class HealthPotion : protected Item
+class HealthPotion : public Item
 {
 protected:
     void Perform(

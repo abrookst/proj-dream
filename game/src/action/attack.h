@@ -4,7 +4,7 @@
 #include "action.h"
 #include "../entity/entity.h"
 
-class Attack : protected Action
+class Attack : public Action
 {
 public:
     void Perform(

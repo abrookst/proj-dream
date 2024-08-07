@@ -4,7 +4,7 @@
 #include "action.h"
 #include <string>
 
-class Item : protected Action{
+class Item : public Action{
 
 protected:
   const static std::string name;
