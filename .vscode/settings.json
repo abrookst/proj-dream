@@ -57,4 +57,13 @@
     "variant": "cpp",
     "xstring": "cpp"
   }
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/*.o": true,
+		"**/*.exe": true,
+	}
 }
