@@ -20,6 +20,8 @@ void BattleEncounter::NextTurn(
         return;
     }
 
+    // Entity player = Player::GetInstance();
+
     //After player input is done, perform monster action
     Action* monsterAction = monster.RandomAction();
     monsterAction->Perform(monster, Player::GetInstance());

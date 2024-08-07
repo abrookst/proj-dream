@@ -6,13 +6,13 @@
 
 class Player : public Entity
 {
-private:
-    static Player instance;
+protected:
+    static Player* instance;
 public:
     Player(uint8_t, uint8_t, uint8_t, std::vector<Action*>);
 
     static Player& GetInstance( ) {
-        return instance;
+        return *instance;
     };
 };
 
