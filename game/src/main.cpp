@@ -1,6 +1,9 @@
 #include "raylib.h"
 #include "audio_engine.h"
+
 #include "entity/player.h"
+#include "entity/monster.h"
+
 #include "action/attack.h"
 #include "action/block.h"
 
@@ -73,6 +76,11 @@ int main(
         float scale = MIN((float)GetScreenWidth() / lowRezWidth, (float)GetScreenHeight() / lowRezHeight);
 
         if (IsKeyPressed(KEY_SPACE)) { audioEngine.PlayMusic("test.mp3"); }
+        if (IsKeyPressed(KEY_ENTER)) 
+        {
+            Attack* monsterAttack = new Attack();
+            Monster* monster = new Monster(10, 5, 50, {monsterAttack});
+        }
 
         BeginTextureMode(targetScene);
 

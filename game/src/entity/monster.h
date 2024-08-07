@@ -10,13 +10,13 @@ class Monster : public Entity
 
 public:
     Monster();
-
+    Monster(
+        Monster&);
     Monster(
         uint8_t hp,
         uint8_t ap,
         uint8_t acc,
-        std::vector<Action*> acts,
-        Image spr);
+        std::vector<Action*> acts);
 
     Action* RandomAction();
 

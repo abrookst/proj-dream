@@ -32,7 +32,7 @@ public:
     const uint8_t GetMaxHealth() { return maxHealth; }
     const uint8_t GetAttackPower() { return attackPower; }
     const uint8_t GetAccuracy() { return accuracy; }
-    const std::vector<Action*>& GetActions() { return actions; }
+    std::vector<Action*>& GetActions() { return actions; }
 
 protected:
     uint8_t health;

@@ -7,10 +7,10 @@
 
 class BattleEncounter : public Encounter
 {
-    Monster monster;
+    Monster* monster;
 
 public:
-    BattleEncounter(Monster m);
+    BattleEncounter(Monster& m);
     void NextTurn();
 
 };
