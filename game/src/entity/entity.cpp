@@ -11,13 +11,14 @@ Entity::Entity()
     maxHealth = 0;
     attackPower = 0;
     accuracy = 0;
-    // actions = std::vector<Action>();
+    actions = std::vector<Action*>();
 }
 
 Entity::Entity(
     uint8_t hp,
     uint8_t ap,
-    uint8_t acc)
+    uint8_t acc,
+    std::vector<Action*>& acts)
 {
     health = hp;
     maxHealth = hp;

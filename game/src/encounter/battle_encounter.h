@@ -3,6 +3,7 @@
 
 #include "encounter.h"
 #include "../entity/monster.h"
+#include "../action/action.h"
 
 class BattleEncounter : public Encounter
 {

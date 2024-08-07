@@ -1,13 +1,13 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "entity.h";
+#include "entity.h"
 
 
 class Player : private Entity
 {
 public:
-    Player(uint8_t, uint8_t, uint8_t);
+    Player(uint8_t, uint8_t, uint8_t, std::vector<Action*>);
 };
 
 #endif
