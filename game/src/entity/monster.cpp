@@ -16,7 +16,7 @@ Monster::Monster(
     uint8_t acc,
     std::vector<Action*> acts,
     Image spr)
-    : Entity(hp, ap, acc, acts)
+    : Entity(hp, ap, acc)
 {
     sprite = spr;
 }

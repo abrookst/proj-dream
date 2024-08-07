@@ -1,7 +1,6 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 
-#include <cstdint>
 #include "entity.h"
 #include <vector>
 #include <raylib.h>

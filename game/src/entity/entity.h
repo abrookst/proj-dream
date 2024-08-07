@@ -25,7 +25,9 @@ public:
     void SetMaxHealth(uint8_t hp) { maxHealth = hp; }
     void SetAttackPower(uint8_t ap) { attackPower = ap; }
     void SetAccuracy(uint8_t acc) { accuracy = acc; }
+    void SetBlock(bool bl) { isBlocking = bl; }
     //create action setters (?)
+    const bool GetBlock() { return isBlocking; }
     const uint8_t GetHealth() { return health; }
     const uint8_t GetMaxHealth() { return maxHealth; }
     const uint8_t GetAttackPower() { return attackPower; }
