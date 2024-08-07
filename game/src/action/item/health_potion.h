@@ -12,6 +12,6 @@ protected:
             Entity&);
 };
 
-const std::string HealthPotion::name = "Health Potion";
+const std::string Item::name = "Health Potion";
 
 #endif
