@@ -1,6 +1,6 @@
 #include "battle_encounter.h"
 
-#include "monster.h"
+
 
 BattleEncounter::BattleEncounter(
     Monster m)
@@ -11,9 +11,9 @@ BattleEncounter::BattleEncounter(
 void BattleEncounter::NextTurn(
     void)
 {
-    Action monsterAction = monster.RandomAction();
-    if (monsterAction == ATTACK)
-    {
+    Action* monsterAction = monster.RandomAction();
+    // if (monsterAction == ATTACK)
+    // {
 
-    }
+    // }
 }
