@@ -21,8 +21,6 @@ void BattleEncounter::NextTurn(
     }
 
     //After player input is done, perform monster action
-    Player player = Player(10, 10, 10, std::vector<Action*>());//TODO: get player from somewhere
-
     Action* monsterAction = monster.RandomAction();
-    monsterAction->Perform(monster, player);
+    monsterAction->Perform(monster, Player::GetInstance());
 }

@@ -10,4 +10,5 @@ Player::Player(
     : Entity(hp, ap, acc, acts)
 {
     //init future player exclusive vars here
+    instance = *this;
 }
