@@ -6,11 +6,9 @@
 
 class Item : public Action{
 
-protected:
-  const static std::string name;
-
 public:
-  std::string GetName() const { return name; };
+  virtual std::string GetName() const;
+  virtual std::string GetDescription() const;
 
 };
 #endif

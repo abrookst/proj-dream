@@ -10,8 +10,10 @@ protected:
     void Perform(
             Entity&,
             Entity&);
-};
 
-const std::string Item::name = "Health Potion";
+public:
+    std::string GetName();
+    std::string GetDescription();
+};
 
 #endif
