@@ -15,9 +15,9 @@ Entity::Entity()
 }
 
 Entity::Entity(
-    uint8_t& hp,
-    uint8_t& ap,
-    uint8_t& acc,
+    uint8_t hp,
+    uint8_t ap,
+    uint8_t acc,
     bool blocking,
     std::vector<Action>& acts)
 {
