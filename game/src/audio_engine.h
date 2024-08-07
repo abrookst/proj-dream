@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstring>
 
-struct volume
+struct Volume
 {
     float oldVolume = 0.5;
     float newVolume = 0.5;
@@ -14,7 +14,7 @@ struct volume
     float volumeEasingTimeTotal = 0;
 };
 
-struct speed
+struct Speed
 {
     float oldSpeed = 1;
     float newSpeed = 1;
@@ -22,14 +22,14 @@ struct speed
     float speedEasingTimeTotal = 0;
 };
 
-struct audioObject
+struct AudioObject
 {
     Music music;
     Sound sound;
     const char* name;
     bool isMusic = false;
-    volume vol;
-    speed spd;
+    Volume vol;
+    Speed spd;
 };
 
 
@@ -55,10 +55,10 @@ public:
     void SetSpeedSound(const char*, float, float);
 
 private:
-    std::vector<audioObject*> audioVector;
+    std::vector<AudioObject*> audioVector;
     std::vector<const char*> loadedCache;
 
-    audioObject* Find(const char*);
+    AudioObject* Find(const char*);
 };
 
 #endif

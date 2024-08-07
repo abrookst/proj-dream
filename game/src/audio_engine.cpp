@@ -7,12 +7,12 @@ AudioEngine::~AudioEngine()
     CloseAudioDevice();
     for (const char* file : loadedCache)
     {
-        audioObject* temp = Find(file);
+        AudioObject* temp = Find(file);
         if (!temp) { return; }
         if (temp->isMusic) { UnloadMusicStream(temp->music); }
         else { UnloadSound(temp->sound); }
     }
-    for (audioObject* obj : audioVector) { delete obj; }
+    for (AudioObject* obj : audioVector) { delete obj; }
 }
 
 // Plays the audio from the specified file (format: "basename.ext" in resources/audio/)
@@ -29,7 +29,7 @@ void AudioEngine::PlayMusic(
     if (isCached) { PlayMusicStream(Find(file)->music); }
     else
     {
-        audioObject* temp = new audioObject{};
+        AudioObject* temp = new AudioObject{};
         char* fullPath = new char[sizeof("./resources/audio/")+strlen(file)];
         strcpy(fullPath, "./resources/audio/");
         strcat(fullPath, file);
@@ -57,7 +57,7 @@ void AudioEngine::PlaySfx(
     if (isCached) { PlaySound(Find(file)->sound); }
     else
     {
-        audioObject* temp = new audioObject{};
+        AudioObject* temp = new AudioObject{};
         char* fullPath = new char[sizeof("./resources/audio/")+strlen(file)];
         strcpy(fullPath, "./resources/audio/");
         strcat(fullPath, file);
@@ -72,14 +72,14 @@ void AudioEngine::PlaySfx(
 // Updates audio streams, volume, and speeds. Should be called every frame.
 void AudioEngine::UpdateAudio()
 {
-    for (audioObject* obj : audioVector) 
+    for (AudioObject* obj : audioVector) 
     {
         if (obj->isMusic && IsMusicStreamPlaying(obj->music))
         {
             UpdateMusicStream(obj->music); 
         } 
-        volume* vol = &obj->vol;
-        speed* spd = &obj->spd;
+        Volume* vol = &obj->vol;
+        Speed* spd = &obj->spd;
         if (vol->volumeEasingTimeTotal)
         {
             vol->volumeEasingTimePassed += GetFrameTime();
@@ -115,7 +115,7 @@ void AudioEngine::UpdateAudio()
 void AudioEngine::Pause(
         const char* file)
 {
-    audioObject* temp = Find(file);
+    AudioObject* temp = Find(file);
     if (!temp) { return; }
     if (temp->isMusic)
     {
@@ -135,7 +135,7 @@ void AudioEngine::Pause(
 void AudioEngine::Stop(
         const char* file)
 {
-    audioObject* temp = Find(file);
+    AudioObject* temp = Find(file);
     if (!temp) { return; }
     if (temp->isMusic) { StopMusicStream(temp->music); }
     else { StopSound(temp->sound); }
@@ -145,7 +145,7 @@ void AudioEngine::Stop(
 void AudioEngine::Restart(
         const char* file)
 {
-    audioObject* temp = Find(file);
+    AudioObject* temp = Find(file);
     if (!temp) { return; }
     if (temp->isMusic)
     {
@@ -159,9 +159,9 @@ void AudioEngine::Restart(
     }
 }
 
-// Internal function to retrieve the audioObject of the file given 
+// Internal function to retrieve the AudioObject of the file given 
 // Format: "basename.ext" in resources/audio/
-audioObject* AudioEngine::Find(
+AudioObject* AudioEngine::Find(
         const char* file)
 {
     for (int i=0; i<audioVector.size(); i++) 
@@ -181,7 +181,7 @@ void AudioEngine::SetVolumeSound(
         const char* file,
         float volume, float time)
 {
-    audioObject* temp = Find(file);
+    AudioObject* temp = Find(file);
     if (!temp) { return; }
     temp->vol.newVolume = volume;
     temp->vol.volumeEasingTimeTotal = time;
@@ -193,7 +193,7 @@ void AudioEngine::SetVolumeAllMusic(
         float volume,
         float time)
 {
-    for (audioObject* obj : audioVector)
+    for (AudioObject* obj : audioVector)
     {
         if (!obj->isMusic) { continue; }
         obj->vol.newVolume = volume;
@@ -207,7 +207,7 @@ void AudioEngine::SetVolumeAllSfx(
         float volume,
         float time)
 {
-    for (audioObject* obj : audioVector)
+    for (AudioObject* obj : audioVector)
     {
         if (obj->isMusic) { continue; }
         obj->vol.newVolume = volume;
@@ -223,7 +223,7 @@ void AudioEngine::SetSpeedSound(
         float speed,
         float time)
 {
-    audioObject* temp = Find(file);
+    AudioObject* temp = Find(file);
     if (!temp) { return; }
     temp->spd.newSpeed = speed;
     temp->spd.speedEasingTimeTotal = time;
