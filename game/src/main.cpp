@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "audio_engine.cpp"
+#include "audio_engine.h"
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
