@@ -1,6 +1,6 @@
 #include "health_potion.h"
 
-void HealthPotion::Preform(
+void HealthPotion::Perform(
         Entity& entity)
 {
     entity.SetHealth(entity.GetHealth());

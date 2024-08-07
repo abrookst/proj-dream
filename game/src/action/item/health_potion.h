@@ -6,7 +6,7 @@
 
 class HealthPotion : protected Item
 {
-    void Preform(
+    void Perform(
             Entity&);
 };
 

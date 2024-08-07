@@ -7,7 +7,7 @@
 class Attack : protected Action
 {
 public:
-    void Preform(
+    void Perform(
             Entity&,
             Entity&);
 };

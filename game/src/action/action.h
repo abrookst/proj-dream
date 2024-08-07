@@ -8,7 +8,7 @@ class Entity; // Forward declaration
 class Action
 {
 public:
-    virtual void Preform(Entity, Entity) = 0;
+    virtual void Perform(Entity, Entity) = 0;
 
 };
 #endif

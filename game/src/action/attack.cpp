@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <cstdlib>
 
-void Attack::Preform(
+void Attack::Perform(
         Entity& e1,
         Entity& e2)
 {
