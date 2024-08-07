@@ -4,7 +4,7 @@
 #include "entity.h"
 
 
-class Player : private Entity
+class Player : public Entity
 {
 public:
     Player(uint8_t, uint8_t, uint8_t, std::vector<Action*>);

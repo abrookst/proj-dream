@@ -5,7 +5,7 @@
 #include <vector>
 #include <raylib.h>
 
-class Monster : private Entity
+class Monster : public Entity
 {
 
 public:
