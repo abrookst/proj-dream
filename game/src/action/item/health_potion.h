@@ -6,8 +6,12 @@
 
 class HealthPotion : protected Item
 {
+protected:
     void Perform(
+            Entity&,
             Entity&);
 };
+
+const std::string HealthPotion::name = "Health Potion";
 
 #endif
