@@ -8,7 +8,7 @@ class Block : protected Action
 {
 public:
     void Preform(
-            Entity);
+            Entity&);
 };
 
 #endif

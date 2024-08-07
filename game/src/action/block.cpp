@@ -1,7 +1,7 @@
 #include "block.h"
 
 void Block::Preform(
-        Entity entity)
+        Entity& entity)
 {
     entity.SetBlock(true);
 }

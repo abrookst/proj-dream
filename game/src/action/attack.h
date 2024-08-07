@@ -8,8 +8,8 @@ class Attack : protected Action
 {
 public:
     void Preform(
-            Entity,
-            Entity);
+            Entity&,
+            Entity&);
 };
 
 #endif
