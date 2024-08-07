@@ -1,6 +1,6 @@
 #include "battle_encounter.h"
 #include "../entity/entity.h"
-#include <player.h>
+#include "../entity/player.h"
 
 
 BattleEncounter::BattleEncounter(
