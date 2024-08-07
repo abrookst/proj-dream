@@ -1,6 +1,6 @@
 #include "monster.h"
 
-#include "encounter.h"
+#include "../encounter/encounter.h"
 #include "entity.h"
 #include <cstdlib>
 
@@ -15,14 +15,13 @@ Monster::Monster(
     uint8_t hp,
     uint8_t ap,
     uint8_t acc,
-    std::vector<Action> acts,
     Image spr)
-    : Entity(hp, ap, acc, acts)
+    : Entity(hp, ap, acc)
 {
     sprite = spr;
 }
 
-Action Monster::RandomAction()
-{
-    return actions.at(rand() % actions.size());
-}
+// Action Monster::RandomAction()
+// {
+    // return actions.at(rand() % actions.size());
+// }

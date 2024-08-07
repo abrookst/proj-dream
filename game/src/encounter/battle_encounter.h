@@ -2,7 +2,7 @@
 #define BATTLE_ENCOUNTER_H
 
 #include "encounter.h"
-#include "monster.h"
+#include "../entity/monster.h"
 
 class BattleEncounter : public Encounter
 {

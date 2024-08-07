@@ -2,7 +2,8 @@
 #define ENTITY_H
 
 #include <vector>
-#include "encounter.h"
+#include <cstdint>
+#include "../encounter/encounter.h"
 
 class Entity
 {
@@ -12,9 +13,7 @@ public:
     Entity(
         uint8_t hp,
         uint8_t ap,
-        uint8_t acc,
-        bool blocking,
-        std::vector<Action>& acts);
+        uint8_t acc);
 
     
     void SetHealth(uint8_t hp) { health = hp; }
@@ -26,7 +25,6 @@ public:
     const uint8_t GetMaxHealth() { return maxHealth; }
     const uint8_t GetAttackPower() { return attackPower; }
     const uint8_t GetAccuracy() { return accuracy; }
-    const std::vector<Action>& GetActions() { return actions; }
 
 protected:
     uint8_t health;
@@ -34,7 +32,6 @@ protected:
     uint8_t attackPower;
     uint8_t accuracy;
     bool isBlocking;
-    std::vector<Action> actions;
 };
 
 #endif

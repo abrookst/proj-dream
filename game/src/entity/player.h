@@ -7,7 +7,7 @@
 class Player : private Entity
 {
 public:
-    Player(uint8_t, uint8_t, uint8_t, std::vector<Action>);
+    Player(uint8_t, uint8_t, uint8_t);
 };
 
 #endif

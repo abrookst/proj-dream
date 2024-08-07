@@ -1,7 +1,6 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 
-#include <cstdint>
 #include "entity.h"
 #include <vector>
 #include <raylib.h>
@@ -16,10 +15,9 @@ public:
         uint8_t hp,
         uint8_t ap,
         uint8_t acc,
-        std::vector<Action> acts,
         Image spr);
 
-    Action RandomAction();
+    // Action RandomAction();
 
 private:
     Image sprite;
