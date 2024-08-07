@@ -10,6 +10,8 @@ protected:
     void Perform(
             Entity&,
             Entity&);
+    void Perform(
+            Entity&);
 
 public:
     std::string GetName();

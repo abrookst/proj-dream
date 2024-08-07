@@ -10,6 +10,8 @@ public:
     void Perform(
             Entity&,
             Entity&);
+    void Perform(
+            Entity&);
 };
 
 #endif

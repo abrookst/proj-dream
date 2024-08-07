@@ -9,6 +9,8 @@ void HealthPotion::Perform(
     // Remove the health potion from the inventory
 }
 
+void HealthPotion::Perform(Entity& entity){}
+
 std::string HealthPotion::GetName()
 {
     return "Health Potion";

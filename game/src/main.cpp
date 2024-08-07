@@ -1,5 +1,8 @@
 #include "raylib.h"
 #include "audio_engine.h"
+#include "entity/player.h"
+#include "action/attack.h"
+#include "action/block.h"
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
@@ -53,6 +56,11 @@ int main(
 
     Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
     AudioEngine audioEngine;
+
+
+    Attack* attack = new Attack();
+    Block* block = new Block();
+    Player player(10, 5, 50, {attack, block});
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);

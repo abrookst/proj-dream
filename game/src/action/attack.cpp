@@ -12,3 +12,14 @@ void Attack::Perform(
          : 0);
     e2.SetHealth(e2.GetHealth() - attackerPower);
 }
+
+void Attack::Perform(
+        Entity& entity)
+{
+
+    uint8_t attackerPower = entity.GetAttackPower() * 
+        (rand() % 100 > entity.GetAccuracy() 
+         ? 1 
+         : 0);
+    entity.SetHealth(entity.GetHealth() - attackerPower);
+}

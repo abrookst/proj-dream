@@ -7,7 +7,10 @@
 class Block : public Action
 {
 public:
-    void Preform(
+    void Perform(
+            Entity&,
+            Entity&);
+    void Perform(
             Entity&);
 };
 

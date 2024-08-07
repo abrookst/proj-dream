@@ -7,8 +7,8 @@
 class Item : public Action{
 
 public:
-  virtual std::string GetName() const;
-  virtual std::string GetDescription() const;
+  virtual std::string GetName() const = 0;
+  virtual std::string GetDescription() const = 0;
 
 };
 #endif
