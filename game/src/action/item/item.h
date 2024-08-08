@@ -1,7 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "action.h"
+#include "../action.h"
 #include <string>
 
 class Item : public Action{
