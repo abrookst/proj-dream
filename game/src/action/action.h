@@ -11,7 +11,5 @@ public:
     virtual void Perform(
             Entity&, 
             Entity&) = 0;
-    virtual void Perform(
-            Entity&) = 0;
 };
 #endif

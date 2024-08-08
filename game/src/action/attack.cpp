@@ -13,14 +13,3 @@ void Attack::Perform(
     if (e2.GetBlock()) { attackerPower = 1; }
     e2.SetHealth(e2.GetHealth() - attackerPower);
 }
-
-void Attack::Perform(
-        Entity& entity)
-{
-
-    uint8_t attackerPower = entity.GetAttackPower() * 
-        (rand() % 100 > entity.GetAccuracy() 
-         ? 0 
-         : 1);
-    entity.SetHealth(entity.GetHealth() - attackerPower);
-}
