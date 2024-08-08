@@ -2,8 +2,6 @@
 #include "../entity/entity.h"
 #include "../entity/player.h"
 
-#include <iostream>
-
 
 BattleEncounter::BattleEncounter(
     Monster& m)
