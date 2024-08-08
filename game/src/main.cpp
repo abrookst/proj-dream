@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "audio_engine.h"
 #include "typewrite.h"
 #include <stdio.h>
 #include <fstream>
@@ -54,6 +55,7 @@ int main(
     int framesCounter = 0;
 
     Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
+    AudioEngine audioEngine;
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
@@ -73,6 +75,8 @@ int main(
     while (!WindowShouldClose())
     {
         float scale = MIN((float)GetScreenWidth() / lowRezWidth, (float)GetScreenHeight() / lowRezHeight);
+
+        if (IsKeyPressed(KEY_SPACE)) { audioEngine.PlayMusic("test.mp3"); }
 
         BeginTextureMode(targetScene);
 
@@ -105,11 +109,13 @@ int main(
         EndTextureMode();
 
         renderScene(targetScene, scale);
+
+        audioEngine.UpdateAudio();
         
     }
 
     UnloadFont(mainFont);
-
+    
     CloseWindow();
 
     return 0;
