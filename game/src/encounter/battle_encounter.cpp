@@ -31,9 +31,9 @@ void BattleEncounter::NextTurn(
 
     // std::cout << "Player: " << (int)player->GetHealth() << ", Monster: " << (int)monster->GetHealth() << std::endl;
     //After player input is done, perform monster action
+    if (monster->GetBlock()) { monster->SetBlock(false); }
     Action* monsterAction = monster->RandomAction();
     monsterAction->Perform(*monster, *Player::GetInstance());
 
-    if (monster->GetBlock()) { monster->SetBlock(false); }
     if (player->GetBlock()) { player->SetBlock(false); }
 }
