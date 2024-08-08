@@ -2,11 +2,14 @@
 #include "../entity/entity.h"
 #include "../entity/player.h"
 
+#include <iostream>
+
 
 BattleEncounter::BattleEncounter(
     Monster& m)
 {
     monster = new Monster(m);
+    player = &Player::GetInstance();
 }
 
 void BattleEncounter::NextTurn(
@@ -18,9 +21,11 @@ void BattleEncounter::NextTurn(
         //TODO: give player loot
         //TODO: display screen for player to choose where to go next
         return;
+    } 
+    else if (player->GetHealth() == 0)
+    {
     }
 
-    // Entity player = Player::GetInstance();
 
     //After player input is done, perform monster action
     Action* monsterAction = monster->RandomAction();
