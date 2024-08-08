@@ -16,6 +16,7 @@ public:
         uint8_t hp,
         uint8_t ap,
         uint8_t acc,
+        uint8_t mp,
         std::vector<Action*>& acts);
 
     Action* RandomAction();

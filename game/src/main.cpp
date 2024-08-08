@@ -64,11 +64,11 @@ int main(
 
     // Player declaration
     std::vector<Action*> playerActions = { new Attack(), new Block() };
-    Player player(50, 5, 95, playerActions);
+    Player player(50, 5, 95, 20, playerActions);
 
     // example Monster and BattleEncounter declaration
     std::vector<Action*> monsterActions = { new Attack() };
-    Monster monster1 = Monster(20, 5, 95, monsterActions);
+    Monster monster1 = Monster(20, 5, 95, 20, monsterActions);
     BattleEncounter battleEncounter1(monster1);
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
