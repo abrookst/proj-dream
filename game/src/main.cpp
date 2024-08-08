@@ -1,5 +1,8 @@
 #include "raylib.h"
 #include "audio_engine.h"
+#include "typewrite.h"
+#include <stdio.h>
+#include <fstream>
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
@@ -59,6 +62,15 @@ int main(
 
     SetTargetFPS(60);
 
+    std::string text = "hello pneumonoultramicroscopicsilicovolcanoconiosis.";
+    FormatStringToDialogue(text);
+    int frames = 0;
+    int displacemeCount = 0;
+    int pauseCount = 60;
+    bool dialogueRenderOver = false;
+    std::string hb = "";
+    std::string buffer = "";
+
     // Main game loop
     while (!WindowShouldClose())
     {
@@ -75,7 +87,24 @@ int main(
             
 
             //DrawText("Test", 3, 48, 3, BLACK);
-            DrawTextEx(mainFont, "ABCDEFGHIJKLMN\nOPQRSTUVWXYZ", Vector2{ 3, 47 }, 6, 1, WHITE);
+            DrawTextEx(mainFont, buffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+            if (!dialogueRenderOver)
+            {
+                if (IsKeyPressed(KEY_ENTER)) 
+                {
+                    dialogueRenderOver = Writer(text, buffer, hb, frames, displacemeCount, pauseCount, 5, 60, true);
+                }
+                dialogueRenderOver = Writer(text, buffer, hb, frames, displacemeCount, pauseCount, 5, 60);
+            }
+            else if (IsKeyPressed(KEY_ENTER)) 
+            {
+                buffer = "";
+            }
+
+            if (IsKeyPressed(KEY_ENTER)) 
+            {
+                printf("PRESSED ENTER WHILE dialogueRenderOver = %d\n", dialogueRenderOver);
+            }
 
         EndTextureMode();
 
