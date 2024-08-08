@@ -267,6 +267,7 @@
   <ItemGroup>
     <ClCompile Include="src\audio_engine.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\raylib-master\raylib.vcxproj">
@@ -275,6 +276,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\audio_engine.h" />
+    <ClInclude Include="src\ui.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
