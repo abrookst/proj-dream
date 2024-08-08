@@ -28,4 +28,7 @@ void BattleEncounter::NextTurn(
     //After player input is done, perform monster action
     Action* monsterAction = monster->RandomAction();
     monsterAction->Perform(*monster, Player::GetInstance());
+
+    if (monster->GetBlock()) { monster->SetBlock(false); }
+    if (player->GetBlock()) { player->SetBlock(false); }
 }
