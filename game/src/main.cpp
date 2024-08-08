@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include "audio_engine.h"
-#include <ui.h>
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
@@ -54,7 +53,6 @@ int main(
 
     Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
     AudioEngine audioEngine;
-    UIEngine uiEngine;
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
@@ -71,7 +69,7 @@ int main(
         BeginTextureMode(targetScene);
 
             ClearBackground(RAYWHITE);
-            DrawTexture(uiEngine.GetTexture(), 0,0, WHITE);
+
             DrawRectangle(2, 46, 60, 16, BLACK);
             DrawRectangle(0, 0, 1, 1, PURPLE);
             
