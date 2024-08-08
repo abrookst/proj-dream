@@ -1,6 +1,7 @@
 #include "battle_encounter.h"
 #include "../entity/entity.h"
 #include "../entity/player.h"
+// #include <iostream>
 
 
 BattleEncounter::BattleEncounter(
@@ -13,7 +14,10 @@ BattleEncounter::BattleEncounter(
 void BattleEncounter::NextTurn(
     void)
 {
+
+    // player->GetActions().at(0)->Perform(Player::GetInstance(), *monster);
     //Wait for player to perform action
+    
     if (monster->GetHealth() == 0)
     {
         //TODO: give player loot
@@ -25,6 +29,7 @@ void BattleEncounter::NextTurn(
     }
 
 
+    // std::cout << "Player: " << (int)player->GetHealth() << ", Monster: " << (int)monster->GetHealth() << std::endl;
     //After player input is done, perform monster action
     Action* monsterAction = monster->RandomAction();
     monsterAction->Perform(*monster, Player::GetInstance());
