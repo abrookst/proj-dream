@@ -11,5 +11,7 @@ void Attack::Perform(
          ? 0 
          : 1);
     if (e2.GetBlock()) { attackerPower = 1; }
-    e2.SetHealth(e2.GetHealth() - attackerPower);
+    int16_t newHealth = e2.GetHealth() - attackerPower;
+    if (newHealth < 0) { e2.SetHealth(0); }
+    else { e2.SetHealth(newHealth); }
 }
