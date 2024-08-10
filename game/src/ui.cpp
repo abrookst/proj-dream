@@ -90,6 +90,7 @@ void UIEngine::ProcessInputKeyboard(
 Texture2D UIEngine::GetTexture(
 	void)
 {
+	//Gets the texture so that main.cpp can render it
 	return currentUIData.uiTexture;
 }
 
@@ -122,7 +123,5 @@ void UIEngine::Back()
 
 void UIEngine::RenderUI()
 {
-	// Render UI
-	DrawTexture(GetTexture(), 0, 0, WHITE);
-
+	//Chat IDK what this is supposed to do
 }
