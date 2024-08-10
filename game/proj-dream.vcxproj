@@ -270,6 +270,7 @@
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\audio_engine.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ui.cpp" />
     <ClCompile Include="src\monster.cpp" />
     <ClCompile Include="src\player.cpp" />
   </ItemGroup>
@@ -285,6 +286,7 @@
     <ClInclude Include="monster.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="src\audio_engine.h" />
+    <ClInclude Include="src\ui.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

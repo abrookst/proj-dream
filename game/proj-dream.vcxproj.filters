@@ -28,6 +28,9 @@
     <ClCompile Include="src\audio_engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="monster.h">
@@ -44,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="battle_encounter.h">
     <ClInclude Include="src\audio_engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
