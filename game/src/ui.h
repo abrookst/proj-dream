@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include <map>
 
 enum UIState
 {
@@ -26,6 +27,7 @@ enum UIState
 struct UIData
 {
 	Image uiFrame;
+	Texture2D uiTexture;
 	uint8_t maxListLength;
 	uint8_t maxWordLength;
 	std::vector<std::string> scrollableList;
@@ -35,10 +37,12 @@ struct UIData
 class UIEngine
 {
 public:
+	UIEngine();
+
 	void ChangeScreen(
 		UIState state);
 
-	void UIEngine::Input(
+	void SetInputEnabled(
 		bool input);
 
 	UIState GetCurrentScreen(
@@ -50,17 +54,20 @@ public:
 	Texture2D GetTexture(
 		void);
 
+	void RenderUI();
+
 private:
 	void MoveUp();
 	void MoveDown();
 	void Confirm();
 	void Back();
-	void RenderUI();
+	
 	bool changingScreen;
 	UIState currentUIState;
 	UIData currentUIData;
 	bool inputEnabled;
 
+	std::map<UIState, UIData> uidata;
 };
 
 #endif

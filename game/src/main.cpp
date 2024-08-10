@@ -3,6 +3,7 @@
 #include "typewrite.h"
 #include <stdio.h>
 #include <fstream>
+#include "ui.h"
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
@@ -71,6 +72,8 @@ int main(
     std::string hb = "";
     std::string buffer = "";
 
+    UIEngine uiEngine = UIEngine();
+
     // Main game loop
     while (!WindowShouldClose())
     {
@@ -85,6 +88,7 @@ int main(
             DrawRectangle(2, 46, 60, 16, BLACK);
             DrawRectangle(0, 0, 1, 1, PURPLE);
             
+            uiEngine.RenderUI();
 
             //DrawText("Test", 3, 48, 3, BLACK);
             DrawTextEx(mainFont, buffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);

@@ -1,5 +1,29 @@
 #include "ui.h"
 
+UIEngine::UIEngine()
+{
+	currentUIState = DREAMWORLD;
+	inputEnabled = true;
+
+	uidata[DREAMWORLD] = {
+		LoadImage("resources/sprites/ui/DREAMWORLD.png"),
+		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
+		5,
+		10,
+		{
+			"Daytime World",
+			"Daytime Player",
+			"Dream World",
+			"Dream Player",
+			"Menu"
+		},
+		0
+	};
+
+
+	currentUIData = uidata[currentUIState];
+}
+
 void UIEngine::ChangeScreen(UIState state)
 {
 	currentUIState = state;
@@ -18,10 +42,11 @@ void UIEngine::ChangeScreen(UIState state)
 	case EQUIP:
 	case ITEMS:
 	case INALIDSTATE:
+	break;
 	}
 }
 
-void UIEngine::Input(
+void UIEngine::SetInputEnabled(
 	bool input)
 {
 	inputEnabled = input;
@@ -56,7 +81,7 @@ void UIEngine::ProcessInputKeyboard(
 		Confirm();
 		break;
 	case KEY_X:
-	case: KEY_BACKSPACE:
+	case KEY_BACKSPACE:
 		Back();
 	}
 	RenderUI();
@@ -65,5 +90,39 @@ void UIEngine::ProcessInputKeyboard(
 Texture2D UIEngine::GetTexture(
 	void)
 {
-	return LoadTextureFromImage(currentUIData.uiFrame);
+	return currentUIData.uiTexture;
+}
+
+void UIEngine::MoveUp()
+{
+	if (currentUIData.selectedElement > 0)
+	{
+		currentUIData.selectedElement--;
+	}
+}
+
+void UIEngine::MoveDown()
+{
+	if (currentUIData.selectedElement < currentUIData.scrollableList.size() - 1)
+	{
+		currentUIData.selectedElement++;
+	}
+}
+
+void UIEngine::Confirm()
+{
+	// Confirm selection
+}
+
+void UIEngine::Back()
+{
+	// Go back to previous screen
+	ChangeScreen(DAYTIMEWORLD);
+}
+
+void UIEngine::RenderUI()
+{
+	// Render UI
+	DrawTexture(GetTexture(), 0, 0, WHITE);
+
 }
