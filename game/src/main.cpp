@@ -1,8 +1,16 @@
+#include "encounter/battle_encounter.h"
 #include "raylib.h"
 #include "audio_engine.h"
 #include "typewrite.h"
 #include <stdio.h>
 #include <fstream>
+
+#include "entity/player.h"
+#include "entity/monster.h"
+
+#include "action/attack.h"
+#include "action/block.h"
+#include <vector>
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
@@ -57,6 +65,15 @@ int main(
     Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
     AudioEngine audioEngine;
 
+    // Player declaration
+    std::vector<Action*> playerActions = { new Attack(), new Block() };
+    Player player(50, 5, 95, 20, playerActions);
+
+    // example Monster and BattleEncounter declaration
+    std::vector<Action*> monsterActions = { new Attack() };
+    Monster monster1 = Monster(20, 5, 95, 20, monsterActions);
+    BattleEncounter battleEncounter1(monster1);
+
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
 
@@ -77,6 +94,7 @@ int main(
         float scale = MIN((float)GetScreenWidth() / lowRezWidth, (float)GetScreenHeight() / lowRezHeight);
 
         if (IsKeyPressed(KEY_SPACE)) { audioEngine.PlayMusic("test.mp3"); }
+        if (IsKeyPressed(KEY_ENTER)) { battleEncounter1.NextTurn(); }
 
         BeginTextureMode(targetScene);
 
