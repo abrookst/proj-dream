@@ -30,6 +30,8 @@ struct UIData
 	Texture2D uiTexture;
 	uint8_t maxListLength;
 	uint8_t maxWordLength;
+	float textXPosition;
+	float textYPosition;
 	std::vector<std::string> scrollableList;
 	uint8_t selectedElement;
 };

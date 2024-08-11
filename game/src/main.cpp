@@ -99,10 +99,7 @@ int main(
         if (IsKeyPressed(KEY_SPACE)) { audioEngine.PlayMusic("test.mp3"); }
         if (IsKeyPressed(KEY_ENTER)) { battleEncounter1.NextTurn(); }
 
-        if (IsKeyPressed(KEY_UP)) { uiEngine.ProcessInputKeyboard(KEY_UP); }
-        if (IsKeyPressed(KEY_DOWN)) { uiEngine.ProcessInputKeyboard(KEY_DOWN); }
-        if (IsKeyPressed(KEY_ENTER)) { uiEngine.ProcessInputKeyboard(KEY_ENTER); }
-        if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
+        uiEngine.ProcessInputKeyboard(static_cast<KeyboardKey>(GetKeyPressed()));
         
 
         BeginTextureMode(targetScene);
