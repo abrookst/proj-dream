@@ -4,10 +4,7 @@ TextEngine::TextEngine(
         Font& mainFont)
 {
    finalBuffer = new char[30];
-   for (int i=0; i<30; i++)
-   {
-       finalBuffer[i] = '0';
-   }
+   for (int i=0; i<30; i++) { finalBuffer[i] = '\0'; }
    DrawTextEx(mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
 }
 
@@ -65,8 +62,7 @@ std::string TextEngine::FormatText(
 
 void TextEngine::Write(const std::string& input)
 {
-    std::string* ptr = new std::string;
-    *ptr = FormatText(input);
+    std::string* ptr = new std::string(FormatText(input));
     writeQueue.push(ptr);
 }
 
@@ -96,7 +92,7 @@ void TextEngine::UpdateText(
 
     char tempChar = writeQueue.front()->front(); 
     *finalBuffer += tempChar;
-    writeQueue.front()->erase(0);
+    // writeQueue.front()->erase(0);
 
     if (writeQueue.front()->front() == '\n')
     {

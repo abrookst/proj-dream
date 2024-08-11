@@ -102,6 +102,10 @@ int main(
         if (IsKeyPressed(KEY_ENTER)) { uiEngine.ProcessInputKeyboard(KEY_ENTER); }
         if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
         
+        if (IsKeyPressed(KEY_ENTER))
+        {
+            textEngine.UpdateText(true);
+        }
 
         BeginTextureMode(targetScene);
 
@@ -114,10 +118,6 @@ int main(
 
             
 
-            if (IsKeyPressed(KEY_ENTER))
-            {
-                textEngine.UpdateText(true);
-            }
 
             //DrawText("Test", 3, 48, 3, BLACK);
             // DrawTextEx(mainFont, buffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
@@ -141,11 +141,10 @@ int main(
 
         EndTextureMode();
 
-        renderScene(targetScene, scale);
-
         audioEngine.UpdateAudio();
         textEngine.UpdateText(false);
-        
+
+        renderScene(targetScene, scale);
     }
 
     UnloadFont(mainFont);
