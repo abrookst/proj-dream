@@ -1,56 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{21EB8090-0D4E-1035-B6D3-48EBA215DCB7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{E9C7FDCE-D52A-8D73-7EB0-C5296AF258F6}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="src\audio_engine.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ui.cpp" />
+    <ClCompile Include="src\entity\monster.cpp" />
+    <ClCompile Include="src\entity\player.cpp" />
+    <ClCompile Include="src\entity\entity.cpp" />
+    <ClCompile Include="src\encounter\encounter.cpp" />
+    <ClCompile Include="src\encounter\battle_encounter.cpp" />
+    <ClCompile Include="src\action\attack.cpp" />
+    <ClCompile Include="src\action\block.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\battle_encounter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\encounter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\monster.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\player.cpp">
-    <ClCompile Include="src\audio_engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="monster.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="encounter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battle_encounter.h">
-    <ClInclude Include="src\audio_engine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="src\audio_engine.h" />
+    <ClInclude Include="src\ui.h" />
+    <ClInclude Include="src\entity\monster.h" />
+    <ClInclude Include="src\entity\player.h" />
+    <ClInclude Include="src\entity\entity.h" />
+    <ClInclude Include="src\encounter\encounter.h" />
+    <ClInclude Include="src\encounter\battle_encounter.h" />
+    <ClInclude Include="src\action\action.h" />
+    <ClInclude Include="src\action\attack.h" />
+    <ClInclude Include="src\action\block.h" />
   </ItemGroup>
 </Project>
