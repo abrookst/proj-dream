@@ -21,13 +21,13 @@ UIEngine::UIEngine(Font font)
 		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
 		5,
 		10,
-		46.0f,
+		43.0f,
 		19.0f,
 		{
-			"ATTK",
-			"BLCK",
-			"TALK",
-			"MENU",
+			new AttackButton(),
+			new BlockButton(),
+			new TalkButton(),
+			new MenuButton()
 		},
 		0
 	};
@@ -49,34 +49,32 @@ void UIEngine::ChangeScreen(UIState state)
 		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
 		5,
 		10,
-		42.0f,
+		43.0f,
 		19.0f,
 		{
-			"ATTK",
-			"BLCK",
-			"TALK",
-			"MENU",
+			new AttackButton(),
+			new BlockButton(),
+			new TalkButton(),
+			new MenuButton()
 		},
 		0
 		};
-		break;
 	case DREAMPLAYER:
 		currentUIData = {
 		LoadImage("resources/sprites/ui/DREAMPLAYER.png"),
 		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMPLAYER.png")),
 		5,
 		10,
-		42.0f,
+		43.0f,
 		19.0f,
 		{
-			"ATTK",
-			"BLCK",
-			"TALK",
-			"MENU",
+			new AttackButton(),
+			new BlockButton(),
+			new TalkButton(),
+			new MenuButton()
 		},
 		0
 		};
-		break;
 	case MENU:
 		currentUIData = {
 		LoadImage("resources/sprites/ui/MENU.png"),
@@ -86,16 +84,10 @@ void UIEngine::ChangeScreen(UIState state)
 		3.0f,
 		4.0f,
 		{
-			"STATS",
-			"MAGIC",
-			"ABLTY",
-			"WEAPN",
-			"EQUIP",
-			"ITEMS"
+			new AttackButton()
 		},
 		0
 		};
-		break;
 	case STATS:
 	case MAGIC:
 	case ABILITY:
@@ -180,12 +172,13 @@ void UIEngine::MoveDown()
 void UIEngine::Confirm()
 {
 	// Confirm selection
+	currentUIData.scrollableList[currentUIData.selectedElement]->confirmAction();
 }
 
 void UIEngine::Back()
 {
 	// Go back to previous screen
-	ChangeScreen(DAYTIMEWORLD);
+	currentUIData.scrollableList[currentUIData.selectedElement]->backAction();
 }
 
 void UIEngine::RenderUI()
@@ -208,7 +201,7 @@ void UIEngine::RenderUI()
 
 		DrawTextEx(
 			mainFont,
-			currentUIData.scrollableList[i].c_str(),
+			currentUIData.scrollableList[i]->buttonText.c_str(),
 			Vector2{ currentUIData.textXPosition, currentUIData.textYPosition + (i * 6) },
 			6,
 			1,
