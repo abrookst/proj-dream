@@ -37,7 +37,7 @@ struct UIData
 class UIEngine
 {
 public:
-	UIEngine();
+	UIEngine(Font mainFont);
 
 	void ChangeScreen(
 		UIState state);
@@ -61,6 +61,8 @@ private:
 	void MoveDown();
 	void Confirm();
 	void Back();
+
+	Font mainFont;
 	
 	bool changingScreen;
 	UIState currentUIState;

@@ -9,6 +9,8 @@ BattleEncounter::BattleEncounter(
 {
     monster = new Monster(m);
     player = Player::GetInstance();
+
+    instance = this;
 }
 
 void BattleEncounter::NextTurn(

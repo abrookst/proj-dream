@@ -89,7 +89,7 @@ int main(
     std::string hb = "";
     std::string buffer = "";
 
-    UIEngine uiEngine = UIEngine();
+    UIEngine uiEngine = UIEngine(mainFont);
 
     // Main game loop
     while (!WindowShouldClose())
@@ -99,6 +99,12 @@ int main(
         if (IsKeyPressed(KEY_SPACE)) { audioEngine.PlayMusic("test.mp3"); }
         if (IsKeyPressed(KEY_ENTER)) { battleEncounter1.NextTurn(); }
 
+        if (IsKeyPressed(KEY_UP)) { uiEngine.ProcessInputKeyboard(KEY_UP); }
+        if (IsKeyPressed(KEY_DOWN)) { uiEngine.ProcessInputKeyboard(KEY_DOWN); }
+        if (IsKeyPressed(KEY_ENTER)) { uiEngine.ProcessInputKeyboard(KEY_ENTER); }
+        if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
+        
+
         BeginTextureMode(targetScene);
 
             ClearBackground(RAYWHITE);
@@ -106,7 +112,7 @@ int main(
             DrawRectangle(2, 46, 60, 16, BLACK);
             DrawRectangle(0, 0, 1, 1, PURPLE);
             
-            DrawTexture(uiEngine.GetTexture(), 0, 0, WHITE);
+            uiEngine.RenderUI();
 
             //DrawText("Test", 3, 48, 3, BLACK);
             DrawTextEx(mainFont, buffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);

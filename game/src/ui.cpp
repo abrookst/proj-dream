@@ -1,7 +1,9 @@
 #include "ui.h"
 
-UIEngine::UIEngine()
+UIEngine::UIEngine(Font font)
 {
+	mainFont = font;
+
 	currentUIState = DREAMWORLD;
 	inputEnabled = true;
 
@@ -11,11 +13,10 @@ UIEngine::UIEngine()
 		5,
 		10,
 		{
-			"Daytime World",
-			"Daytime Player",
-			"Dream World",
-			"Dream Player",
-			"Menu"
+			"ATTK",
+			"BLCK",
+			"TALK",
+			"MENU"
 		},
 		0
 	};
@@ -96,17 +97,19 @@ Texture2D UIEngine::GetTexture(
 
 void UIEngine::MoveUp()
 {
-	if (currentUIData.selectedElement > 0)
+	currentUIData.selectedElement--;
+	if (currentUIData.selectedElement >= currentUIData.scrollableList.size())
 	{
-		currentUIData.selectedElement--;
+		currentUIData.selectedElement = currentUIData.scrollableList.size()-1;
 	}
 }
 
 void UIEngine::MoveDown()
 {
-	if (currentUIData.selectedElement < currentUIData.scrollableList.size() - 1)
+	currentUIData.selectedElement++;
+	if (currentUIData.selectedElement >= currentUIData.scrollableList.size())
 	{
-		currentUIData.selectedElement++;
+		currentUIData.selectedElement = 0;
 	}
 }
 
@@ -123,5 +126,29 @@ void UIEngine::Back()
 
 void UIEngine::RenderUI()
 {
-	//Chat IDK what this is supposed to do
+	DrawTexture(GetTexture(), 0, 0, WHITE);
+
+	// Draw the list of options
+	for (int i = 0; i < currentUIData.scrollableList.size(); i++)
+	{
+		//DrawTextEx(mainFont, buffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+		DrawTextEx(
+			mainFont,
+			currentUIData.scrollableList[i].c_str(),
+			Vector2{ 46, 19.0f + (i * 6) },
+			6,
+			1,
+			BLACK
+		);
+	}
+
+	// Draw the cursor
+	DrawTextEx(
+		mainFont,
+		">",
+		Vector2{ 42, 19.0f + (currentUIData.selectedElement * 6) },
+		6,
+		1,
+		BLACK
+	);
 }
