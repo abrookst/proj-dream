@@ -1,11 +1,14 @@
 #include "text_engine.h"
 
-TextEngine::TextEngine()
+TextEngine::TextEngine(
+        Font& mainFont)
 {
    finalBuffer = new char[30]; 
+   DrawTextEx(mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
 }
 
-TextEngine::~TextEngine()
+TextEngine::~TextEngine(
+        void)
 {
     delete finalBuffer;
     while (!writeQueue.empty())
@@ -15,7 +18,91 @@ TextEngine::~TextEngine()
     }
 }
 
-void TextEngine::Write(const std::string&)
-{
 
+std::string TextEngine::FormatText(
+    const std::string& inputString) 
+{
+    std::stringstream textStream((std::string(inputString)));
+    std::string output = "";
+    std::string temp = "";
+    int currWidth = 0;
+
+    while (textStream >> temp) 
+    {
+        //printf("word: %s\ncurrWidth: %d\n", temp.c_str(), currWidth);
+        while (temp != "") {
+            if (temp.length() > 14 && currWidth == 0) 
+            {
+                std::string word =  temp.substr(0, 13);
+                temp = temp.substr(13);
+                output += word + "-";
+                currWidth = 14;
+            }
+            if (currWidth + temp.length() > 14) 
+            {
+                currWidth = 0;
+                output += "\n";
+            }
+            else 
+            {   
+                output += temp;
+                currWidth += temp.length();
+                temp = "";
+            }
+        }
+        if (currWidth != 14) 
+        {
+            output += temp + " ";
+            currWidth++;
+        }
+    }
+    return output.substr(0, output.length() - 1);
+}
+
+void TextEngine::Write(const std::string& input)
+{
+    std::string* ptr = new std::string;
+    *ptr = FormatText(input);
+    writeQueue.push(ptr);
+}
+
+void TextEngine::UpdateText(
+        bool userPressedEnter)
+{
+    if (writeQueue.front()->empty()) 
+    {
+        frameCount = 0;
+        lineState = 0;
+        pauseCount = -1;
+        return;
+    } 
+    else if (delay && frameCount % delay) 
+    {
+        frameCount++;
+        return;
+    }
+    if (!userPressedEnter && lineState == 2) {
+        return;
+    }
+    if (lineState == 2 && frameCount > 0 && userPressedEnter)
+    {
+        finalBuffer = "";
+        pauseCount = -1;
+        lineState = 0;
+        return;
+    }
+
+    finalBuffer += writeQueue.front()->front();
+
+    if (writeQueue.front()->front())
+    {
+        finalBuffer += '\n';
+        if (lineState) 
+        {
+            pauseCount = 0;
+        }
+        lineState++;
+    }
+    frameCount++;
+    return;
 }

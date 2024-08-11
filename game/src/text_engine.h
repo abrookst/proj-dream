@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
+#include <raylib.h>
 
 class TextEngine
 {
