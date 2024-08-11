@@ -3,7 +3,11 @@
 TextEngine::TextEngine(
         Font& mainFont)
 {
-   finalBuffer = new char[30]; 
+   finalBuffer = new char[30];
+   for (int i=0; i<30; i++)
+   {
+       finalBuffer[i] = '0';
+   }
    DrawTextEx(mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
 }
 
@@ -73,7 +77,6 @@ void TextEngine::UpdateText(
     {
         frameCount = 0;
         lineState = 0;
-        pauseCount = -1;
         return;
     } 
     else if (delay && frameCount % delay) 
@@ -87,22 +90,19 @@ void TextEngine::UpdateText(
     if (lineState == 2 && frameCount > 0 && userPressedEnter)
     {
         finalBuffer = "";
-        pauseCount = -1;
         lineState = 0;
         return;
     }
 
-    finalBuffer += writeQueue.front()->front();
+    char tempChar = writeQueue.front()->front(); 
+    *finalBuffer += tempChar;
+    writeQueue.front()->erase(0);
 
-    if (writeQueue.front()->front())
+    if (writeQueue.front()->front() == '\n')
     {
         finalBuffer += '\n';
-        if (lineState) 
-        {
-            pauseCount = 0;
-        }
         lineState++;
-    }
+  }
     frameCount++;
     return;
 }

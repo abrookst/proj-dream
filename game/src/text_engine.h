@@ -16,8 +16,7 @@ class TextEngine
     uint8_t delay = 0;
     uint8_t pause = 0;
     uint8_t frameCount = 0;
-    uint8_t pauseCount = 0;
-    uint8_t lineState = 2;
+    uint8_t lineState = 0;
 
     std::string FormatText(const std::string&);
 public:
