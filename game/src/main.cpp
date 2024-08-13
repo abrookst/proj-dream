@@ -111,12 +111,9 @@ int main(
             DrawRectangle(0, 0, 1, 1, PURPLE);
             
             uiEngine.RenderUI();
-            textEngine.UpdateText(false);
 
-            if (IsKeyPressed(KEY_ENTER))
-            {
-                textEngine.UpdateText(true);
-            }
+            if (IsKeyPressed(KEY_ENTER)) { textEngine.UpdateText(true); }
+            else { textEngine.UpdateText(false); }
             
 
 

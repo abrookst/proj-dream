@@ -96,7 +96,6 @@ void TextEngine::UpdateText(
     tempChar[0] = writeQueue.front()->front(); 
     std::strcat(finalBuffer, tempChar);
     writeQueue.front()->erase(0,1);
-    std::cout << "finalBuffer:\n-----\n" << finalBuffer << "\n-----\nwriteQueue.front()\n===========\n" << *writeQueue.front() << "\n==========\n\n";
 
     if (writeQueue.front()->front() == '\n')
     {
