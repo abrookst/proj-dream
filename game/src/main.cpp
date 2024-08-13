@@ -1,7 +1,6 @@
 #include "encounter/battle_encounter.h"
 #include "raylib.h"
 #include "audio_engine.h"
-#include "typewrite.h"
 #include <stdio.h>
 #include <fstream>
 #include "ui.h"
