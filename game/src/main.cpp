@@ -115,28 +115,6 @@ int main(
             if (IsKeyPressed(KEY_ENTER)) { textEngine.UpdateText(true); }
             else { textEngine.UpdateText(false); }
             
-
-
-            //DrawText("Test", 3, 48, 3, BLACK);
-            // DrawTextEx(mainFont, buffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
-            // if (!dialogueRenderOver)
-            // {
-            //     if (IsKeyPressed(KEY_ENTER)) 
-            //     {
-            //         dialogueRenderOver = Writer(text, buffer, hb, frames, displacemeCount, pauseCount, 5, 60, true);
-            //     }
-            //     dialogueRenderOver = Writer(text, buffer, hb, frames, displacemeCount, pauseCount, 5, 60);
-            // }
-            // else if (IsKeyPressed(KEY_ENTER)) 
-            // {
-            //     buffer = "";
-            // }
-            //
-            // if (IsKeyPressed(KEY_ENTER)) 
-            // {
-            //     printf("PRESSED ENTER WHILE dialogueRenderOver = %d\n", dialogueRenderOver);
-            // }
-
         EndTextureMode();
 
         audioEngine.UpdateAudio();
