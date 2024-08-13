@@ -102,10 +102,6 @@ int main(
         if (IsKeyPressed(KEY_ENTER)) { uiEngine.ProcessInputKeyboard(KEY_ENTER); }
         if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
         
-        if (IsKeyPressed(KEY_ENTER))
-        {
-            textEngine.UpdateText(true);
-        }
 
         BeginTextureMode(targetScene);
 
@@ -115,7 +111,12 @@ int main(
             DrawRectangle(0, 0, 1, 1, PURPLE);
             
             uiEngine.RenderUI();
+            textEngine.UpdateText(false);
 
+            if (IsKeyPressed(KEY_ENTER))
+            {
+                textEngine.UpdateText(true);
+            }
             
 
 
@@ -142,7 +143,6 @@ int main(
         EndTextureMode();
 
         audioEngine.UpdateAudio();
-        textEngine.UpdateText(false);
 
         renderScene(targetScene, scale);
     }
