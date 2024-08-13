@@ -1,14 +1,12 @@
 #include "text_engine.h"
-#include <cstring>
 #include <iostream>
 
 TextEngine::TextEngine(
         Font& font)
 {
     mainFont = &font;
-    finalBuffer = new char[30];
-    for (int i=0; i<30; i++) { finalBuffer[i] = '\0'; }
-    DrawTextEx(*mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
+    finalBuffer = new std::string();
+    DrawTextEx(*mainFont, finalBuffer->c_str(), Vector2{ 3, 47 }, 6, 1, RED);
 }
 
 TextEngine::~TextEngine(
@@ -17,8 +15,9 @@ TextEngine::~TextEngine(
     delete finalBuffer;
     while (!writeQueue.empty())
     {
-        delete writeQueue.front();
+        std::string* tmpPtr = writeQueue.front();
         writeQueue.pop();
+        delete tmpPtr;
     }
 }
 
@@ -74,6 +73,9 @@ void TextEngine::UpdateText(
 {
     if (writeQueue.front()->empty()) 
     {
+        std::string* tmpPtr = writeQueue.front();
+        writeQueue.pop();
+        delete tmpPtr;
         frameCount = 0;
         lineState = 0;
         return;
@@ -86,16 +88,15 @@ void TextEngine::UpdateText(
     if (!userPressedEnter && lineState == 2) { return; }
     if (lineState == 2 && frameCount > 0 && userPressedEnter)
     {
-        for (int i=0; i<30; i++) { finalBuffer[i] = '\0'; }
-        DrawTextEx(*mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
+        finalBuffer->clear();
+        DrawTextEx(*mainFont, finalBuffer->c_str(), Vector2{ 3, 47 }, 6, 1, RED);
         lineState = 0;
         return;
     }
 
-    char tempChar[1];
-    tempChar[0] = writeQueue.front()->front(); 
-    std::strcat(finalBuffer, tempChar);
+    *finalBuffer += writeQueue.front()->front(); 
     writeQueue.front()->erase(0,1);
+    std::cout << "finalBuffer:\n-----\n" << *finalBuffer << "\n-----\nwriteQueue.front()\n===========\n" << *writeQueue.front() << "\n==========\n\n";
 
     if (writeQueue.front()->front() == '\n')
     {
@@ -103,6 +104,6 @@ void TextEngine::UpdateText(
         lineState++;
     }
     frameCount++;
-    DrawTextEx(*mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
+    DrawTextEx(*mainFont, finalBuffer->c_str(), Vector2{ 3, 47 }, 6, 1, RED);
     return;
 }
