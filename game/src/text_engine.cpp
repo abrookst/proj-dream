@@ -5,14 +5,14 @@ TextEngine::TextEngine(
         Font& font)
 {
     mainFont = &font;
-    finalBuffer = new std::string();
-    DrawTextEx(*mainFont, finalBuffer->c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+    // finalBuffer = new std::string();
+    DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
 }
 
 TextEngine::~TextEngine(
         void)
 {
-    delete finalBuffer;
+    // delete finalBuffer;
     while (!writeQueue.empty())
     {
         std::string* tmpPtr = writeQueue.front();
@@ -82,28 +82,32 @@ void TextEngine::UpdateText(
     } 
     else if (delay && frameCount % delay) 
     {
+        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
         frameCount++;
         return;
     }
-    if (!userPressedEnter && lineState == 2) { return; }
-    if (lineState == 2 && frameCount > 0 && userPressedEnter)
+    if (!userPressedEnter && lineState == 2) 
     {
-        finalBuffer->clear();
-        DrawTextEx(*mainFont, finalBuffer->c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+        return; 
+    }
+    if (userPressedEnter && lineState == 2 && frameCount > 0)
+    {
+        finalBuffer.clear();
+        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
         lineState = 0;
         return;
     }
 
-    *finalBuffer += writeQueue.front()->front(); 
+    finalBuffer += writeQueue.front()->front(); 
     writeQueue.front()->erase(0,1);
-    std::cout << "finalBuffer:\n-----\n" << *finalBuffer << "\n-----\nwriteQueue.front()\n===========\n" << *writeQueue.front() << "\n==========\n\n";
 
     if (writeQueue.front()->front() == '\n')
     {
-        finalBuffer += '\n';
+        // finalBuffer += '\n';
         lineState++;
     }
     frameCount++;
-    DrawTextEx(*mainFont, finalBuffer->c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+    DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
     return;
 }

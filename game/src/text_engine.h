@@ -11,7 +11,7 @@
 
 class TextEngine
 {
-    std::string* finalBuffer;
+    std::string finalBuffer;
     std::queue<std::string*> writeQueue;
     Font* mainFont;
     uint8_t delay = 5;
