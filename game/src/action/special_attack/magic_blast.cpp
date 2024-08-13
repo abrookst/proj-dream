@@ -2,7 +2,8 @@
 
 void MagicBlast::Perform(
         Entity& e1, 
-        Entity& e2)
+        Entity& e2,
+        TextEngine& textEngine)
 {
     uint8_t attackerPower = 2 * e1.GetAttackPower() * 
         (rand() % 100 > e1.GetAccuracy() 

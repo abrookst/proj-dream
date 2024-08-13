@@ -9,7 +9,8 @@ class HealthPotion : public Item
 protected:
     void Perform(
             Entity&,
-            Entity&);
+            Entity&,
+            TextEngine&);
 
 public:
     std::string GetName();
