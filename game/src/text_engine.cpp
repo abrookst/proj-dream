@@ -5,7 +5,7 @@ TextEngine::TextEngine(
 {
     mainFont = &font;
     // finalBuffer = new std::string();
-    DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+    DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
 }
 
 TextEngine::~TextEngine(
@@ -72,7 +72,7 @@ void TextEngine::UpdateText(
 {
     if (writeQueue.empty())
     {
-        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
         return; 
     }
     else if (writeQueue.front()->empty()) 
@@ -86,7 +86,7 @@ void TextEngine::UpdateText(
     } 
     else if (delay && frameCount % delay) 
     {
-        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
         frameCount++;
         return;
     }
@@ -96,10 +96,10 @@ void TextEngine::UpdateText(
         {
             writeQueue.front()->erase(0,1);
             finalBuffer.clear();
-            DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+            DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
             lineState = 0;
         }
-        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
         return; 
     }
     else if (lineState == 3)
@@ -109,7 +109,7 @@ void TextEngine::UpdateText(
             finalBuffer.clear();
             lineState = 0;
         }
-        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
         return;
     }
 
@@ -119,6 +119,6 @@ void TextEngine::UpdateText(
     if (writeQueue.front()->front() == '\n') { lineState++; }
 
     frameCount++;
-    DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+    DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
     return;
 }

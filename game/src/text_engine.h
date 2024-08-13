@@ -17,6 +17,7 @@ class TextEngine
     uint8_t delay = 5;
     uint8_t frameCount = 0;
     uint8_t lineState = 0;
+    Color color = WHITE;
 
     std::string FormatText(const std::string&);
 public:
@@ -27,6 +28,8 @@ public:
     uint8_t GetLineState() { return lineState; }
     void SetDelay(uint8_t d) { delay = d; }
     void UpdateText(bool);
+    void SetColor(Color c) { color = c; }
+    Color GetColor() { return color; }
 };
 
 
