@@ -71,6 +71,12 @@ void TextEngine::Write(const std::string& input)
 void TextEngine::UpdateText(
         bool userPressedEnter)
 {
+    if (writeQueue.empty())
+    {
+        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+        return; 
+    }
+
     if (writeQueue.front()->empty()) 
     {
         std::string* tmpPtr = writeQueue.front();
