@@ -81,7 +81,7 @@ void TextEngine::UpdateText(
         writeQueue.pop();
         delete tmpPtr;
         frameCount = 0;
-        lineState = 0;
+        lineState = 3;
         return;
     } 
     else if (delay && frameCount % delay) 
@@ -90,17 +90,26 @@ void TextEngine::UpdateText(
         frameCount++;
         return;
     }
-    else if (!userPressedEnter && lineState == 2) 
+    else if (lineState == 2 )
     {
+        if (userPressedEnter && frameCount > 0) 
+        {
+            writeQueue.front()->erase(0,1);
+            finalBuffer.clear();
+            DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+            lineState = 0;
+        }
         DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
         return; 
     }
-    else if (userPressedEnter && lineState == 2 && frameCount > 0)
+    else if (lineState == 3)
     {
-        writeQueue.front()->erase(0,1);
-        finalBuffer.clear();
+        if (userPressedEnter)
+        {
+            finalBuffer.clear();
+            lineState = 0;
+        }
         DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
-        lineState = 0;
         return;
     }
 
