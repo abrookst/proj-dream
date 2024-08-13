@@ -71,12 +71,12 @@ int main(
 
     // Player declaration
     std::vector<Action*> playerActions = { new Attack(), new Block() };
-    Player player(50, 5, 95, 20, playerActions);
+    Player player(50, 5, 95, 20, playerActions, ":3");
 
     // example Monster and BattleEncounter declaration
     std::vector<Action*> monsterActions = { new Attack() };
-    Monster monster1 = Monster(20, 5, 95, 20, monsterActions);
-    BattleEncounter battleEncounter1(monster1);
+    Monster monster1 = Monster(20, 5, 95, 20, monsterActions, "ghoul");
+    BattleEncounter battleEncounter1(monster1, textEngine);
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
@@ -84,8 +84,7 @@ int main(
     SetTargetFPS(60);
 
     std::string text = "hello pneumonoultramicroscopicsilicovolcanoconiosis.";
-    textEngine.Write(text);
-    textEngine.Write(text);
+    // textEngine.Write(text);
 
     UIEngine uiEngine = UIEngine(mainFont);
 
@@ -101,9 +100,10 @@ int main(
         if (IsKeyPressed(KEY_ENTER)) { uiEngine.ProcessInputKeyboard(KEY_ENTER); }
         if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
 
-        if (IsKeyPressed(KEY_ENTER))
+        if (IsKeyPressed(KEY_N))
         {
             battleEncounter1.NextTurn(player.GetActions().at(0));
+            textEngine.UpdateText(true);
         }
         
 

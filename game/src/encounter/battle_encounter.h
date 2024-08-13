@@ -5,6 +5,7 @@
 #include "../entity/monster.h"
 #include "../entity/player.h"
 #include "../action/action.h"
+#include "../text_engine.h"
 #include <cstdint>
 #include <string>
 
@@ -12,6 +13,7 @@ class BattleEncounter : public Encounter
 {
     Monster* monster;
     Player* player;
+    TextEngine* textEngine;
     std::string writeBuffer = "";
     std::string writeHidBuffer = "";
     int writeFrameCount = 0;
@@ -19,7 +21,7 @@ class BattleEncounter : public Encounter
     int writePauseCount = 60;
 
 public:
-    BattleEncounter(Monster& m);
+    BattleEncounter(Monster&, TextEngine&);
     void NextTurn(Action*);
 
     uint8_t GetPlayerHealth() { return player->GetHealth(); }

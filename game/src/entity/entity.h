@@ -2,6 +2,7 @@
 #define ENTITY_H
 
 #include <vector>
+#include <string>
 #include "../encounter/encounter.h"
 #include "../action/action.h"
 #include <cstdint>
@@ -19,7 +20,8 @@ public:
         uint8_t ap,
         uint8_t acc,
         uint8_t mp,
-        std::vector<Action*>& acts);
+        std::vector<Action*>& acts,
+        std::string n);
 
     
     void SetHealth(uint8_t hp) { health = hp; }
@@ -31,6 +33,7 @@ public:
     void SetBlock(bool bl) { isBlocking = bl; }
     //create action setters (?)
     const bool GetBlock() { return isBlocking; }
+    std::string GetName() { return name; }
     const uint8_t GetHealth() { return health; }
     const uint8_t GetMaxHealth() { return maxHealth; }
     const uint8_t GetAttackPower() { return attackPower; }
@@ -47,6 +50,7 @@ protected:
     uint8_t accuracy;
     uint8_t mana;
     uint8_t maxMana;
+    std::string name;
     bool isBlocking;
     std::vector<Action*> actions;
 };

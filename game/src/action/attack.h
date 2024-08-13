@@ -9,7 +9,8 @@ class Attack : public Action
 public:
     void Perform(
             Entity&,
-            Entity&);
+            Entity&,
+            TextEngine&);
 };
 
 #endif
