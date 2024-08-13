@@ -13,6 +13,7 @@ class TextEngine
 {
     char* finalBuffer;
     std::queue<std::string*> writeQueue;
+    Font* mainFont;
     uint8_t delay = 5;
     uint8_t frameCount = 0;
     uint8_t lineState = 0;

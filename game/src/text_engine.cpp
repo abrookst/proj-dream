@@ -1,11 +1,14 @@
 #include "text_engine.h"
+#include <cstring>
+#include <iostream>
 
 TextEngine::TextEngine(
-        Font& mainFont)
+        Font& font)
 {
-   finalBuffer = new char[30];
-   for (int i=0; i<30; i++) { finalBuffer[i] = '\0'; }
-   DrawTextEx(mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
+    mainFont = &font;
+    finalBuffer = new char[30];
+    for (int i=0; i<30; i++) { finalBuffer[i] = '\0'; }
+    DrawTextEx(*mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
 }
 
 TextEngine::~TextEngine(
@@ -80,25 +83,27 @@ void TextEngine::UpdateText(
         frameCount++;
         return;
     }
-    if (!userPressedEnter && lineState == 2) {
-        return;
-    }
+    if (!userPressedEnter && lineState == 2) { return; }
     if (lineState == 2 && frameCount > 0 && userPressedEnter)
     {
-        finalBuffer = "";
+        for (int i=0; i<30; i++) { finalBuffer[i] = '\0'; }
+        DrawTextEx(*mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
         lineState = 0;
         return;
     }
 
-    char tempChar = writeQueue.front()->front(); 
-    *finalBuffer += tempChar;
-    // writeQueue.front()->erase(0);
+    char tempChar[1];
+    tempChar[0] = writeQueue.front()->front(); 
+    std::strcat(finalBuffer, tempChar);
+    writeQueue.front()->erase(0,1);
+    std::cout << "finalBuffer:\n-----\n" << finalBuffer << "\n-----\nwriteQueue.front()\n===========\n" << *writeQueue.front() << "\n==========\n\n";
 
     if (writeQueue.front()->front() == '\n')
     {
         finalBuffer += '\n';
         lineState++;
-  }
+    }
     frameCount++;
+    DrawTextEx(*mainFont, finalBuffer, Vector2{ 3, 47 }, 6, 1, RED);
     return;
 }
