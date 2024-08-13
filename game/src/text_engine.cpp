@@ -75,8 +75,7 @@ void TextEngine::UpdateText(
         DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
         return; 
     }
-
-    if (writeQueue.front()->empty()) 
+    else if (writeQueue.front()->empty()) 
     {
         std::string* tmpPtr = writeQueue.front();
         writeQueue.pop();
@@ -91,12 +90,12 @@ void TextEngine::UpdateText(
         frameCount++;
         return;
     }
-    if (!userPressedEnter && lineState == 2) 
+    else if (!userPressedEnter && lineState == 2) 
     {
         DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
         return; 
     }
-    if (userPressedEnter && lineState == 2 && frameCount > 0)
+    else if (userPressedEnter && lineState == 2 && frameCount > 0)
     {
         writeQueue.front()->erase(0,1);
         finalBuffer.clear();
@@ -108,11 +107,8 @@ void TextEngine::UpdateText(
     finalBuffer += writeQueue.front()->front(); 
     writeQueue.front()->erase(0,1);
 
-    if (writeQueue.front()->front() == '\n')
-    {
-        // finalBuffer += '\n';
-        lineState++;
-    }
+    if (writeQueue.front()->front() == '\n') { lineState++; }
+
     frameCount++;
     DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
     return;

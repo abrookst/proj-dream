@@ -85,6 +85,7 @@ int main(
 
     std::string text = "hello pneumonoultramicroscopicsilicovolcanoconiosis.";
     textEngine.Write(text);
+    textEngine.Write(text);
 
     UIEngine uiEngine = UIEngine(mainFont);
 
