@@ -93,6 +93,7 @@ void TextEngine::UpdateText(
     }
     if (userPressedEnter && lineState == 2 && frameCount > 0)
     {
+        writeQueue.front()->erase(0,1);
         finalBuffer.clear();
         DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
         lineState = 0;
