@@ -1,5 +1,4 @@
 #include "text_engine.h"
-#include <iostream>
 
 TextEngine::TextEngine(
         Font& font)
