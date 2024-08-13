@@ -1,13 +1,14 @@
 #include "encounter/battle_encounter.h"
 #include "raylib.h"
 #include "audio_engine.h"
-#include "typewrite.h"
 #include <stdio.h>
 #include <fstream>
 #include "ui.h"
 
 #include "entity/player.h"
 #include "entity/monster.h"
+
+#include "text_engine.h"
 
 #include "action/attack.h"
 #include "action/block.h"
@@ -66,6 +67,8 @@ int main(
     Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
     AudioEngine audioEngine;
 
+    TextEngine textEngine(mainFont);
+
     // Player declaration
     std::vector<Action*> playerActions = { new Attack(), new Block() };
     Player player(50, 5, 95, 20, playerActions);
@@ -81,13 +84,8 @@ int main(
     SetTargetFPS(60);
 
     std::string text = "hello pneumonoultramicroscopicsilicovolcanoconiosis.";
-    FormatStringToDialogue(text);
-    int frames = 0;
-    int displacemeCount = 0;
-    int pauseCount = 60;
-    bool dialogueRenderOver = false;
-    std::string hb = "";
-    std::string buffer = "";
+    textEngine.Write(text);
+    textEngine.Write(text);
 
     UIEngine uiEngine = UIEngine(mainFont);
 
@@ -114,32 +112,14 @@ int main(
             
             uiEngine.RenderUI();
 
-            //DrawText("Test", 3, 48, 3, BLACK);
-            DrawTextEx(mainFont, buffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
-            if (!dialogueRenderOver)
-            {
-                if (IsKeyPressed(KEY_ENTER)) 
-                {
-                    dialogueRenderOver = Writer(text, buffer, hb, frames, displacemeCount, pauseCount, 5, 60, true);
-                }
-                dialogueRenderOver = Writer(text, buffer, hb, frames, displacemeCount, pauseCount, 5, 60);
-            }
-            else if (IsKeyPressed(KEY_ENTER)) 
-            {
-                buffer = "";
-            }
-
-            if (IsKeyPressed(KEY_ENTER)) 
-            {
-                printf("PRESSED ENTER WHILE dialogueRenderOver = %d\n", dialogueRenderOver);
-            }
-
+            if (IsKeyPressed(KEY_ENTER)) { textEngine.UpdateText(true); }
+            else { textEngine.UpdateText(false); }
+            
         EndTextureMode();
 
-        renderScene(targetScene, scale);
-
         audioEngine.UpdateAudio();
-        
+
+        renderScene(targetScene, scale);
     }
 
     UnloadFont(mainFont);
