@@ -6,15 +6,21 @@
 #include "../entity/player.h"
 #include "../action/action.h"
 #include <cstdint>
+#include <string>
 
 class BattleEncounter : public Encounter
 {
     Monster* monster;
     Player* player;
+    std::string writeBuffer = "";
+    std::string writeHidBuffer = "";
+    int writeFrameCount = 0;
+    int writeLineState = 0;
+    int writePauseCount = 60;
 
 public:
     BattleEncounter(Monster& m);
-    void NextTurn();
+    void NextTurn(Action*);
 
     uint8_t GetPlayerHealth() { return player->GetHealth(); }
     uint8_t GetPlayerMaxHealth() { return player->GetMaxHealth(); }
