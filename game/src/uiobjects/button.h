@@ -3,16 +3,19 @@
 
 #include <string>
 #include <iostream>
+#include "../encounter/encounter.h"
 
 struct Button
 {
 public:
 	std::string buttonText;
+    Encounter* encounter;
 	virtual void confirmAction() {}
 	virtual void backAction() {}
-	Button(std::string bttnText)
+	Button(std::string bttnText, Encounter* enc)
 	{
 		buttonText = bttnText;
+        encounter = enc;
 	}
 	virtual ~Button() {}
 };
@@ -20,7 +23,7 @@ public:
 struct AttackButton : public Button
 {
 public:
-	AttackButton() : Button("ATTK") {}
+	AttackButton(Encounter* enc) : Button("ATTK", enc) {}
 	void confirmAction()
 	{
 		std::cout << "CONFIRMED!" << std::endl;
@@ -35,7 +38,7 @@ public:
 struct BlockButton : public Button
 {
 public:
-	BlockButton() : Button("BLCK") {}
+	BlockButton(Encounter* enc) : Button("BLCK", enc) {}
 	void confirmAction()
 	{
 		std::cout << "CONFIRMED!" << std::endl;
@@ -50,7 +53,7 @@ public:
 struct TalkButton : public Button
 {
 public:
-	TalkButton() : Button("TALK") {}
+	TalkButton(Encounter* enc) : Button("TALK", enc) {}
 	void confirmAction()
 	{
 		std::cout << "CONFIRMED!" << std::endl;
@@ -65,7 +68,7 @@ public:
 struct MenuButton : public Button
 {
 public:
-	MenuButton() : Button("MENU") {}
+	MenuButton(Encounter* enc) : Button("MENU", enc) {}
 	void confirmAction()
 	{
 		std::cout << "CONFIRMED!" << std::endl;

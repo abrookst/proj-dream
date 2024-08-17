@@ -24,10 +24,10 @@ UIEngine::UIEngine(Font font)
 		43.0f,
 		19.0f,
 		{
-			new AttackButton(),
-			new BlockButton(),
-			new TalkButton(),
-			new MenuButton()
+			new AttackButton(currentEncounter),
+			new BlockButton(currentEncounter),
+			new TalkButton(currentEncounter),
+			new MenuButton(currentEncounter)
 		},
 		0
 	};
@@ -52,10 +52,10 @@ void UIEngine::ChangeScreen(UIState state)
 		43.0f,
 		19.0f,
 		{
-			new AttackButton(),
-			new BlockButton(),
-			new TalkButton(),
-			new MenuButton()
+			new AttackButton(currentEncounter),
+			new BlockButton(currentEncounter),
+			new TalkButton(currentEncounter),
+			new MenuButton(currentEncounter)
 		},
 		0
 		};
@@ -68,10 +68,10 @@ void UIEngine::ChangeScreen(UIState state)
 		43.0f,
 		19.0f,
 		{
-			new AttackButton(),
-			new BlockButton(),
-			new TalkButton(),
-			new MenuButton()
+			new AttackButton(currentEncounter),
+			new BlockButton(currentEncounter),
+			new TalkButton(currentEncounter),
+			new MenuButton(currentEncounter)
 		},
 		0
 		};
@@ -84,7 +84,7 @@ void UIEngine::ChangeScreen(UIState state)
 		3.0f,
 		4.0f,
 		{
-			new AttackButton()
+			new AttackButton(currentEncounter)
 		},
 		0
 		};
