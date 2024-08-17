@@ -23,5 +23,6 @@
     <ClInclude Include="src\action\action.h" />
     <ClInclude Include="src\action\attack.h" />
     <ClInclude Include="src\action\block.h" />
+    <ClInclude Include="src\uiobjects\button.h" />
   </ItemGroup>
 </Project>

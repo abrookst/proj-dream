@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include "uiobjects/button.h"
 
 enum UIState
 {
@@ -24,13 +25,16 @@ enum UIState
 	ITEMS,
 	INALIDSTATE
 };
+
 struct UIData
 {
 	Image uiFrame;
 	Texture2D uiTexture;
 	uint8_t maxListLength;
 	uint8_t maxWordLength;
-	std::vector<std::string> scrollableList;
+	float textXPosition;
+	float textYPosition;
+	std::vector<Button*> scrollableList;
 	uint8_t selectedElement;
 };
 

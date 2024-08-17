@@ -1,5 +1,14 @@
 #include "ui.h"
 
+#define DREAM_WHITE      CLITERAL(Color){ 246, 219, 186, 255 }
+#define DREAM_ORANGE      CLITERAL(Color){ 219, 96, 76, 255 }
+#define DREAM_RED      CLITERAL(Color){ 177, 51, 83, 255 }
+#define DREAM_PURPLE      CLITERAL(Color){ 94, 32, 82, 255 }
+#define DREAM_GREEN      CLITERAL(Color){ 116, 201, 158, 255 }
+#define DREAM_AQUA      CLITERAL(Color){ 49, 124, 135, 255 }
+#define DREAM_BLUE      CLITERAL(Color){ 39, 24, 84, 255 }
+#define DREAM_BLACK      CLITERAL(Color){ 26, 16, 22, 255 }
+
 UIEngine::UIEngine(Font font)
 {
 	mainFont = font;
@@ -7,35 +16,78 @@ UIEngine::UIEngine(Font font)
 	currentUIState = DREAMWORLD;
 	inputEnabled = true;
 
-	uidata[DREAMWORLD] = {
+	currentUIData = {
 		LoadImage("resources/sprites/ui/DREAMWORLD.png"),
 		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
 		5,
 		10,
+		43.0f,
+		19.0f,
 		{
-			"ATTK",
-			"BLCK",
-			"TALK",
-			"MENU"
+			new AttackButton(),
+			new BlockButton(),
+			new TalkButton(),
+			new MenuButton()
 		},
 		0
 	};
-
-
-	currentUIData = uidata[currentUIState];
 }
 
 void UIEngine::ChangeScreen(UIState state)
 {
 	currentUIState = state;
+	UnloadImage(currentUIData.uiFrame);
+	UnloadTexture(currentUIData.uiTexture);
 
 	switch(state)
 	{
 	case DAYTIMEWORLD:
 	case DAYTIMEPLAYER:
 	case DREAMWORLD:
+		currentUIData = {
+		LoadImage("resources/sprites/ui/DREAMWORLD.png"),
+		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
+		5,
+		10,
+		43.0f,
+		19.0f,
+		{
+			new AttackButton(),
+			new BlockButton(),
+			new TalkButton(),
+			new MenuButton()
+		},
+		0
+		};
 	case DREAMPLAYER:
+		currentUIData = {
+		LoadImage("resources/sprites/ui/DREAMPLAYER.png"),
+		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMPLAYER.png")),
+		5,
+		10,
+		43.0f,
+		19.0f,
+		{
+			new AttackButton(),
+			new BlockButton(),
+			new TalkButton(),
+			new MenuButton()
+		},
+		0
+		};
 	case MENU:
+		currentUIData = {
+		LoadImage("resources/sprites/ui/MENU.png"),
+		LoadTextureFromImage(LoadImage("resources/sprites/ui/MENU.png")),
+		5,
+		10,
+		3.0f,
+		4.0f,
+		{
+			new AttackButton()
+		},
+		0
+		};
 	case STATS:
 	case MAGIC:
 	case ABILITY:
@@ -84,6 +136,10 @@ void UIEngine::ProcessInputKeyboard(
 	case KEY_X:
 	case KEY_BACKSPACE:
 		Back();
+		break;
+	case KEY_M:
+		ChangeScreen(MENU);
+		break;
 	}
 	RenderUI();
 }
@@ -116,39 +172,40 @@ void UIEngine::MoveDown()
 void UIEngine::Confirm()
 {
 	// Confirm selection
+	currentUIData.scrollableList[currentUIData.selectedElement]->confirmAction();
 }
 
 void UIEngine::Back()
 {
 	// Go back to previous screen
-	ChangeScreen(DAYTIMEWORLD);
+	currentUIData.scrollableList[currentUIData.selectedElement]->backAction();
 }
 
 void UIEngine::RenderUI()
 {
 	DrawTexture(GetTexture(), 0, 0, WHITE);
 
+	Color currTextColor;
+
 	// Draw the list of options
 	for (int i = 0; i < currentUIData.scrollableList.size(); i++)
 	{
-		//DrawTextEx(mainFont, buffer.c_str(), Vector2{ 3, 47 }, 6, 1, RED);
+		if (i == currentUIData.selectedElement)
+		{
+			currTextColor = DREAM_RED;
+		}
+		else
+		{
+			currTextColor = DREAM_BLUE;
+		}
+
 		DrawTextEx(
 			mainFont,
-			currentUIData.scrollableList[i].c_str(),
-			Vector2{ 46, 19.0f + (i * 6) },
+			currentUIData.scrollableList[i]->buttonText.c_str(),
+			Vector2{ currentUIData.textXPosition, currentUIData.textYPosition + (i * 6) },
 			6,
 			1,
-			BLACK
+			currTextColor
 		);
 	}
-
-	// Draw the cursor
-	DrawTextEx(
-		mainFont,
-		">",
-		Vector2{ 42, 19.0f + (currentUIData.selectedElement * 6) },
-		6,
-		1,
-		BLACK
-	);
 }
