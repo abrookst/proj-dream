@@ -1,6 +1,7 @@
 #include "encounter/battle_encounter.h"
 #include "raylib.h"
 #include "audio_engine.h"
+#include "text_engine.h"
 #include <stdio.h>
 #include <fstream>
 #include "ui.h"
@@ -73,7 +74,7 @@ int main(
     std::vector<Action*> playerActions = { new Attack(), new Block() };
     Player player(50, 5, 95, 20, playerActions, ":3");
 
-    // example Monster and BattleEncounter declaration
+    // Monster and BattleEncounter declaration
     std::vector<Action*> monsterActions = { new Attack() };
     Monster monster1 = Monster(20, 5, 95, 20, monsterActions, "ghoul");
     BattleEncounter battleEncounter1(monster1, textEngine);
