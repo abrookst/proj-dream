@@ -5,6 +5,8 @@
 #include <iostream>
 #include "../encounter/encounter.h"
 
+class UIEngine;
+
 struct Button
 {
 public:
@@ -12,11 +14,7 @@ public:
     Encounter* encounter;
 	virtual void confirmAction() {}
 	virtual void backAction() {}
-	Button(std::string bttnText, Encounter* enc)
-	{
-		buttonText = bttnText;
-        encounter = enc;
-	}
+	Button(std::string, Encounter*);
 	virtual ~Button() {}
 };
 
@@ -24,60 +22,34 @@ struct AttackButton : public Button
 {
 public:
 	AttackButton(Encounter* enc) : Button("ATTK", enc) {}
-	void confirmAction()
-	{
-		std::cout << "CONFIRMED!" << std::endl;
-	}
-
-	void backAction()
-	{
-		std::cout << "BACKED!" << std::endl;
-	}
+	void confirmAction();
+	void backAction();
 };
 
 struct BlockButton : public Button
 {
 public:
 	BlockButton(Encounter* enc) : Button("BLCK", enc) {}
-	void confirmAction()
-	{
-		std::cout << "CONFIRMED!" << std::endl;
-	}
-
-	void backAction()
-	{
-		std::cout << "BACKED!" << std::endl;
-	}
+	void confirmAction();
+	void backAction();
 };
 
 struct TalkButton : public Button
 {
 public:
 	TalkButton(Encounter* enc) : Button("TALK", enc) {}
-	void confirmAction()
-	{
-		std::cout << "CONFIRMED!" << std::endl;
-	}
-
-	void backAction()
-	{
-		std::cout << "BACKED!" << std::endl;
-	}
+	void confirmAction();
+	void backAction();
 };
 
 struct MenuButton : public Button
 {
 public:
-	MenuButton(Encounter* enc) : Button("MENU", enc) {}
-	void confirmAction()
-	{
-		std::cout << "CONFIRMED!" << std::endl;
-	}
+    UIEngine* uiEngine;
 
-	void backAction()
-	{
-		std::cout << "BACKED!" << std::endl;
-	}
+	MenuButton(Encounter* enc, UIEngine* eng) : Button("MENU", enc) { uiEngine = eng; }
+	void confirmAction();
+	void backAction();
 };
 
 #endif

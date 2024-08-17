@@ -13,28 +13,29 @@ UIEngine::UIEngine(Font font)
 {
 	mainFont = font;
 
-	currentUIState = DREAMWORLD;
+    // ChangeScreen(MENU);
+    // currentUIState = MENU;
 	inputEnabled = true;
 
-	currentUIData = {
-		LoadImage("resources/sprites/ui/DREAMWORLD.png"),
-		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
-		5,
-		10,
-		43.0f,
-		19.0f,
-		{
-			new AttackButton(currentEncounter),
-			new BlockButton(currentEncounter),
-			new TalkButton(currentEncounter),
-			new MenuButton(currentEncounter)
-		},
-		0
-	};
+	// currentUIData = {
+	// 	LoadImage("resources/sprites/ui/DREAMWORLD.png"),
+	// 	LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
+	// 	5,
+	// 	10,
+	// 	43.0f,
+	// 	19.0f,
+	// 	{
+	// 		new MenuButton(currentEncounter, this)
+	// 	},
+	// 	0
+	// };
 }
 
 void UIEngine::ChangeScreen(UIState state)
 {
+    if (currentEncounter != nullptr) {
+        std::cout << currentEncounter->getType() << std::endl;
+    }
 	currentUIState = state;
 	UnloadImage(currentUIData.uiFrame);
 	UnloadTexture(currentUIData.uiTexture);
@@ -55,7 +56,7 @@ void UIEngine::ChangeScreen(UIState state)
 			new AttackButton(currentEncounter),
 			new BlockButton(currentEncounter),
 			new TalkButton(currentEncounter),
-			new MenuButton(currentEncounter)
+			new MenuButton(currentEncounter, this)
 		},
 		0
 		};
@@ -71,7 +72,7 @@ void UIEngine::ChangeScreen(UIState state)
 			new AttackButton(currentEncounter),
 			new BlockButton(currentEncounter),
 			new TalkButton(currentEncounter),
-			new MenuButton(currentEncounter)
+			new MenuButton(currentEncounter, this)
 		},
 		0
 		};
@@ -84,7 +85,7 @@ void UIEngine::ChangeScreen(UIState state)
 		3.0f,
 		4.0f,
 		{
-			new AttackButton(currentEncounter)
+			new MenuButton(currentEncounter, this)
 		},
 		0
 		};
@@ -95,6 +96,8 @@ void UIEngine::ChangeScreen(UIState state)
 	case EQUIP:
 	case ITEMS:
 	case INALIDSTATE:
+    case TITLESCREEN:
+    case SETTINGS:
 	break;
 	}
 }

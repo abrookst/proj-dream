@@ -67,8 +67,9 @@ int main(
 
     Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
     AudioEngine audioEngine;
-
     TextEngine textEngine(mainFont);
+    UIEngine uiEngine = UIEngine(mainFont);
+    uiEngine.ChangeScreen(MENU);
 
     // Player declaration
     std::vector<Action*> playerActions = { new Attack(), new Block() };
@@ -78,6 +79,7 @@ int main(
     std::vector<Action*> monsterActions = { new Attack() };
     Monster monster1 = Monster(20, 5, 95, 20, monsterActions, "ghoul");
     BattleEncounter battleEncounter1(monster1, textEngine);
+    uiEngine.SetEncounter(battleEncounter1);
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
@@ -87,7 +89,6 @@ int main(
     std::string text = "hello pneumonoultramicroscopicsilicovolcanoconiosis.";
     // textEngine.Write(text);
 
-    UIEngine uiEngine = UIEngine(mainFont);
 
     // Main game loop
     while (!WindowShouldClose())
@@ -100,13 +101,6 @@ int main(
         if (IsKeyPressed(KEY_DOWN)) { uiEngine.ProcessInputKeyboard(KEY_DOWN); }
         if (IsKeyPressed(KEY_ENTER)) { uiEngine.ProcessInputKeyboard(KEY_ENTER); }
         if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
-
-        if (IsKeyPressed(KEY_N))
-        {
-            battleEncounter1.NextTurn(player.GetActions().at(0));
-            textEngine.UpdateText(true);
-        }
-        
 
         BeginTextureMode(targetScene);
 
