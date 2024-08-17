@@ -7,6 +7,7 @@
 #include <string>
 #include <map>
 #include "uiobjects/button.h"
+#include "encounter/encounter.h"
 
 enum UIState
 {
@@ -60,6 +61,9 @@ public:
 
 	void RenderUI();
 
+    void SetEncounter(
+        Encounter&);
+
 private:
 	void MoveUp();
 	void MoveDown();
@@ -72,6 +76,7 @@ private:
 	UIState currentUIState;
 	UIData currentUIData;
 	bool inputEnabled;
+    Encounter* currentEncounter = nullptr;
 
 	std::map<UIState, UIData> uidata;
 };

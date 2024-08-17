@@ -209,3 +209,10 @@ void UIEngine::RenderUI()
 		);
 	}
 }
+
+void UIEngine::SetEncounter(
+        Encounter& enc)
+{
+    currentEncounter = &enc;
+    if( currentEncounter->getType() == BATTLE ) { ChangeScreen(DREAMWORLD); }
+}

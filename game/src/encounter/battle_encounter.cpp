@@ -7,6 +7,7 @@ BattleEncounter::BattleEncounter(
     monster = new Monster(m);
     player = Player::GetInstance();
     textEngine = &t;
+    encType = BATTLE;
 
     instance = this;
 }
