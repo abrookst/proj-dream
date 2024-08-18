@@ -14,14 +14,14 @@ public:
     Encounter* encounter;
 	virtual void confirmAction() {}
 	virtual void backAction() {}
-	Button(std::string, Encounter*);
+	Button(std::string);
 	virtual ~Button() {}
 };
 
 struct AttackButton : public Button
 {
 public:
-	AttackButton(Encounter* enc) : Button("ATTK", enc) {}
+	AttackButton(Encounter* enc) : Button("ATTK") {}
 	void confirmAction();
 	void backAction();
 };
@@ -29,7 +29,7 @@ public:
 struct BlockButton : public Button
 {
 public:
-	BlockButton(Encounter* enc) : Button("BLCK", enc) {}
+	BlockButton(Encounter* enc) : Button("BLCK") {}
 	void confirmAction();
 	void backAction();
 };
@@ -37,7 +37,7 @@ public:
 struct TalkButton : public Button
 {
 public:
-	TalkButton(Encounter* enc) : Button("TALK", enc) {}
+	TalkButton(Encounter* enc) : Button("TALK") {}
 	void confirmAction();
 	void backAction();
 };
@@ -45,9 +45,9 @@ public:
 struct MenuButton : public Button
 {
 public:
-    UIEngine* uiEngine;
+    std::string name;
 
-	MenuButton(Encounter* enc, UIEngine* eng) : Button("MENU", enc) { uiEngine = eng; }
+	MenuButton(std::string n) : Button(n) {name = n;}
 	void confirmAction();
 	void backAction();
 };

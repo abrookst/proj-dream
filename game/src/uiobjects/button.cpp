@@ -1,10 +1,9 @@
 #include "button.h"
-#include "../ui.h"
+#include <raylib.h>
 
-Button::Button(std::string bttnText, Encounter* enc)
+Button::Button(std::string bttnText)
 {
     buttonText = bttnText;
-    encounter = enc;
 }
 
 void AttackButton::confirmAction()
@@ -40,7 +39,10 @@ void TalkButton::backAction()
 
 void MenuButton::confirmAction()
 {
-    uiEngine->SetEncounter(*encounter);
+    if (name == "QUIT")
+    {
+        CloseWindow();
+    }
     std::cout << "CONFIRMED!" << std::endl;
 }
 
