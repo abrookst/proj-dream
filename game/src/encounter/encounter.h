@@ -8,10 +8,13 @@ enum EncounterType {
 
 class Encounter {
 public:
-    EncounterType getType() { return encType; }
+    EncounterType GetType() { return encType; }
+    bool IsDone() { return isDone; }
+    void SetDone(bool d) { isDone = d; }
 protected:
     static Encounter* instance;
     EncounterType encType;
+    bool isDone;
 };
 
 #endif
