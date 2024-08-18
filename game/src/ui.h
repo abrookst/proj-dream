@@ -17,6 +17,7 @@ enum UIState
 	DAYTIMEPLAYER,
 	DREAMWORLD,
 	DREAMPLAYER,
+    FIGHT,
 	MENU,
 	STATS,
 	MAGIC,
@@ -59,7 +60,8 @@ public:
 	Texture2D GetTexture(
 		void);
 
-	void RenderUI();
+	void RenderUI(
+            void);
 
     void SetEncounter(
         Encounter&);
