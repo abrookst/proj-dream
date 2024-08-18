@@ -11,7 +11,6 @@ struct Button
 {
 public:
 	std::string buttonText;
-    Encounter* encounter;
     UIEngine* engine;
 	virtual void confirmAction() {}
 	virtual void backAction() {}

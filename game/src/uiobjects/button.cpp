@@ -11,7 +11,7 @@ Button::Button(std::string bttnText, UIEngine* eng)
 
 void AttackButton::confirmAction()
 {
-    std::cout << "CONFIRMED!" << std::endl;
+
 }
 
 void AttackButton::backAction()
@@ -42,14 +42,9 @@ void TalkButton::backAction()
 
 void MenuButton::confirmAction()
 {
-    if ( name == "QUIT" )
-    {
-        CloseWindow();
-    }
-    else if ( name == "START" )
-    {
-        engine->ChangeScreen(FIGHT);
-    }
+    if ( name == "QUIT" ) { CloseWindow(); }
+    else if ( name == "START" ) { engine->ChangeScreen(FIGHT); }
+    else if ( name == "SETTINGS" ) { engine->ChangeScreen(SETTINGS); }
     std::cout << "CONFIRMED!" << std::endl;
 }
 
