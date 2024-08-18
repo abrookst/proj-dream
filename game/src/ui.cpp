@@ -34,7 +34,7 @@ UIEngine::UIEngine(Font font)
 void UIEngine::ChangeScreen(UIState state)
 {
     if (currentEncounter != nullptr) {
-        std::cout << currentEncounter->getType() << std::endl;
+        std::cout << currentEncounter->GetType() << std::endl;
     }
 	currentUIState = state;
 	UnloadImage(currentUIData.uiFrame);
@@ -53,13 +53,14 @@ void UIEngine::ChangeScreen(UIState state)
 		43.0f,
 		19.0f,
 		{
-			new AttackButton(currentEncounter),
-			new BlockButton(currentEncounter),
-			new TalkButton(currentEncounter),
-			new MenuButton(currentEncounter, this)
+			new AttackButton(NULL),
+			new BlockButton(NULL),
+			new TalkButton(NULL),
+			new MenuButton(NULL, this)
 		},
 		0
 		};
+        break;
 	case DREAMPLAYER:
 		currentUIData = {
 		LoadImage("resources/sprites/ui/DREAMPLAYER.png"),
@@ -76,6 +77,7 @@ void UIEngine::ChangeScreen(UIState state)
 		},
 		0
 		};
+        break;
 	case MENU:
 		currentUIData = {
 		LoadImage("resources/sprites/ui/MENU.png"),
@@ -89,6 +91,7 @@ void UIEngine::ChangeScreen(UIState state)
 		},
 		0
 		};
+        break;
 	case STATS:
 	case MAGIC:
 	case ABILITY:
@@ -217,5 +220,5 @@ void UIEngine::SetEncounter(
         Encounter& enc)
 {
     currentEncounter = &enc;
-    if( currentEncounter->getType() == BATTLE ) { ChangeScreen(DREAMWORLD); }
+    if( currentEncounter->GetType() == BATTLE ) { ChangeScreen(DREAMWORLD); }
 }
