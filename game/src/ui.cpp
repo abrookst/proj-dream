@@ -9,27 +9,7 @@
 #define DREAM_BLUE      CLITERAL(Color){ 39, 24, 84, 255 }
 #define DREAM_BLACK      CLITERAL(Color){ 26, 16, 22, 255 }
 
-UIEngine::UIEngine(Font font)
-{
-	mainFont = font;
-
-    // ChangeScreen(MENU);
-    // currentUIState = MENU;
-	inputEnabled = true;
-
-	// currentUIData = {
-	// 	LoadImage("resources/sprites/ui/DREAMWORLD.png"),
-	// 	LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
-	// 	5,
-	// 	10,
-	// 	43.0f,
-	// 	19.0f,
-	// 	{
-	// 		new MenuButton(currentEncounter, this)
-	// 	},
-	// 	0
-	// };
-}
+UIEngine::UIEngine(Font font) { mainFont = font; }
 
 void UIEngine::ChangeScreen(UIState state)
 {
@@ -46,50 +26,50 @@ void UIEngine::ChangeScreen(UIState state)
 	case DAYTIMEPLAYER:
 	case DREAMWORLD:
 		currentUIData = {
-		LoadImage("resources/sprites/ui/DREAMWORLD.png"),
-		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
-		5,
-		10,
-		43.0f,
-		19.0f,
-		{
-			new AttackButton(NULL),
-			new BlockButton(NULL),
-			new TalkButton(NULL),
-			new MenuButton(NULL, this)
-		},
-		0
+            LoadImage("resources/sprites/ui/DREAMWORLD.png"),
+            LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
+            5,
+            10,
+            43.0f,
+            19.0f,
+            {
+                new AttackButton(nullptr),
+                new BlockButton(nullptr),
+                new TalkButton(nullptr),
+                new MenuButton("MENU", this)
+            },
+            0
 		};
         break;
 	case DREAMPLAYER:
 		currentUIData = {
-		LoadImage("resources/sprites/ui/DREAMPLAYER.png"),
-		LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMPLAYER.png")),
-		5,
-		10,
-		43.0f,
-		19.0f,
-		{
-			new AttackButton(currentEncounter),
-			new BlockButton(currentEncounter),
-			new TalkButton(currentEncounter),
-			new MenuButton(currentEncounter, this)
-		},
-		0
+            LoadImage("resources/sprites/ui/DREAMPLAYER.png"),
+            LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMPLAYER.png")),
+            5,
+            10,
+            43.0f,
+            19.0f,
+            {
+                new AttackButton(this),
+                new BlockButton(this),
+                new TalkButton(this),
+                new MenuButton("MENU", this)
+            },
+            0
 		};
         break;
 	case MENU:
 		currentUIData = {
-		LoadImage("resources/sprites/ui/MENU.png"),
-		LoadTextureFromImage(LoadImage("resources/sprites/ui/MENU.png")),
-		5,
-		10,
-		3.0f,
-		4.0f,
-		{
-			new MenuButton(currentEncounter, this)
-		},
-		0
+            LoadImage("resources/sprites/ui/MENU.png"),
+            LoadTextureFromImage(LoadImage("resources/sprites/ui/MENU.png")),
+            5,
+            10,
+            3.0f,
+            4.0f,
+            {
+                new MenuButton("MENU", this)
+            },
+            0
 		};
         break;
 	case STATS:
@@ -100,6 +80,21 @@ void UIEngine::ChangeScreen(UIState state)
 	case ITEMS:
 	case INALIDSTATE:
     case TITLESCREEN:
+		currentUIData = {
+            LoadImage("resources/sprites/ui/SETTINGS.png"),
+            LoadTextureFromImage(LoadImage("resources/sprites/ui/SETTINGS.png")),
+            0,
+            0,
+            20.0f,
+            20.0f,
+            {
+                new MenuButton("START", this),
+                new MenuButton("SETTINGS", this),
+                new MenuButton("QUIT", this),
+            },
+            0
+        };
+        break;
     case SETTINGS:
 	break;
 	}

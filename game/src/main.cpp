@@ -69,31 +69,25 @@ int main(
     AudioEngine audioEngine;
     TextEngine textEngine(mainFont);
     UIEngine uiEngine = UIEngine(mainFont);
-    uiEngine.ChangeScreen(MENU);
+    uiEngine.ChangeScreen(TITLESCREEN);
+    uiEngine.SetInputEnabled(true);
 
-    // Player declaration
-    std::vector<Action*> playerActions = { new Attack(), new Block() };
-    Player player(50, 5, 95, 20, playerActions, ":3");
+    Player player;
+    std::vector<Action*> mActs = { new Attack() };
+    std::vector<Monster*> monsters = {
+        new Monster(20, 5, 95, 20, mActs, "ghoul"),
+        new Monster(20, 5, 95, 20, mActs, "skeleton")
+    };
 
-    // Monster and BattleEncounter declaration
-    std::vector<Action*> monsterActions = { new Attack() };
-    Monster monster1 = Monster(20, 5, 95, 20, monsterActions, "ghoul");
-    BattleEncounter battleEncounter1(monster1, textEngine);
-    uiEngine.SetEncounter(battleEncounter1);
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
 
     SetTargetFPS(60);
 
-    std::string text = "hello pneumonoultramicroscopicsilicovolcanoconiosis.";
-    // textEngine.Write(text);
-
-
     // Main game loop
     while (!WindowShouldClose())
     {
-        float scale = MIN((float)GetScreenWidth() / lowRezWidth, (float)GetScreenHeight() / lowRezHeight);
 
         if (IsKeyPressed(KEY_SPACE)) { audioEngine.PlayMusic("test.mp3"); }
 
@@ -101,6 +95,16 @@ int main(
         if (IsKeyPressed(KEY_DOWN)) { uiEngine.ProcessInputKeyboard(KEY_DOWN); }
         if (IsKeyPressed(KEY_ENTER)) { uiEngine.ProcessInputKeyboard(KEY_ENTER); }
         if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
+
+
+        if (uiEngine.GetCurrentScreen() == FIGHT)
+        {
+            std::vector<Action*> pActs = { new Attack(), new Block() };
+            player = Player(50, 5, 95, 20, pActs, ":3");
+            BattleEncounter fightTest(*monsters.at(0), textEngine);
+
+            uiEngine.SetEncounter(fightTest);
+        }
 
         BeginTextureMode(targetScene);
 
@@ -113,12 +117,12 @@ int main(
 
             if (IsKeyPressed(KEY_ENTER)) { textEngine.UpdateText(true); }
             else { textEngine.UpdateText(false); }
-            
 
         EndTextureMode();
 
         audioEngine.UpdateAudio();
 
+        float scale = MIN((float)GetScreenWidth() / lowRezWidth, (float)GetScreenHeight() / lowRezHeight);
         renderScene(targetScene, scale);
     }
 

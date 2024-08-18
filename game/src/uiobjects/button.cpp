@@ -1,9 +1,12 @@
 #include "button.h"
+#include "../ui.h"
 #include <raylib.h>
 
-Button::Button(std::string bttnText)
+
+Button::Button(std::string bttnText, UIEngine* eng)
 {
     buttonText = bttnText;
+    engine = eng;
 }
 
 void AttackButton::confirmAction()
@@ -39,9 +42,13 @@ void TalkButton::backAction()
 
 void MenuButton::confirmAction()
 {
-    if (name == "QUIT")
+    if ( name == "QUIT" )
     {
         CloseWindow();
+    }
+    else if ( name == "START" )
+    {
+        engine->ChangeScreen(FIGHT);
     }
     std::cout << "CONFIRMED!" << std::endl;
 }

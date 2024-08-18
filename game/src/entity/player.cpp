@@ -16,3 +16,9 @@ Player::Player(
     //init future player exclusive vars here
     instance = this;
 }
+
+Player::Player(
+        void)
+{
+    instance = this;
+}
