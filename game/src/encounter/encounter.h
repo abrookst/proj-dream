@@ -1,6 +1,8 @@
 #ifndef ENCOUNTER_H
 #define ENCOUNTER_H
 
+#include "../action.h"
+
 enum EncounterType {
     BATTLE,
     EVENT
@@ -9,12 +11,10 @@ enum EncounterType {
 class Encounter {
 public:
     EncounterType GetType() { return encType; }
-    bool IsDone() { return isDone; }
-    void SetDone(bool d) { isDone = d; }
+    // virtual void Next(Action);
 protected:
     static Encounter* instance;
     EncounterType encType;
-    bool isDone;
 };
 
 #endif

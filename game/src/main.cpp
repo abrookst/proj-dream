@@ -1,4 +1,4 @@
-#include "encounter/battle_encounter.h"
+// #include "encounter/battle_encounter.h"
 #include "raylib.h"
 #include "audio_engine.h"
 #include "text_engine.h"
@@ -11,8 +11,7 @@
 
 #include "text_engine.h"
 
-#include "action/attack.h"
-#include "action/block.h"
+#include "action.h"
 #include <vector>
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
@@ -73,10 +72,9 @@ int main(
     uiEngine.SetInputEnabled(true);
 
     Player player;
-    std::vector<Action*> mActs = { new Attack() };
     std::vector<Monster*> monsters = {
-        new Monster(20, 5, 95, 20, mActs, "ghoul"),
-        new Monster(20, 5, 95, 20, mActs, "skeleton")
+        new Monster(20, 5, 95, 20, { ATTACK }, "ghoul"),
+        new Monster(20, 5, 95, 20, { ATTACK, BLOCK }, "skeleton")
     };
 
 
@@ -99,8 +97,7 @@ int main(
 
         if (uiEngine.GetCurrentScreen() == FIGHT)
         {
-            std::vector<Action*> pActs = { new Attack(), new Block() };
-            player = Player(50, 5, 95, 20, pActs, ":3");
+            player = Player(50, 5, 95, 20, { ATTACK, BLOCK }, ":3");
             BattleEncounter fightTest(*monsters.at(0), textEngine);
 
             uiEngine.SetEncounter(fightTest);

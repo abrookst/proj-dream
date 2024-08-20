@@ -12,7 +12,7 @@ protected:
 
 public:
     Player();
-    Player(uint8_t, uint8_t, uint8_t, uint8_t, std::vector<Action*>&, std::string);
+    Player(uint8_t, uint8_t, uint8_t, uint8_t, std::vector<Action>, std::string);
 
     static Player* GetInstance( ) { return instance; };
 };

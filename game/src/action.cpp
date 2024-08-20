@@ -1,11 +1,7 @@
-#include "attack.h"
-#include <cstdint>
-#include <cstdlib>
+#include "action.h"
 
-void Attack::Perform(
-        Entity& e1,
-        Entity& e2,
-        TextEngine& textEngine)
+
+void Attack(Entity& e1, Entity& e2, TextEngine& textEngine)
 {
     uint8_t attackerPower = e1.GetAttackPower() * 
         (rand() % 100 > e1.GetAccuracy() 
@@ -17,3 +13,13 @@ void Attack::Perform(
     else { e2.SetHealth(newHealth); }
     textEngine.Write(e1.GetName() + " did " + std::to_string(attackerPower) + " dmg to " + e2.GetName() + ".");
 }
+
+
+void Block(Entity& entity, TextEngine& textEngine)
+{
+    entity.SetBlock(true);
+    textEngine.Write(entity.GetName() + " is now blocking.");
+}
+
+void SpecialAttack(std::string, Entity&, Entity&, TextEngine&);
+void Item(std::string, Entity&, Entity&, TextEngine&);

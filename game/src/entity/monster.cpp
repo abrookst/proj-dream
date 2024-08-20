@@ -27,7 +27,7 @@ Monster::Monster(
     uint8_t ap,
     uint8_t acc,
     uint8_t mp,
-    std::vector<Action*>& acts,
+    std::vector<Action> acts,
     std::string n)
     : Entity(hp, ap, acc, mp, acts, n)
 {

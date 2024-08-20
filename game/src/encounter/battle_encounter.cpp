@@ -13,13 +13,18 @@ BattleEncounter::BattleEncounter(
 }
 
 void BattleEncounter::NextTurn(
-    Action* act)
+    Action act)
 {
-    act->Perform(*player, *monster, *textEngine);
+    // act->Perform(*player, *monster, *textEngine);
+    if (act == ATTACK) { Attack(*player, *monster, *textEngine); }
+    else if (act == BLOCK) { Block(*player, *textEngine); }
+    else if (act == TALK) { Talk(*monster, *textEngine); }
 
     if (monster->GetBlock()) { monster->SetBlock(false); }
     Action* monsterAction = monster->RandomAction();
-    monsterAction->Perform(*monster, *player, *textEngine);
+    if (*monsterAction == ATTACK) { Attack(*player, *monster, *textEngine); }
+    else if (*monsterAction == BLOCK) { Block(*player, *textEngine); }
+    else if (*monsterAction == TALK) { Talk(*monster, *textEngine); }
 
     if (player->GetBlock()) { player->SetBlock(false); }
     if (monster->GetHealth() == 0)

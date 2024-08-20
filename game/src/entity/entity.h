@@ -3,24 +3,26 @@
 
 #include <vector>
 #include <string>
-#include "../encounter/encounter.h"
-#include "../action/action.h"
 #include <cstdint>
-#include <cstdlib>
 
-class Action; //forward declaration
+enum Action
+{
+    ATTACK,
+    BLOCK,
+    TALK,
+    HEALTH_POTION
+};
 
 class Entity
 {
 public:
     Entity();
-
     Entity(
         uint8_t hp,
         uint8_t ap,
         uint8_t acc,
         uint8_t mp,
-        std::vector<Action*>& acts,
+        std::vector<Action> acts,
         std::string n);
 
     
@@ -41,7 +43,7 @@ public:
     const uint8_t GetMana() { return mana; }
     const uint8_t GetMaxMana() { return maxMana; }
 
-    std::vector<Action*>& GetActions() { return actions; }
+    std::vector<Action>& GetActions() { return actions; }
 
 protected:
     uint8_t health;
@@ -50,9 +52,9 @@ protected:
     uint8_t accuracy;
     uint8_t mana;
     uint8_t maxMana;
-    std::string name;
     bool isBlocking;
-    std::vector<Action*> actions;
+    std::string name;
+    std::vector<Action> actions;
 };
 
 #endif
