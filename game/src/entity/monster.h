@@ -20,7 +20,7 @@ public:
         std::vector<Action> acts,
         std::string name);
 
-    Action* RandomAction();
+    Action RandomAction();
 
 private:
     Image sprite;

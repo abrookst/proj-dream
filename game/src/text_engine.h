@@ -9,6 +9,8 @@
 #include <sstream>
 #include <raylib.h>
 
+class UIEngine;
+
 class TextEngine
 {
     std::string finalBuffer;
@@ -18,10 +20,11 @@ class TextEngine
     uint8_t frameCount = 0;
     uint8_t lineState = 0;
     Color color = WHITE;
+    UIEngine* uiEngine;
 
     std::string FormatText(const std::string&);
 public:
-    TextEngine(Font&);
+    TextEngine(Font&, UIEngine&);
     ~TextEngine();
     void Write(const std::string&);
     bool IsDone() { return writeQueue.empty(); }

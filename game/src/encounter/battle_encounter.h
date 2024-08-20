@@ -22,7 +22,7 @@ class BattleEncounter : public Encounter
 
 public:
     BattleEncounter(Monster&, TextEngine&);
-    void NextTurn(Action);
+    void Next(Action);
 
     uint8_t GetPlayerHealth() { return player->GetHealth(); }
     uint8_t GetPlayerMaxHealth() { return player->GetMaxHealth(); }

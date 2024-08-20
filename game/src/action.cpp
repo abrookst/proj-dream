@@ -21,5 +21,7 @@ void Block(Entity& entity, TextEngine& textEngine)
     textEngine.Write(entity.GetName() + " is now blocking.");
 }
 
+void Talk(Entity& entity, TextEngine& textEngine);
+
 void SpecialAttack(std::string, Entity&, Entity&, TextEngine&);
 void Item(std::string, Entity&, Entity&, TextEngine&);

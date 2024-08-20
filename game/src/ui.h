@@ -66,6 +66,9 @@ public:
     void SetEncounter(
         Encounter&);
 
+    void Next(
+            Action);
+
 private:
 	void MoveUp();
 	void MoveDown();

@@ -1,10 +1,13 @@
 #include "text_engine.h"
+#include "ui.h"
 
 TextEngine::TextEngine(
-        Font& font)
+        Font& font,
+        UIEngine& eng)
 {
     mainFont = &font;
-    // finalBuffer = new std::string();
+    uiEngine = &eng;
+
     DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
 }
 
@@ -63,6 +66,8 @@ std::string TextEngine::FormatText(
 
 void TextEngine::Write(const std::string& input)
 {
+
+    uiEngine->SetInputEnabled(false);
     std::string* ptr = new std::string(FormatText(input));
     writeQueue.push(ptr);
 }
@@ -72,6 +77,7 @@ void TextEngine::UpdateText(
 {
     if (writeQueue.empty())
     {
+        uiEngine->SetInputEnabled(true);
         DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
         return; 
     }
@@ -96,7 +102,6 @@ void TextEngine::UpdateText(
         {
             writeQueue.front()->erase(0,1);
             finalBuffer.clear();
-            DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
             lineState = 0;
         }
         DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);

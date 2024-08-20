@@ -7,7 +7,7 @@ class EventEncounter : public Encounter {
 protected:
 public:
     EventEncounter() { encType = EVENT; }
-    virtual void startEvent() = 0;
+    void Next(Action) {};
 };
 
 #endif

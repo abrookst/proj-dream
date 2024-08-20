@@ -34,7 +34,7 @@ Monster::Monster(
     // sprite = spr;
 }
 
-Action* Monster::RandomAction()
+Action Monster::RandomAction()
 {
     return actions.at(rand() % actions.size());
 }

@@ -1,7 +1,7 @@
 #include "bonfire_event.h"
 #include "../../entity/player.h"
 
-void BonfireEvent::startEvent()
+void BonfireEvent::Next(Action)
 {
     Player* player = Player::GetInstance();
 

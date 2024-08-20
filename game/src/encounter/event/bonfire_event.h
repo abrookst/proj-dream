@@ -6,7 +6,7 @@
 class BonfireEvent : public EventEncounter
 {
 public:
-    void startEvent();
+    void Next(Action);
 };
 
 #endif

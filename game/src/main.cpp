@@ -9,8 +9,7 @@
 #include "entity/player.h"
 #include "entity/monster.h"
 
-#include "text_engine.h"
-
+#include "encounter/battle_encounter.h"
 #include "action.h"
 #include <vector>
 
@@ -66,17 +65,18 @@ int main(
 
     Font mainFont = LoadFontEx("./resources/fonts/mainfont.ttf", 6, 0, 0);
     AudioEngine audioEngine;
-    TextEngine textEngine(mainFont);
     UIEngine uiEngine = UIEngine(mainFont);
+    TextEngine textEngine(mainFont, uiEngine);
     uiEngine.ChangeScreen(TITLESCREEN);
     uiEngine.SetInputEnabled(true);
 
-    Player player;
+    Player player = Player(50, 5, 95, 20, { ATTACK, BLOCK }, ":3");
     std::vector<Monster*> monsters = {
         new Monster(20, 5, 95, 20, { ATTACK }, "ghoul"),
         new Monster(20, 5, 95, 20, { ATTACK, BLOCK }, "skeleton")
     };
 
+    BattleEncounter firstFight = BattleEncounter(*monsters.at(0), textEngine);
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
@@ -97,10 +97,7 @@ int main(
 
         if (uiEngine.GetCurrentScreen() == FIGHT)
         {
-            player = Player(50, 5, 95, 20, { ATTACK, BLOCK }, ":3");
-            BattleEncounter fightTest(*monsters.at(0), textEngine);
-
-            uiEngine.SetEncounter(fightTest);
+            uiEngine.SetEncounter(firstFight);
         }
 
         BeginTextureMode(targetScene);
@@ -122,6 +119,8 @@ int main(
         float scale = MIN((float)GetScreenWidth() / lowRezWidth, (float)GetScreenHeight() / lowRezHeight);
         renderScene(targetScene, scale);
     }
+
+    for ( Monster* m : monsters ) { delete m; }
 
     UnloadFont(mainFont);
     
