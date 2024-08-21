@@ -24,7 +24,7 @@ void UIEngine::ChangeScreen(UIState state)
     {
         case DAYTIMEWORLD:
         case DAYTIMEPLAYER:
-        case DREAMWORLD:
+        case FIGHT:
             currentUIData = {
                 LoadImage("resources/sprites/ui/DREAMWORLD.png"),
                 LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
@@ -41,6 +41,7 @@ void UIEngine::ChangeScreen(UIState state)
                 0
             };
             break;
+        case DREAMWORLD:
         case DREAMPLAYER:
             currentUIData = {
                 LoadImage("resources/sprites/ui/DREAMPLAYER.png"),
@@ -215,7 +216,7 @@ void UIEngine::SetEncounter(
         Encounter& enc)
 {
     currentEncounter = &enc;
-    if( currentEncounter->GetType() == BATTLE ) { ChangeScreen(DREAMWORLD); }
+    if( currentEncounter->GetType() == BATTLE ) { ChangeScreen(FIGHT); }
 }
 
 void UIEngine::Next(

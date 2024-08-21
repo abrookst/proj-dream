@@ -95,10 +95,7 @@ int main(
         if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
 
 
-        if (uiEngine.GetCurrentScreen() == FIGHT)
-        {
-            uiEngine.SetEncounter(firstFight);
-        }
+        if (uiEngine.GetCurrentScreen() == FIGHT) { uiEngine.SetEncounter(firstFight); }
 
         BeginTextureMode(targetScene);
 
