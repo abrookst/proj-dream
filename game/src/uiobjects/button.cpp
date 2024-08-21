@@ -48,3 +48,15 @@ void MenuButton::backAction()
 {
     std::cout << "BACKED!" << std::endl;
 }
+
+void PathButton::confirmAction()
+{
+    // if ( name == "FWRD") {
+        GameManager::GetInstance()->GoForward();
+    // }
+}
+
+void PathButton::backAction()
+{
+    std::cout << "BACKED!" << std::endl;
+}

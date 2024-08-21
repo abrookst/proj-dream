@@ -51,6 +51,20 @@ void UIEngine::ChangeScreen(UIState state)
                 0
             };
             break;
+        case CHOOSE_NEXT_ENCOUNTER:
+            currentUIData = {
+                LoadImage("resources/sprites/UI/DREAMWORLD.png"),
+                LoadTextureFromImage(LoadImage("resources/sprites/UI/DREAMWORLD.png")),
+                5,
+                10,
+                43.0f,
+                19.0f,
+                {
+                    new PathButton("FWRD", this)
+                },
+                0
+            };
+            break;
         case DREAMWORLD:
         case DREAMPLAYER:
             currentUIData = {

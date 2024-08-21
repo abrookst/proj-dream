@@ -55,4 +55,14 @@ public:
 	void backAction();
 };
 
+struct PathButton : public Button
+{
+public:
+	std::string name;
+
+	PathButton(std::string n, UIEngine* eng) : Button(n, eng) {name = n;}
+	void confirmAction();
+	void backAction();
+};
+
 #endif

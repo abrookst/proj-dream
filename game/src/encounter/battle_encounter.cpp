@@ -14,9 +14,6 @@ BattleEncounter::BattleEncounter(
 void BattleEncounter::Next(
     Action act)
 {
-    if (finished) {//To prevent text from action from overwritting the ending text.
-        return;
-    }
     // act->Perform(*player, *monster, *textEngine);
     switch (act)
     {
@@ -33,6 +30,15 @@ void BattleEncounter::Next(
     }
 
     if (monster->GetBlock()) { monster->SetBlock(false); }
+
+    if (monster->GetHealth() == 0)
+    {
+        //TODO: give player loot
+        //TODO: display screen for player to choose where to go next
+        textEngine->Write("Congratulations, you have defeated the enemy!");
+        finished = true;
+        return;
+    } 
     Action monsterAction = monster->RandomAction();
     switch (monsterAction)
     {
@@ -47,14 +53,7 @@ void BattleEncounter::Next(
     }
 
     if (player->GetBlock()) { player->SetBlock(false); }
-    if (monster->GetHealth() == 0)
-    {
-        //TODO: give player loot
-        //TODO: display screen for player to choose where to go next
-        textEngine->Write("Congratulations, you have defeated the enemy!");
-        finished = true;
-        return;
-    } 
+    
     if (player->GetHealth() == 0)
     {
         textEngine->Write("You have been defeated!");

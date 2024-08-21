@@ -17,8 +17,9 @@ public:
 
     void Next(Action action);
 
-    void SetEncounter(
-        Encounter& enc);
+    void SetEncounter(Encounter& enc);
+
+    void GoForward();
 
     void StartRun();
 
