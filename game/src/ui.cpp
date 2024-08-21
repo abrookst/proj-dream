@@ -13,14 +13,15 @@ UIEngine::UIEngine(Font font) { mainFont = font; }
 
 void UIEngine::ChangeScreen(UIState state)
 {
-    if (currentEncounter != nullptr) {
-        std::cout << currentEncounter->GetType() << std::endl;
-    }
     currentUIState = state;
 		//If currentUIData is uninitialized, all number values will be 0. In that case, don't unload.
-		if (currentUIData.maxWordLength != 0 && currentUIData.maxListLength != 0 && currentUIData.textXPosition != 0 && currentUIData.textYPosition != 0) {
-			UnloadImage(currentUIData.uiFrame);
-    	UnloadTexture(currentUIData.uiTexture);
+		if (currentUIData.maxWordLength != 0 
+                && currentUIData.maxListLength != 0 
+                && currentUIData.textXPosition != 0 
+                && currentUIData.textYPosition != 0) 
+        {
+            UnloadImage(currentUIData.uiFrame);
+            UnloadTexture(currentUIData.uiTexture);
 		}
     
 
