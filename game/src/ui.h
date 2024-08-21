@@ -28,6 +28,8 @@ enum UIState
 	INALIDSTATE
 };
 
+struct Button; //Forward declaration
+
 struct UIData
 {
 	Image uiFrame;
@@ -63,13 +65,9 @@ public:
 	void RenderUI(
             void);
 
-    void SetEncounter(
-        Encounter&);
-
-    void Next(
-            Action);
-
     uint8_t GetCurrentItem(void) { return currentUIData.selectedElement; }
+
+	static UIEngine* GetInstance( ) { return instance; };
 
 private:
 	void MoveUp();
@@ -83,9 +81,10 @@ private:
 	UIState currentUIState;
 	UIData currentUIData;
 	bool inputEnabled;
-    Encounter* currentEncounter = nullptr;
 
 	std::map<UIState, UIData> uidata;
+
+	static UIEngine* instance;
 };
 
 #endif

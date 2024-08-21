@@ -9,7 +9,12 @@
 #define DREAM_BLUE      CLITERAL(Color){ 39, 24, 84, 255 }
 #define DREAM_BLACK      CLITERAL(Color){ 26, 16, 22, 255 }
 
-UIEngine::UIEngine(Font font) { mainFont = font; }
+UIEngine* UIEngine::instance = nullptr;
+
+UIEngine::UIEngine(Font font) { 
+    mainFont = font; 
+    instance = this;    
+}
 
 void UIEngine::ChangeScreen(UIState state)
 {
@@ -215,18 +220,4 @@ void UIEngine::RenderUI()
                 currTextColor
                 );
     }
-}
-
-void UIEngine::SetEncounter(
-        Encounter& enc)
-{
-    currentEncounter = &enc;
-    currentEncounter->SetStarted(true);
-    if( currentEncounter->GetType() == BATTLE ) { ChangeScreen(FIGHT); }
-}
-
-void UIEngine::Next(
-        Action act)
-{
-    currentEncounter->Next(act);
 }

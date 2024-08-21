@@ -1,12 +1,11 @@
 #include "battle_encounter.h"
 
 BattleEncounter::BattleEncounter(
-    Monster& m,
-    TextEngine& t)
+    Monster& m)
 {
     monster = new Monster(m);
     player = Player::GetInstance();
-    textEngine = &t;
+    textEngine = TextEngine::GetInstance();
     encType = BATTLE;
 
     instance = this;
@@ -15,8 +14,7 @@ BattleEncounter::BattleEncounter(
 void BattleEncounter::Next(
     Action act)
 {
-    if (finished) {
-        SelectNextEncounter();
+    if (finished) {//To prevent text from action from overwritting the ending text.
         return;
     }
     // act->Perform(*player, *monster, *textEngine);

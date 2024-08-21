@@ -17,12 +17,12 @@ public:
     bool GetStarted() { return started; }
     bool GetFinished() { return finished; }
     void SetFinished(bool fnshed) {finished = fnshed; }
+    static Encounter* GetInstance( ) { return instance; };
 protected:
     bool started = false;
     bool finished = false;
     static Encounter* instance;
     EncounterType encType;
-    void SelectNextEncounter();
 };
 
 #endif

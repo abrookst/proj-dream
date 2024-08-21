@@ -8,6 +8,7 @@
 #include "../text_engine.h"
 #include <cstdint>
 #include <string>
+#include "../game_manager.h"
 
 class BattleEncounter : public Encounter
 {
@@ -21,7 +22,7 @@ class BattleEncounter : public Encounter
     int writePauseCount = 60;
 
 public:
-    BattleEncounter(Monster&, TextEngine&);
+    BattleEncounter(Monster&);
     void Next(Action);
 
     uint8_t GetPlayerHealth() { return player->GetHealth(); }

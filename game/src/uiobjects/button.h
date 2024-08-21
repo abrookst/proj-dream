@@ -3,7 +3,10 @@
 
 #include <string>
 #include <iostream>
+#include "../game_manager.h"
 #include "../encounter/encounter.h"
+#include "../ui.h"
+#include <raylib.h>
 
 class UIEngine;
 

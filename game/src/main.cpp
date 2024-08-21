@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "audio_engine.h"
 #include "text_engine.h"
+#include "game_manager.h"
 #include <stdio.h>
 #include <fstream>
 #include "ui.h"
@@ -10,6 +11,7 @@
 #include "entity/monster.h"
 
 #include "encounter/battle_encounter.h"
+
 #include "action.h"
 #include <vector>
 
@@ -67,16 +69,12 @@ int main(
     AudioEngine audioEngine;
     UIEngine uiEngine = UIEngine(mainFont);
     TextEngine textEngine(mainFont, uiEngine);
+    GameManager gameManager = GameManager();
+
     uiEngine.ChangeScreen(TITLESCREEN);
     uiEngine.SetInputEnabled(true);
 
     Player player = Player(50, 5, 95, 20, { ATTACK, BLOCK }, ":3");
-    std::vector<Monster*> monsters = {
-        new Monster(20, 5, 95, 20, { ATTACK }, "ghoul"),
-        new Monster(20, 5, 95, 20, { ATTACK, BLOCK }, "skeleton")
-    };
-
-    BattleEncounter firstFight = BattleEncounter(*monsters.at(0), textEngine);
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
@@ -93,9 +91,6 @@ int main(
         if (IsKeyPressed(KEY_DOWN)) {  uiEngine.ProcessInputKeyboard(KEY_DOWN); }
         if (IsKeyPressed(KEY_ENTER)) { uiEngine.ProcessInputKeyboard(KEY_ENTER); }
         if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
-
-
-        if (uiEngine.GetCurrentScreen() == FIGHT && !firstFight.GetStarted()) { uiEngine.SetEncounter(firstFight); }
 
         BeginTextureMode(targetScene);
 
@@ -117,7 +112,7 @@ int main(
         renderScene(targetScene, scale);
     }
 
-    for ( Monster* m : monsters ) { delete m; }
+    for ( Monster* m : GameManager::GetInstance()->monsters ) { delete m; }
 
     UnloadFont(mainFont);
     

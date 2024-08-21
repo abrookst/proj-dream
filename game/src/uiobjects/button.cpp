@@ -1,7 +1,4 @@
 #include "button.h"
-#include "../ui.h"
-#include <raylib.h>
-
 
 Button::Button(std::string bttnText, UIEngine* eng)
 {
@@ -11,7 +8,7 @@ Button::Button(std::string bttnText, UIEngine* eng)
 
 void AttackButton::confirmAction()
 {
-    engine->Next(ATTACK);
+    GameManager::GetInstance()->Next(ATTACK);
 }
 
 void AttackButton::backAction()
@@ -22,7 +19,7 @@ void AttackButton::backAction()
 
 void BlockButton::confirmAction()
 {
-    engine->Next(BLOCK);
+    GameManager::GetInstance()->Next(BLOCK);
 }
 
 void BlockButton::backAction()
@@ -32,7 +29,7 @@ void BlockButton::backAction()
 
 void TalkButton::confirmAction()
 {
-    engine->Next(TALK);
+    GameManager::GetInstance()->Next(TALK);
 }
 
 void TalkButton::backAction()
@@ -43,7 +40,7 @@ void TalkButton::backAction()
 void MenuButton::confirmAction()
 {
     if ( name == "QUIT" ) { CloseWindow(); }
-    else if ( name == "START" ) { engine->ChangeScreen(FIGHT); }
+    else if ( name == "START" ) { GameManager::GetInstance()->StartRun(); }
     else if ( name == "SETTINGS" ) { engine->ChangeScreen(SETTINGS); }
 }
 
