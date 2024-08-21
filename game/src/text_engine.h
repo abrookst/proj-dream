@@ -8,6 +8,7 @@
 #include <string>
 #include <sstream>
 #include <raylib.h>
+#include <cstdint>
 
 class UIEngine;
 
