@@ -6,35 +6,24 @@ Button::Button(std::string bttnText, UIEngine* eng)
     engine = eng;
 }
 
-void AttackButton::confirmAction()
-{
-    GameManager::GetInstance()->Next(ATTACK);
-}
-
-void AttackButton::backAction()
+void Button::backAction()
 {
     std::cout << "BACKED!" << std::endl;
 }
 
+void AttackButton::confirmAction()
+{
+    GameManager::GetInstance()->Next(ATTACK);
+}
 
 void BlockButton::confirmAction()
 {
     GameManager::GetInstance()->Next(BLOCK);
 }
 
-void BlockButton::backAction()
-{
-    std::cout << "BACKED!" << std::endl;
-}
-
 void TalkButton::confirmAction()
 {
     GameManager::GetInstance()->Next(TALK);
-}
-
-void TalkButton::backAction()
-{
-    std::cout << "BACKED!" << std::endl;
 }
 
 void MenuButton::confirmAction()
@@ -44,19 +33,9 @@ void MenuButton::confirmAction()
     else if ( name == "SETTINGS" ) { engine->ChangeScreen(SETTINGS); }
 }
 
-void MenuButton::backAction()
-{
-    std::cout << "BACKED!" << std::endl;
-}
-
 void PathButton::confirmAction()
 {
     // if ( name == "FWRD") {
         GameManager::GetInstance()->GoForward();
     // }
-}
-
-void PathButton::backAction()
-{
-    std::cout << "BACKED!" << std::endl;
 }
