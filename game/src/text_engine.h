@@ -22,6 +22,7 @@ class TextEngine
     uint8_t lineState = 0;
     Color color = WHITE;
     UIEngine* uiEngine;
+    static TextEngine* instance;
 
     std::string FormatText(const std::string&);
 public:
@@ -34,6 +35,7 @@ public:
     void UpdateText(bool);
     void SetColor(Color c) { color = c; }
     Color GetColor() { return color; }
+    static TextEngine* GetInstance( ) { return instance; };
 };
 
 

@@ -1,12 +1,16 @@
 #include "text_engine.h"
 #include "ui.h"
 
+TextEngine* TextEngine::instance = nullptr;
+
 TextEngine::TextEngine(
         Font& font,
         UIEngine& eng)
 {
     mainFont = &font;
     uiEngine = &eng;
+
+    instance = this;
 
     DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
 }

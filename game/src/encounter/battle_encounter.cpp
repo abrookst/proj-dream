@@ -15,6 +15,10 @@ BattleEncounter::BattleEncounter(
 void BattleEncounter::Next(
     Action act)
 {
+    if (finished) {
+        SelectNextEncounter();
+        return;
+    }
     // act->Perform(*player, *monster, *textEngine);
     switch (act)
     {
@@ -50,10 +54,12 @@ void BattleEncounter::Next(
         //TODO: give player loot
         //TODO: display screen for player to choose where to go next
         textEngine->Write("Congratulations, you have defeated the enemy!");
+        finished = true;
         return;
     } 
     if (player->GetHealth() == 0)
     {
         textEngine->Write("You have been defeated!");
+        finished = true;
     }
 }
