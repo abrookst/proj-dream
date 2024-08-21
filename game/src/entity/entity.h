@@ -10,7 +10,8 @@ enum Action
     ATTACK,
     BLOCK,
     TALK,
-    HEALTH_POTION
+    HEALTH_POTION,
+    MAGIC_BLAST,
 };
 
 class Entity

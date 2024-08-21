@@ -21,7 +21,19 @@ void Block(Entity& entity, TextEngine& textEngine)
     textEngine.Write(entity.GetName() + " is now blocking.");
 }
 
-void Talk(Entity& entity, TextEngine& textEngine);
+void Talk(Monster& mon, TextEngine& textEngine)
+{
 
-void SpecialAttack(std::string, Entity&, Entity&, TextEngine&);
-void Item(std::string, Entity&, Entity&, TextEngine&);
+}
+void Other(Entity& e1, Entity& e2, Action act, TextEngine& textEngine) 
+{
+    switch (act)
+    {
+        case HEALTH_POTION:
+            break;
+        case MAGIC_BLAST:
+            break;
+        default:
+            break;
+    }
+}

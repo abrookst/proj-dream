@@ -24,6 +24,10 @@ void BattleEncounter::Next(
         case BLOCK:
             Block(*player, *textEngine);
             break;
+        case TALK:
+            Talk(*monster, *textEngine);
+        default:
+            Other(*monster, *player, act, *textEngine);
     }
 
     if (monster->GetBlock()) { monster->SetBlock(false); }
@@ -36,6 +40,8 @@ void BattleEncounter::Next(
         case BLOCK:
             Block(*monster, *textEngine);
             break;
+        default:
+            Other(*monster, *player, monsterAction, *textEngine);
     }
 
     if (player->GetBlock()) { player->SetBlock(false); }
