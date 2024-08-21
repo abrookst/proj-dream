@@ -1,5 +1,4 @@
 #include "battle_encounter.h"
-#include <iostream>
 
 BattleEncounter::BattleEncounter(
     Monster& m,

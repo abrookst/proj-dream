@@ -221,6 +221,5 @@ void UIEngine::SetEncounter(
 void UIEngine::Next(
         Action act)
 {
-    std::cout << "In Next" << std::endl;
     currentEncounter->Next(act);
 }
