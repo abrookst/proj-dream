@@ -75,13 +75,13 @@ void TextEngine::Write(const std::string& input)
 void TextEngine::UpdateText(
         bool userPressedEnter)
 {
-    if (writeQueue.empty())
+    if (writeQueue.empty()) // no more text to be written
     {
         uiEngine->SetInputEnabled(true);
         DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
         return; 
     }
-    else if (writeQueue.front()->empty()) 
+    else if (writeQueue.front()->empty()) // move on to next string in queue
     {
         std::string* tmpPtr = writeQueue.front();
         writeQueue.pop();
@@ -90,7 +90,21 @@ void TextEngine::UpdateText(
         lineState = 3;
         return;
     } 
-    else if (delay && frameCount % delay) 
+    else if (userPressedEnter && lineState < 2 && frameCount > 0) // user pressed enter before done
+    {
+        for (;writeQueue.front()->size() != 0;writeQueue.front()->erase(0,1))
+        {
+            finalBuffer += writeQueue.front()->front();
+            if (writeQueue.front()->front() == '\n') 
+            { 
+                lineState++; 
+                if (lineState == 2) { break; }
+            }
+        }
+        DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
+        return;
+    }
+    else if (delay && frameCount % delay) // uneven frame, skip adding char
     {
         DrawTextEx(*mainFont, finalBuffer.c_str(), Vector2{ 3, 47 }, 6, 1, color);
         frameCount++;
@@ -98,7 +112,7 @@ void TextEngine::UpdateText(
     }
     else if (lineState == 2 )
     {
-        if (userPressedEnter && frameCount > 0) 
+        if (userPressedEnter && frameCount > 0) // user presed enter to move to next screen
         {
             writeQueue.front()->erase(0,1);
             finalBuffer.clear();
@@ -109,7 +123,7 @@ void TextEngine::UpdateText(
     }
     else if (lineState == 3)
     {
-        if (userPressedEnter)
+        if (userPressedEnter) // user pressed enter to move to next string
         {
             finalBuffer.clear();
             lineState = 0;
