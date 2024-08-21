@@ -30,8 +30,8 @@ void UIEngine::ChangeScreen(UIState state)
         case DAYTIMEPLAYER:
         case FIGHT:
             currentUIData = {
-                LoadImage("resources/sprites/ui/DREAMWORLD.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMWORLD.png")),
+                LoadImage("resources/sprites/UI/DREAMWORLD.png"),
+                LoadTextureFromImage(LoadImage("resources/sprites/UI/DREAMWORLD.png")),
                 5,
                 10,
                 43.0f,
@@ -48,8 +48,8 @@ void UIEngine::ChangeScreen(UIState state)
         case DREAMWORLD:
         case DREAMPLAYER:
             currentUIData = {
-                LoadImage("resources/sprites/ui/DREAMPLAYER.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/ui/DREAMPLAYER.png")),
+                LoadImage("resources/sprites/UI/DREAMPLAYER.png"),
+                LoadTextureFromImage(LoadImage("resources/sprites/UI/DREAMPLAYER.png")),
                 5,
                 10,
                 43.0f,
@@ -65,8 +65,8 @@ void UIEngine::ChangeScreen(UIState state)
             break;
         case MENU:
             currentUIData = {
-                LoadImage("resources/sprites/ui/MENU.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/ui/MENU.png")),
+                LoadImage("resources/sprites/UI/MENU.png"),
+                LoadTextureFromImage(LoadImage("resources/sprites/UI/MENU.png")),
                 5,
                 10,
                 3.0f,
@@ -86,8 +86,8 @@ void UIEngine::ChangeScreen(UIState state)
         case INALIDSTATE:
         case TITLESCREEN:
             currentUIData = {
-                LoadImage("resources/sprites/ui/SETTINGS.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/ui/SETTINGS.png")),
+                LoadImage("resources/sprites/UI/SETTINGS.png"),
+                LoadTextureFromImage(LoadImage("resources/sprites/UI/SETTINGS.png")),
                 0,
                 0,
                 20.0f,
