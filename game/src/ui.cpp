@@ -221,6 +221,7 @@ void UIEngine::SetEncounter(
         Encounter& enc)
 {
     currentEncounter = &enc;
+    currentEncounter->SetStarted(true);
     if( currentEncounter->GetType() == BATTLE ) { ChangeScreen(FIGHT); }
 }
 

@@ -12,7 +12,10 @@ class Encounter {
 public:
     EncounterType GetType() { return encType; }
     virtual void Next(Action) = 0;
+    void SetStarted(bool strt) { started = strt; }
+    bool GetStarted() { return started; }
 protected:
+    bool started = false;
     static Encounter* instance;
     EncounterType encType;
 };

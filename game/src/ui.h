@@ -69,6 +69,8 @@ public:
     void Next(
             Action);
 
+    uint8_t GetCurrentItem(void) { return currentUIData.selectedElement; }
+
 private:
 	void MoveUp();
 	void MoveDown();
