@@ -2,7 +2,7 @@
 
 #include "entity/player.h"
 
-const char* Item::GetItemName(ItemType item){
+const char* GetItemName(Item item){
     switch (item)
     {
     case BANDAGE:
@@ -13,7 +13,7 @@ const char* Item::GetItemName(ItemType item){
     }
 }
 
-void Item::UseItem(ItemType item) {
+void UseItem(Item item) {
     Player* player = Player::GetInstance();
 
     switch (item)

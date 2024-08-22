@@ -20,7 +20,7 @@ public:
         std::vector<Action> acts,
         std::string n);
 
-    std::vector<Item::ItemType> inventory;
+    std::vector<Item> inventory;
 
     static Player* GetInstance( ) { return instance; };
 };

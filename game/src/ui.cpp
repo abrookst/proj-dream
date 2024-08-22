@@ -263,7 +263,7 @@ void UIEngine::RenderUI()
         for (int i = 0; i < player.inventory.size(); i++)
         DrawTextEx(
                 mainFont,
-                Item::GetItemName(player.inventory[i]),
+                GetItemName(player.inventory[i]),
                 Vector2{ 5, 5.0f + (i * 6) },
                 6,
                 1,

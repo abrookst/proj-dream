@@ -1,16 +1,14 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-class Item {
-public:
-    enum ItemType 
-    {
-        BANDAGE
-    };
 
-    static const char* GetItemName(ItemType item);
-
-    static void UseItem(ItemType item);
+enum Item 
+{
+    BANDAGE
 };
+
+const char* GetItemName(Item item);
+
+void UseItem(Item item);
 
 #endif
