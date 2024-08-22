@@ -1,8 +1,9 @@
 #include "action.h"
 
 
-void Attack(Entity& e1, Entity& e2, TextEngine& textEngine)
+void Attack(Entity& e1, Entity& e2)
 {
+    TextEngine &textEngine = *TextEngine::GetInstance();
     uint8_t attackerPower = e1.GetAttackPower() * 
         (rand() % 100 > e1.GetAccuracy() 
          ? 0 
@@ -15,18 +16,22 @@ void Attack(Entity& e1, Entity& e2, TextEngine& textEngine)
 }
 
 
-void Block(Entity& entity, TextEngine& textEngine)
+void Block(Entity& entity)
 {
+    TextEngine &textEngine = *TextEngine::GetInstance();
     entity.SetBlock(true);
     textEngine.Write(entity.GetName() + " is now blocking.");
 }
 
-void Talk(Monster& mon, TextEngine& textEngine)
+void Talk(Monster& mon)
 {
+    TextEngine &textEngine = *TextEngine::GetInstance();
 
 }
-void Other(Entity& e1, Entity& e2, Action act, TextEngine& textEngine) 
+void Other(Entity& e1, Entity& e2, Action act) 
 {
+    TextEngine &textEngine = *TextEngine::GetInstance();
+
     switch (act)
     {
         case HEALTH_POTION:

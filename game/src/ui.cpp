@@ -61,7 +61,9 @@ void UIEngine::ChangeScreen(UIState state)
                 43.0f,
                 19.0f,
                 {
-                    new PathButton("FWRD", this)
+                    new PathButton("LEFT", this),
+                    new PathButton("FWRD", this),
+                    new PathButton("RGHT", this)
                 },
                 0
             };
@@ -104,6 +106,21 @@ void UIEngine::ChangeScreen(UIState state)
         case WEAPON:
         case EQUIP:
         case ITEMS:
+            currentUIData = {
+                LoadImage("resources/sprites/UI/ITEMS.png"),
+                LoadTextureFromImage(LoadImage("resources/sprites/UI/ITEMS.png")),
+                0,
+                0,
+                20.0f,
+                20.0f,
+                {
+                    new MenuButton("USE", this),
+                    new MenuButton("INFO", this),
+                    new MenuButton("BACK", this),
+                },
+                0
+            };
+            break;
         case INALIDSTATE:
         case TITLESCREEN:
             currentUIData = {

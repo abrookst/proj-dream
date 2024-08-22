@@ -18,15 +18,15 @@ void BattleEncounter::Next(
     switch (act)
     {
         case ATTACK:
-            Attack(*player, *monster, *textEngine);
+            Attack(*player, *monster);
             break;
         case BLOCK:
-            Block(*player, *textEngine);
+            Block(*player);
             break;
         case TALK:
-            Talk(*monster, *textEngine);
+            Talk(*monster);
         default:
-            Other(*monster, *player, act, *textEngine);
+            Other(*monster, *player, act);
     }
 
     if (monster->GetBlock()) { monster->SetBlock(false); }
@@ -43,13 +43,13 @@ void BattleEncounter::Next(
     switch (monsterAction)
     {
         case ATTACK:
-            Attack(*monster, *player, *textEngine);
+            Attack(*monster, *player);
             break;
         case BLOCK:
-            Block(*monster, *textEngine);
+            Block(*monster);
             break;
         default:
-            Other(*monster, *player, monsterAction, *textEngine);
+            Other(*monster, *player, monsterAction);
     }
 
     if (player->GetBlock()) { player->SetBlock(false); }
