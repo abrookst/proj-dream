@@ -261,19 +261,22 @@ void UIEngine::RenderUI()
                 );
     }
 
-    // if (currentUIState == ITEMS) {
-    //     for (int i = 0; i < player.inventory.size(); i++)
-    //     DrawTextEx(
-    //             mainFont,
-    //             GetItemName(player.inventory[i]),
-    //             Vector2{ 5, 5.0f + (i * 6) },
-    //             6,
-    //             1,
-    //             DREAM_WHITE
-    //             );
-    // }
+    if (currentUIState == ITEMS) {
+        if (player.inventory.size() > 0) {
+            //Get the item description. Right now its the same as name.
+            const char* description = GetItemName(player.inventory[currentUIData.selectedElement]);
+            DrawTextEx(
+                mainFont,
+                description,
+                Vector2{ 37.0f, 30.0f },
+                6,
+                1,
+                DREAM_WHITE
+                );
+        }
+    }
 
-    if (currentUIState == FIGHT) {
+    if (currentUIState == FIGHT) {//Display healthbars only if in battle (possibly add other UI states where health bars are shown)
         float healthPercentage = player.GetHealthPercentage();
         int healthBarLength = (int)(15 * healthPercentage);
         DrawRectangle(60, 17-healthBarLength, 1, healthBarLength, DREAM_RED);
