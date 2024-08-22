@@ -60,4 +60,13 @@ public:
 	void confirmAction();
 };
 
+struct ItemButton: public Button
+{
+public:
+	Item item;
+
+	ItemButton(Item i, UIEngine* eng) : Button(GetItemName(i), eng) { item = i; }
+	void confirmAction();
+};
+
 #endif

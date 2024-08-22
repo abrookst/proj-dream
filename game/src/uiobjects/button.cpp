@@ -40,3 +40,8 @@ void PathButton::confirmAction()
         GameManager::GetInstance()->GoForward();
     // }
 }
+
+void ItemButton::confirmAction()
+{
+    UseItem(item);
+}

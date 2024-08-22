@@ -29,7 +29,7 @@ void UIEngine::ChangeScreen(UIState state)
         UnloadImage(currentUIData.uiFrame);
         UnloadTexture(currentUIData.uiTexture);
     }
-    
+    Player &player = *Player::GetInstance();
 
     switch(state)
     {
@@ -111,15 +111,17 @@ void UIEngine::ChangeScreen(UIState state)
                 LoadTextureFromImage(LoadImage("resources/sprites/UI/ITEMS.png")),
                 5,
                 10,
-                43.0f,
-                39.0f,
-                {
-                    new MenuButton("USE", this),
-                    new MenuButton("INFO", this),
-                    new MenuButton("BACK", this),
-                },
+                5.0f,
+                5.0f,
+                {},
                 0
             };
+            //Add each inventory item as a menu button, instead of the usual pre-defined buttons.
+            //This means that ChangeScreen should be called if you want to update the inventory screen while its open.
+            for (int i = 0; i < player.inventory.size(); i++) {
+                currentUIData.scrollableList.push_back(new ItemButton(player.inventory[i], this));
+            }
+            
             break;
         case INALIDSTATE:
         case TITLESCREEN:
@@ -259,17 +261,17 @@ void UIEngine::RenderUI()
                 );
     }
 
-    if (currentUIState == ITEMS) {
-        for (int i = 0; i < player.inventory.size(); i++)
-        DrawTextEx(
-                mainFont,
-                GetItemName(player.inventory[i]),
-                Vector2{ 5, 5.0f + (i * 6) },
-                6,
-                1,
-                DREAM_WHITE
-                );
-    }
+    // if (currentUIState == ITEMS) {
+    //     for (int i = 0; i < player.inventory.size(); i++)
+    //     DrawTextEx(
+    //             mainFont,
+    //             GetItemName(player.inventory[i]),
+    //             Vector2{ 5, 5.0f + (i * 6) },
+    //             6,
+    //             1,
+    //             DREAM_WHITE
+    //             );
+    // }
 
     if (currentUIState == FIGHT) {
         float healthPercentage = player.GetHealthPercentage();

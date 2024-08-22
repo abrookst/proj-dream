@@ -77,7 +77,10 @@ int main(
     uiEngine.SetInputEnabled(true);
 
     Player player = Player(50, 5, 95, 20, { ATTACK, BLOCK }, ":3");
-    player.inventory.push_back(Item::BANDAGE);
+
+    //Default items for testing inventory mechanics
+    player.inventory.push_back(BANDAGE);
+    player.inventory.push_back(PILLS);
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);
