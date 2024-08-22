@@ -47,7 +47,7 @@ void UIEngine::ChangeScreen(UIState state)
                     new AttackButton(this),
                     new BlockButton(this),
                     new TalkButton(this),
-                    new MenuButton("MENU", this)
+                    new MenuButton("ITEM", this)
                 },
                 0
             };
@@ -81,7 +81,7 @@ void UIEngine::ChangeScreen(UIState state)
                     new AttackButton(this),
                     new BlockButton(this),
                     new TalkButton(this),
-                    new MenuButton("MENU", this)
+                    new MenuButton("ITEM", this)
                 },
                 0
             };
@@ -109,10 +109,10 @@ void UIEngine::ChangeScreen(UIState state)
             currentUIData = {
                 LoadImage("resources/sprites/UI/ITEMS.png"),
                 LoadTextureFromImage(LoadImage("resources/sprites/UI/ITEMS.png")),
-                0,
-                0,
-                20.0f,
-                20.0f,
+                5,
+                10,
+                43.0f,
+                39.0f,
                 {
                     new MenuButton("USE", this),
                     new MenuButton("INFO", this),
@@ -227,6 +227,8 @@ void UIEngine::Back()
 
 void UIEngine::RenderUI()
 {
+    Player &player = *Player::GetInstance();
+
     DrawTexture(GetTexture(), 0, 0, WHITE);
 
     Color currTextColor;
@@ -257,13 +259,25 @@ void UIEngine::RenderUI()
                 );
     }
 
+    if (currentUIState == ITEMS) {
+        for (int i = 0; i < player.inventory.size(); i++)
+        DrawTextEx(
+                mainFont,
+                Item::GetItemName(player.inventory[i]),
+                Vector2{ 5, 5.0f + (i * 6) },
+                6,
+                1,
+                DREAM_WHITE
+                );
+    }
 
-    Player &player = *Player::GetInstance();
-    float healthPercentage = player.GetHealthPercentage();
-    int healthBarLength = (int)(15 * healthPercentage);
-    DrawRectangle(60, 17-healthBarLength, 1, healthBarLength, DREAM_RED);
+    if (currentUIState == FIGHT) {
+        float healthPercentage = player.GetHealthPercentage();
+        int healthBarLength = (int)(15 * healthPercentage);
+        DrawRectangle(60, 17-healthBarLength, 1, healthBarLength, DREAM_RED);
 
-    float sanityPercentage = player.GetManaPercentage();
-    int sanityBarLength = (int)(15 * sanityPercentage);
-    DrawRectangle(61, 17-sanityBarLength, 1, sanityBarLength, DREAM_BLUE);
+        float sanityPercentage = player.GetManaPercentage();
+        int sanityBarLength = (int)(15 * sanityPercentage);
+        DrawRectangle(61, 17-sanityBarLength, 1, sanityBarLength, DREAM_BLUE);
+    }    
 }

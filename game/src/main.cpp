@@ -15,6 +15,8 @@
 #include "action.h"
 #include <vector>
 
+#include "item.h"
+
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
 
@@ -75,6 +77,7 @@ int main(
     uiEngine.SetInputEnabled(true);
 
     Player player = Player(50, 5, 95, 20, { ATTACK, BLOCK }, ":3");
+    player.inventory.push_back(Item::BANDAGE);
 
     RenderTexture2D targetScene = LoadRenderTexture(lowRezWidth, lowRezHeight);
     SetTextureFilter(targetScene.texture, TEXTURE_FILTER_POINT);

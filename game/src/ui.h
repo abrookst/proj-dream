@@ -8,6 +8,7 @@
 #include <map>
 #include "uiobjects/button.h"
 #include "encounter/encounter.h"
+#include "item.h"
 
 enum UIState
 {

@@ -3,6 +3,7 @@
 
 #include "entity.h"
 #include <cstdint>
+#include "../item.h"
 
 
 class Player : public Entity
@@ -18,6 +19,8 @@ public:
         uint8_t mp,
         std::vector<Action> acts,
         std::string n);
+
+    std::vector<Item::ItemType> inventory;
 
     static Player* GetInstance( ) { return instance; };
 };
