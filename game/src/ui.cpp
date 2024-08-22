@@ -1,6 +1,7 @@
 #include "ui.h"
 
 #define DREAM_WHITE      CLITERAL(Color){ 246, 219, 186, 255 }
+#define DREAM_GREY         CLITERAL(Color){ 246, 219, 186, 128 }
 #define DREAM_ORANGE      CLITERAL(Color){ 219, 96, 76, 255 }
 #define DREAM_RED      CLITERAL(Color){ 177, 51, 83, 255 }
 #define DREAM_PURPLE      CLITERAL(Color){ 94, 32, 82, 255 }
@@ -216,7 +217,11 @@ void UIEngine::RenderUI()
     // Draw the list of options
     for (int i = 0; i < currentUIData.scrollableList.size(); i++)
     {
-        if (i == currentUIData.selectedElement)
+        if (!inputEnabled) 
+        {
+            currTextColor = DREAM_GREY;
+        }
+        else if (i == currentUIData.selectedElement)
         {
             currTextColor = DREAM_RED;
         }
