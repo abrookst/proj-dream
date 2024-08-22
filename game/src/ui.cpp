@@ -256,4 +256,14 @@ void UIEngine::RenderUI()
                 currTextColor
                 );
     }
+
+
+    Player &player = *Player::GetInstance();
+    float healthPercentage = player.GetHealthPercentage();
+    int healthBarLength = (int)(15 * healthPercentage);
+    DrawRectangle(60, 17-healthBarLength, 1, healthBarLength, DREAM_RED);
+
+    float sanityPercentage = player.GetManaPercentage();
+    int sanityBarLength = (int)(15 * sanityPercentage);
+    DrawRectangle(61, 17-sanityBarLength, 1, sanityBarLength, DREAM_BLUE);
 }

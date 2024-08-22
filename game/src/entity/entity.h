@@ -28,8 +28,10 @@ public:
 
     
     void SetHealth(uint8_t hp) { health = hp; }
+    void IncrementHealth(uint8_t amount) { health += amount; }
     void SetMaxHealth(uint8_t hp) { maxHealth = hp; }
     void SetMana(uint8_t m) { mana = m; }
+    void IncrementMana(uint8_t amount) { mana += amount; }
     void SetMaxMana(uint8_t m) { maxMana = m; }
     void SetAttackPower(uint8_t ap) { attackPower = ap; }
     void SetAccuracy(uint8_t acc) { accuracy = acc; }
@@ -38,10 +40,12 @@ public:
     const bool GetBlock() { return isBlocking; }
     std::string GetName() { return name; }
     const uint8_t GetHealth() { return health; }
+    const float GetHealthPercentage() { return (float)health / (float)maxHealth; }
     const uint8_t GetMaxHealth() { return maxHealth; }
     const uint8_t GetAttackPower() { return attackPower; }
     const uint8_t GetAccuracy() { return accuracy; }
     const uint8_t GetMana() { return mana; }
+    const float GetManaPercentage() { return (float)mana / (float)maxMana; }
     const uint8_t GetMaxMana() { return maxMana; }
 
     std::vector<Action>& GetActions() { return actions; }

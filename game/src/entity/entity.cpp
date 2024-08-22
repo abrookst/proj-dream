@@ -21,11 +21,10 @@ Entity::Entity(
 {
     health = hp;
     maxHealth = hp;
-    mp = mp;
+    mana = mp;
     maxMana = mp;
     attackPower = ap;
     accuracy = acc;
     actions = acts;
     name = n;
-
 }
