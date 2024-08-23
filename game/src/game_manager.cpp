@@ -7,11 +7,18 @@ GameManager::GameManager() {
 }
 
 void GameManager::StartRun() {
-    currentEncounter = new BattleEncounter(*monsters.at(0));
-    SetEncounter(*currentEncounter);
+    StartRandomMonsterEncounter();
 }
 
 void GameManager::GoForward() {
+    TextEngine* textEngine = TextEngine::GetInstance();
+    textEngine->Write("Where will you go next?");
+
+    UIEngine::GetInstance()->ChangeScreen(CHOOSE_NEXT_ENCOUNTER);    
+}
+
+//This function is just for testing,
+void GameManager::StartRandomMonsterEncounter() {
     currentEncounter = new BattleEncounter(*monsters.at(0));
     SetEncounter(*currentEncounter);
 }
@@ -22,10 +29,8 @@ void GameManager::Next(
     currentEncounter->Next(act);
 
     if (currentEncounter->GetFinished()) {
-        TextEngine* textEngine = TextEngine::GetInstance();
-        textEngine->Write("Where will you go next?");
-
-        UIEngine::GetInstance()->ChangeScreen(CHOOSE_NEXT_ENCOUNTER);
+        GoForward();
+        
     }
 }
 

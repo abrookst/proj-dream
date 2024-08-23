@@ -21,6 +21,9 @@ public:
 
     void GoForward();
 
+    //This function is just for testing.
+    void StartRandomMonsterEncounter();
+
     void StartRun();
 
     std::vector<Monster*> monsters = {

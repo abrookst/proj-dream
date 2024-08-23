@@ -36,9 +36,8 @@ void MenuButton::confirmAction()
 
 void PathButton::confirmAction()
 {
-    // if ( name == "FWRD") {
-        GameManager::GetInstance()->GoForward();
-    // }
+    //Replace this code with selecting a specific encounter.
+    GameManager::GetInstance()->StartRandomMonsterEncounter();
 }
 
 void ItemButton::confirmAction()
