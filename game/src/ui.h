@@ -52,8 +52,14 @@ public:
 	void ChangeScreen(
 		UIState state);
 
+	//Sets the button for the current UI state.
+	//If you switch UI states and later switch back, the buttons will be saved.
 	void SetButtons(
 		std::vector<Button*>& buttons);
+
+	//Same as changescreen, except the current state is placed into the escape queue.
+	void EnterMenu(
+		UIState state);
 
 	void SetInputEnabled(
 		bool input);
@@ -88,6 +94,9 @@ private:
 	bool inputEnabled;
 
 	std::map<UIState, UIData> uiDataMap;
+
+	//This stores the UI state before entering a menu, so that you can return to it after you exit the menu.
+	std::vector<UIState> escapeQueue;
 
 	static UIEngine* instance;
 };

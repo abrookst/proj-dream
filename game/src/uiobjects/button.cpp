@@ -30,8 +30,8 @@ void MenuButton::confirmAction()
 {
     if ( name == "QUIT" ) { CloseWindow(); }
     else if ( name == "START" ) { GameManager::GetInstance()->StartRun(); }
-    else if ( name == "SETTINGS" ) { engine->ChangeScreen(SETTINGS); }
-    else if ( name == "ITEM" ) {engine -> ChangeScreen(ITEMS); }
+    else if ( name == "SETTINGS" ) { engine->EnterMenu(SETTINGS); }
+    else if ( name == "ITEM" ) {engine -> EnterMenu(ITEMS); }
 }
 
 void PathButton::confirmAction()

@@ -14,8 +14,8 @@ UIEngine* UIEngine::instance = nullptr;
 
 UIEngine::UIEngine(Font font) { 
     mainFont = font; 
-    instance = this;    
-
+    instance = this;
+#pragma region 
     uiDataMap[FIGHT] = {
         LoadImage("resources/sprites/UI/DREAMWORLD.png"),
         LoadTextureFromImage(LoadImage("resources/sprites/UI/DREAMWORLD.png")),
@@ -81,6 +81,14 @@ UIEngine::UIEngine(Font font) {
         },
         0
     };
+#pragma endregion
+}
+
+void UIEngine::EnterMenu(
+		UIState state)
+{
+    escapeQueue.push_back(currentUIState);
+    ChangeScreen(state);
 }
 
 void UIEngine::ChangeScreen(UIState state)
@@ -162,7 +170,14 @@ void UIEngine::ProcessInputKeyboard(
             Back();
             break;
         case KEY_M:
-            ChangeScreen(MENU);
+            if (currentUIState == MENU) {
+                ChangeScreen(escapeQueue.at(escapeQueue.size()-1));
+                escapeQueue.pop_back();
+            } else {
+                escapeQueue.push_back(currentUIState);
+                ChangeScreen(MENU);
+            }
+            
             break;
     }
     RenderUI();
@@ -203,6 +218,10 @@ void UIEngine::Back()
 {
     // Go back to previous screen
     currentUIData.scrollableList[currentUIData.selectedElement]->backAction();
+    if (!escapeQueue.empty()) {
+        ChangeScreen(escapeQueue.at(escapeQueue.size()-1));
+        escapeQueue.pop_back();
+    }
 }
 
 void UIEngine::RenderUI()

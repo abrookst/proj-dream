@@ -97,6 +97,7 @@ int main(
         if (IsKeyPressed(KEY_DOWN)) {  uiEngine.ProcessInputKeyboard(KEY_DOWN); }
         if (IsKeyPressed(KEY_ENTER)) { uiEngine.ProcessInputKeyboard(KEY_ENTER); }
         if (IsKeyPressed(KEY_BACKSPACE)) { uiEngine.ProcessInputKeyboard(KEY_BACKSPACE); }
+        if (IsKeyPressed(KEY_M)) { uiEngine.ProcessInputKeyboard(KEY_M); }
 
         BeginTextureMode(targetScene);
 
