@@ -15,135 +15,113 @@ UIEngine* UIEngine::instance = nullptr;
 UIEngine::UIEngine(Font font) { 
     mainFont = font; 
     instance = this;    
+
+    uiDataMap[FIGHT] = {
+        LoadImage("resources/sprites/UI/DREAMWORLD.png"),
+        LoadTextureFromImage(LoadImage("resources/sprites/UI/DREAMWORLD.png")),
+        5,
+        10,
+        43.0f,
+        19.0f,
+        {
+            new AttackButton(this),
+            new BlockButton(this),
+            new TalkButton(this),
+            new MenuButton("ITEM", this)
+        },
+        0
+    };
+    uiDataMap[CHOOSE_NEXT_ENCOUNTER] = {
+        LoadImage("resources/sprites/UI/DREAMWORLD.png"),
+        LoadTextureFromImage(LoadImage("resources/sprites/UI/DREAMWORLD.png")),
+        5,
+        10,
+        43.0f,
+        19.0f,
+        {
+            new PathButton("LEFT", this),
+            new PathButton("FWRD", this),
+            new PathButton("RGHT", this)
+        },
+        0
+    };
+    uiDataMap[ITEMS] = {
+        LoadImage("resources/sprites/UI/ITEMS.png"),
+        LoadTextureFromImage(LoadImage("resources/sprites/UI/ITEMS.png")),
+        5,
+        10,
+        5.0f,
+        5.0f,
+        {},
+        0
+    };
+    uiDataMap[MENU] = {
+        LoadImage("resources/sprites/UI/MENU.png"),
+        LoadTextureFromImage(LoadImage("resources/sprites/UI/MENU.png")),
+        5,
+        10,
+        3.0f,
+        4.0f,
+        {
+            new MenuButton("MENU", this)
+        },
+        0
+    };
+    uiDataMap[TITLESCREEN] = {
+        LoadImage("resources/sprites/UI/SETTINGS.png"),
+        LoadTextureFromImage(LoadImage("resources/sprites/UI/SETTINGS.png")),
+        0,
+        0,
+        20.0f,
+        20.0f,
+        {
+            new MenuButton("START", this),
+            new MenuButton("SETTINGS", this),
+            new MenuButton("QUIT", this),
+        },
+        0
+    };
 }
 
 void UIEngine::ChangeScreen(UIState state)
 {
     currentUIState = state;
+
+    //Dont unload, because now we only load once at the start of the game.
     //If currentUIData is uninitialized, all number values will be 0. In that case, don't unload.
-    if (currentUIData.maxWordLength != 0 
-            && currentUIData.maxListLength != 0 
-            && currentUIData.textXPosition != 0 
-            && currentUIData.textYPosition != 0) 
-    {
-        UnloadImage(currentUIData.uiFrame);
-        UnloadTexture(currentUIData.uiTexture);
-    }
+    // if (currentUIData.maxWordLength != 0 
+    //         && currentUIData.maxListLength != 0 
+    //         && currentUIData.textXPosition != 0 
+    //         && currentUIData.textYPosition != 0) 
+    // {
+    //     UnloadImage(currentUIData.uiFrame);
+    //     UnloadTexture(currentUIData.uiTexture);
+    // }
     Player &player = *Player::GetInstance();
 
-    switch(state)
-    {
-        case DAYTIMEWORLD:
-        case DAYTIMEPLAYER:
-        case FIGHT:
-            currentUIData = {
-                LoadImage("resources/sprites/UI/DREAMWORLD.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/UI/DREAMWORLD.png")),
-                5,
-                10,
-                43.0f,
-                19.0f,
-                {
-                    new AttackButton(this),
-                    new BlockButton(this),
-                    new TalkButton(this),
-                    new MenuButton("ITEM", this)
-                },
-                0
-            };
-            break;
-        case CHOOSE_NEXT_ENCOUNTER:
-            currentUIData = {
-                LoadImage("resources/sprites/UI/DREAMWORLD.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/UI/DREAMWORLD.png")),
-                5,
-                10,
-                43.0f,
-                19.0f,
-                {
-                    new PathButton("LEFT", this),
-                    new PathButton("FWRD", this),
-                    new PathButton("RGHT", this)
-                },
-                0
-            };
-            break;
-        case DREAMWORLD:
-        case DREAMPLAYER:
-            currentUIData = {
-                LoadImage("resources/sprites/UI/DREAMPLAYER.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/UI/DREAMPLAYER.png")),
-                5,
-                10,
-                43.0f,
-                19.0f,
-                {
-                    new AttackButton(this),
-                    new BlockButton(this),
-                    new TalkButton(this),
-                    new MenuButton("ITEM", this)
-                },
-                0
-            };
-            break;
-        case MENU:
-            currentUIData = {
-                LoadImage("resources/sprites/UI/MENU.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/UI/MENU.png")),
-                5,
-                10,
-                3.0f,
-                4.0f,
-                {
-                    new MenuButton("MENU", this)
-                },
-                0
-            };
-            break;
-        case STATS:
-        case MAGIC:
-        case ABILITY:
-        case WEAPON:
-        case EQUIP:
-        case ITEMS:
-            currentUIData = {
-                LoadImage("resources/sprites/UI/ITEMS.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/UI/ITEMS.png")),
-                5,
-                10,
-                5.0f,
-                5.0f,
-                {},
-                0
-            };
-            //Add each inventory item as a menu button, instead of the usual pre-defined buttons.
-            //This means that ChangeScreen should be called if you want to update the inventory screen while its open.
-            for (int i = 0; i < player.inventory.size(); i++) {
-                currentUIData.scrollableList.push_back(new ItemButton(player.inventory[i], this));
-            }
-            
-            break;
-        case INALIDSTATE:
-        case TITLESCREEN:
-            currentUIData = {
-                LoadImage("resources/sprites/UI/SETTINGS.png"),
-                LoadTextureFromImage(LoadImage("resources/sprites/UI/SETTINGS.png")),
-                0,
-                0,
-                20.0f,
-                20.0f,
-                {
-                    new MenuButton("START", this),
-                    new MenuButton("SETTINGS", this),
-                    new MenuButton("QUIT", this),
-                },
-                0
-            };
-            break;
-        case SETTINGS:
-            break;
+    currentUIData = uiDataMap[currentUIState];
+
+    if (currentUIState == ITEMS) {
+        std::vector<Button*> itemButtons = {};
+        for (int i = 0; i < player.inventory.size(); i++) {
+            itemButtons.push_back(new ItemButton(player.inventory[i], this));
+        }
+        SetButtons(itemButtons);
     }
 }
+
+void UIEngine::SetButtons(
+		std::vector<Button*>& buttons) 
+{
+    for (int i = 0; i < currentUIData.scrollableList.size(); i++) {
+        free(currentUIData.scrollableList[i]);
+    }
+    currentUIData.scrollableList.clear();
+    for (int i = 0; i < buttons.size(); i++) {
+        currentUIData.scrollableList.push_back(buttons[i]);
+    }
+}
+
 
 void UIEngine::SetInputEnabled(
         bool input)
@@ -276,7 +254,8 @@ void UIEngine::RenderUI()
         }
     }
 
-    if (currentUIState == FIGHT) {//Display healthbars only if in battle (possibly add other UI states where health bars are shown)
+    //Display healthbars only if in battle (possibly add other UI states where health bars are shown)
+    if (currentUIState == FIGHT || currentUIState == CHOOSE_NEXT_ENCOUNTER) {
         float healthPercentage = player.GetHealthPercentage();
         int healthBarLength = (int)(15 * healthPercentage);
         DrawRectangle(60, 17-healthBarLength, 1, healthBarLength, DREAM_RED);

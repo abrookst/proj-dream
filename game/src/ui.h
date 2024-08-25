@@ -52,6 +52,9 @@ public:
 	void ChangeScreen(
 		UIState state);
 
+	void SetButtons(
+		std::vector<Button*>& buttons);
+
 	void SetInputEnabled(
 		bool input);
 
@@ -84,7 +87,7 @@ private:
 	UIData currentUIData;
 	bool inputEnabled;
 
-	std::map<UIState, UIData> uidata;
+	std::map<UIState, UIData> uiDataMap;
 
 	static UIEngine* instance;
 };
