@@ -82,6 +82,7 @@ UIEngine::UIEngine(Font font) {
         0
     };
 #pragma endregion
+    currentUIData = &uiDataMap[TITLESCREEN];
 }
 
 void UIEngine::EnterMenu(
@@ -105,7 +106,7 @@ void UIEngine::ChangeScreen(UIState state)
     //     UnloadImage(currentUIData.uiFrame);
     //     UnloadTexture(currentUIData.uiTexture);
     // }
-    currentUIData = uiDataMap[currentUIState];
+    currentUIData = &uiDataMap[currentUIState];
 
     if (currentUIState == ITEMS) {
         SetButtonsInventory();
@@ -113,6 +114,7 @@ void UIEngine::ChangeScreen(UIState state)
 }
 
 void UIEngine::SetButtonsInventory() {
+    std::cout << "items" << std::endl;
     Player &player = *Player::GetInstance();
     std::vector<Button*> itemButtons = {};
     for (int i = 0; i < player.inventory.size(); i++) {
@@ -144,14 +146,15 @@ void UIEngine::SetButtonsSpecialAttack() {
 void UIEngine::SetButtons(
         std::vector<Button*>& buttons) 
 {
-    std::cout << "SetButtons " << std::endl;
-    currentUIData.selectedElement = 0;
-    for (int i = 0; i < currentUIData.scrollableList.size(); i++) {
-        delete currentUIData.scrollableList[i];
+    currentUIData->selectedElement = 0;
+    std::cout << "SetButtons " << currentUIData->scrollableList.size() << std::endl;
+    for (int i = 0; i < currentUIData->scrollableList.size(); i++) {
+        delete currentUIData->scrollableList[i];
     }
-    currentUIData.scrollableList.clear();
+    currentUIData->scrollableList.clear();
+    std::cout << "SetButtons After Delete" << currentUIData->scrollableList.size() << std::endl;
     for (int i = 0; i < buttons.size(); i++) {
-        currentUIData.scrollableList.push_back(buttons[i]);
+        currentUIData->scrollableList.push_back(buttons[i]);
     }
 }
 
@@ -210,37 +213,37 @@ Texture2D UIEngine::GetTexture(
         void)
 {
     //Gets the texture so that main.cpp can render it
-    return currentUIData.uiTexture;
+    return currentUIData->uiTexture;
 }
 
 void UIEngine::MoveUp()
 {
-    currentUIData.selectedElement--;
-    if (currentUIData.selectedElement >= currentUIData.scrollableList.size())
+    currentUIData->selectedElement--;
+    if (currentUIData->selectedElement >= currentUIData->scrollableList.size())
     {
-        currentUIData.selectedElement = currentUIData.scrollableList.size()-1;
+        currentUIData->selectedElement = currentUIData->scrollableList.size()-1;
     }
 }
 
 void UIEngine::MoveDown()
 {
-    currentUIData.selectedElement++;
-    if (currentUIData.selectedElement >= currentUIData.scrollableList.size())
+    currentUIData->selectedElement++;
+    if (currentUIData->selectedElement >= currentUIData->scrollableList.size())
     {
-        currentUIData.selectedElement = 0;
+        currentUIData->selectedElement = 0;
     }
 }
 
 void UIEngine::Confirm()
 {
     // Confirm selection
-    currentUIData.scrollableList[currentUIData.selectedElement]->confirmAction();
+    currentUIData->scrollableList[currentUIData->selectedElement]->confirmAction();
 }
 
 void UIEngine::Back()
 {
     // Go back to previous screen
-    currentUIData.scrollableList[currentUIData.selectedElement]->backAction();
+    currentUIData->scrollableList[currentUIData->selectedElement]->backAction();
 }
 
 void UIEngine::ExitMenu() {
@@ -259,13 +262,13 @@ void UIEngine::RenderUI()
     Color currTextColor;
 
     // Draw the list of options
-    for (int i = 0; i < currentUIData.scrollableList.size(); i++)
+    for (int i = 0; i < currentUIData->scrollableList.size(); i++)
     {
         if (!inputEnabled) 
         {
             currTextColor = DREAM_GREY;
         }
-        else if (i == currentUIData.selectedElement)
+        else if (i == currentUIData->selectedElement)
         {
             currTextColor = DREAM_RED;
         }
@@ -276,8 +279,8 @@ void UIEngine::RenderUI()
 
         DrawTextEx(
                 mainFont,
-                currentUIData.scrollableList[i]->buttonText.c_str(),
-                Vector2{ currentUIData.textXPosition, currentUIData.textYPosition + (i * 6) },
+                currentUIData->scrollableList[i]->buttonText.c_str(),
+                Vector2{ currentUIData->textXPosition, currentUIData->textYPosition + (i * 6) },
                 6,
                 1,
                 currTextColor
@@ -287,7 +290,7 @@ void UIEngine::RenderUI()
     if (currentUIState == ITEMS) {
         if (player.inventory.size() > 0) {
             //Get the item description. Right now its the same as name.
-            const char* description = GetItemName(player.inventory[currentUIData.selectedElement]);
+            const char* description = GetItemName(player.inventory[currentUIData->selectedElement]);
             DrawTextEx(
                 mainFont,
                 description,

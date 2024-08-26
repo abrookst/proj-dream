@@ -84,7 +84,7 @@ public:
 	void RenderUI(
             void);
 
-    uint8_t GetCurrentItem(void) { return currentUIData.selectedElement; }
+    uint8_t GetCurrentItem(void) { return currentUIData->selectedElement; }
 
 	static UIEngine* GetInstance( ) { return instance; };
 
@@ -98,7 +98,7 @@ private:
 	
 	bool changingScreen;
 	UIState currentUIState;
-	UIData currentUIData;
+	UIData* currentUIData;
 	bool inputEnabled;
 
 	std::map<UIState, UIData> uiDataMap;
