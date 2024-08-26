@@ -12,6 +12,8 @@ const char* GetItemName(Item item){
         return "Bandage";
     case PILLS:
         return "Pills";
+    case GREEBLE:
+        return "Greeble";
     default:
         return "Invalid Name";
     }
@@ -19,6 +21,11 @@ const char* GetItemName(Item item){
 
 void UseItem(Item item) {
     Player* player = Player::GetInstance();
+    Encounter* encounter = Encounter::GetInstance();
+    Monster* monster = nullptr;
+    if (typeid(encounter) == typeid(BattleEncounter*)) {
+        monster = ((BattleEncounter*) encounter)->GetMonster();
+    }
 
     std::cout << "Used Item: " << GetItemName(item) << std::endl;
 
@@ -27,13 +34,17 @@ void UseItem(Item item) {
         player->inventory.erase(position);
     else
         std::cout << "Uh oh... tried to remove item, but item was not found" << std::endl;
+        return;
 
     switch (item)
     {
     case BANDAGE:
         player->IncrementHealth(3);
         break;
-    
+    case GREEBLE:
+        if (monster != nullptr) {
+            monster->IncrementHealth(-2);
+        }
     default:
         break;
     }

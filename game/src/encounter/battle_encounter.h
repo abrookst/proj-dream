@@ -33,6 +33,7 @@ public:
     uint8_t GetPlayerAttackPower() { return player->GetAttackPower(); }
     std::vector<Action>& GetPlayerActions() { return player->GetActions(); }
 
+    Monster* GetMonster() { return monster; }
     uint8_t GetMonsterHealth() { return monster->GetHealth(); }
     uint8_t GetMonsterAccuracy() { return monster->GetAccuracy(); }
     uint8_t GetMonsterAttackPower() { return monster->GetAttackPower(); }

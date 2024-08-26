@@ -5,7 +5,8 @@
 enum Item 
 {
     BANDAGE,
-    PILLS
+    PILLS,
+    GREEBLE
 };
 
 const char* GetItemName(Item item);
