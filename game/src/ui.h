@@ -57,9 +57,17 @@ public:
 	void SetButtons(
 		std::vector<Button*>& buttons);
 
+	void SetButtonsInventory();
+
+	void SetButtonsCombat();
+
+	void SetButtonsSpecialAttack();
+
 	//Same as changescreen, except the current state is placed into the escape queue.
 	void EnterMenu(
 		UIState state);
+
+	void ExitMenu();
 
 	void SetInputEnabled(
 		bool input);

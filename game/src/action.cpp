@@ -36,7 +36,7 @@ void Other(Entity& e1, Entity& e2, Action act)
     {
         case HEALTH_POTION:
             break;
-        case MAGIC_BLAST:
+        case HEAVY:
             uint8_t attackerPower = 2 * e1.GetAttackPower() *
                 (rand() % 100 > e1.GetAccuracy()
                  ? 0
@@ -52,5 +52,16 @@ void Other(Entity& e1, Entity& e2, Action act)
             if (newHealth < 0) { e2.SetHealth(0); }
             else { e2.SetHealth(newHealth); }
             break;
+    }
+}
+
+std::string GetActionName(Action act) {
+    switch (act)
+    {
+    case HEAVY:
+        return "HEAVY";
+    
+    default:
+        return "Unknown";
     }
 }

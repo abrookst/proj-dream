@@ -27,7 +27,7 @@ public:
     void StartRun();
 
     std::vector<Monster*> monsters = {
-        new Monster(20, 5, 95, 20, { ATTACK }, "ghoul"),
+        new Monster(10, 5, 95, 20, { ATTACK }, "ghoul"),
         new Monster(20, 5, 95, 20, { ATTACK, BLOCK }, "skeleton")
     };
 

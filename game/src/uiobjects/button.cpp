@@ -9,6 +9,7 @@ Button::Button(std::string bttnText, UIEngine* eng)
 void Button::backAction()
 {
     std::cout << "BACKED!" << std::endl;
+    engine->ExitMenu();
 }
 
 void AttackButton::confirmAction()
@@ -21,9 +22,14 @@ void BlockButton::confirmAction()
     GameManager::GetInstance()->Next(BLOCK);
 }
 
-void TalkButton::confirmAction()
+void SpecialAttackButton::confirmAction()
 {
-    GameManager::GetInstance()->Next(TALK);
+    if ( name == "HEAVY" ) {}
+}
+
+void SpecialAttackButton::backAction()
+{
+    engine -> SetButtonsCombat();
 }
 
 void MenuButton::confirmAction()
@@ -32,6 +38,7 @@ void MenuButton::confirmAction()
     else if ( name == "START" ) { GameManager::GetInstance()->StartRun(); }
     else if ( name == "SETTINGS" ) { engine->EnterMenu(SETTINGS); }
     else if ( name == "ITEM" ) {engine -> EnterMenu(ITEMS); }
+    else if ( name == "DREAM" ) {engine -> SetButtonsSpecialAttack(); }
 }
 
 void PathButton::confirmAction()

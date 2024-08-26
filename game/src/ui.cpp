@@ -26,7 +26,7 @@ UIEngine::UIEngine(Font font) {
         {
             new AttackButton(this),
             new BlockButton(this),
-            new TalkButton(this),
+            new MenuButton("DREAM", this),
             new MenuButton("ITEM", this)
         },
         0
@@ -105,31 +105,55 @@ void UIEngine::ChangeScreen(UIState state)
     //     UnloadImage(currentUIData.uiFrame);
     //     UnloadTexture(currentUIData.uiTexture);
     // }
-    Player &player = *Player::GetInstance();
-
     currentUIData = uiDataMap[currentUIState];
 
     if (currentUIState == ITEMS) {
-        std::vector<Button*> itemButtons = {};
-        for (int i = 0; i < player.inventory.size(); i++) {
-            itemButtons.push_back(new ItemButton(player.inventory[i], this));
-        }
-        SetButtons(itemButtons);
+        SetButtonsInventory();
     }
 }
 
+void UIEngine::SetButtonsInventory() {
+    Player &player = *Player::GetInstance();
+    std::vector<Button*> itemButtons = {};
+    for (int i = 0; i < player.inventory.size(); i++) {
+        itemButtons.push_back(new ItemButton(player.inventory[i], this));
+    }
+    SetButtons(itemButtons);
+}
+
+void UIEngine::SetButtonsCombat() {
+    std::vector<Button*> b = {
+            new AttackButton(this),
+            new BlockButton(this),
+            new MenuButton("DREAM", this),
+            new MenuButton("ITEM", this)
+        };
+    SetButtons(b);
+}
+
+void UIEngine::SetButtonsSpecialAttack() {
+    Player &player = *Player::GetInstance();
+    std::vector<Button*> specialButtons = {};
+    std::vector<Action> actions = player.GetActions();
+    for (int i = 0; i < actions.size(); i++) {
+        specialButtons.push_back(new SpecialAttackButton(GetActionName(actions[i]), this));
+    }
+    SetButtons(specialButtons);
+}
+
 void UIEngine::SetButtons(
-		std::vector<Button*>& buttons) 
+        std::vector<Button*>& buttons) 
 {
+    std::cout << "SetButtons " << std::endl;
+    currentUIData.selectedElement = 0;
     for (int i = 0; i < currentUIData.scrollableList.size(); i++) {
-        free(currentUIData.scrollableList[i]);
+        delete currentUIData.scrollableList[i];
     }
     currentUIData.scrollableList.clear();
     for (int i = 0; i < buttons.size(); i++) {
         currentUIData.scrollableList.push_back(buttons[i]);
     }
 }
-
 
 void UIEngine::SetInputEnabled(
         bool input)
@@ -171,8 +195,7 @@ void UIEngine::ProcessInputKeyboard(
             break;
         case KEY_M:
             if (currentUIState == MENU) {
-                ChangeScreen(escapeQueue.at(escapeQueue.size()-1));
-                escapeQueue.pop_back();
+                Back();
             } else {
                 escapeQueue.push_back(currentUIState);
                 ChangeScreen(MENU);
@@ -218,6 +241,9 @@ void UIEngine::Back()
 {
     // Go back to previous screen
     currentUIData.scrollableList[currentUIData.selectedElement]->backAction();
+}
+
+void UIEngine::ExitMenu() {
     if (!escapeQueue.empty()) {
         ChangeScreen(escapeQueue.at(escapeQueue.size()-1));
         escapeQueue.pop_back();

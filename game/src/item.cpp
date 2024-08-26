@@ -30,11 +30,12 @@ void UseItem(Item item) {
     std::cout << "Used Item: " << GetItemName(item) << std::endl;
 
     std::vector<Item>::iterator position = std::find(player->inventory.begin(), player->inventory.end(), item);
-    if (position != player->inventory.end()) //Check if item was found
+    if (position != player->inventory.end()) {//Check if item was found
         player->inventory.erase(position);
-    else
+    } else {
         std::cout << "Uh oh... tried to remove item, but item was not found" << std::endl;
         return;
+    }
 
     switch (item)
     {
@@ -51,5 +52,5 @@ void UseItem(Item item) {
     
     //Reload scene to update items displayed
     UIEngine* uiengine = UIEngine::GetInstance();
-    uiengine->ChangeScreen(ITEMS);
+    uiengine->SetButtonsInventory();
 }

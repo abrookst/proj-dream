@@ -40,7 +40,8 @@ void GameManager::SetEncounter(
     currentEncounter = &enc;
     currentEncounter->SetStarted(true);
     if( currentEncounter->GetType() == BATTLE ) { 
-        UIEngine::GetInstance()->ChangeScreen(FIGHT);
+        UIEngine* uiengine = UIEngine::GetInstance();
+        uiengine->ChangeScreen(FIGHT);
 
         TextEngine* textEngine = TextEngine::GetInstance();
         textEngine->Write("Encountered Enemy!");

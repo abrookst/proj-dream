@@ -76,7 +76,7 @@ int main(
     uiEngine.ChangeScreen(TITLESCREEN);
     uiEngine.SetInputEnabled(true);
 
-    Player player = Player(50, 5, 95, 20, { ATTACK, BLOCK }, ":3");
+    Player player = Player(50, 5, 95, 20, { HEAVY }, ":3");
 
     //Default items for testing inventory mechanics
     player.inventory.push_back(BANDAGE);

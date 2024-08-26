@@ -16,7 +16,7 @@ public:
 	std::string buttonText;
     UIEngine* engine;
 	virtual void confirmAction() {}
-	void backAction();
+	virtual void backAction();
 	Button(std::string, UIEngine*);
 	virtual ~Button() {}
 };
@@ -35,11 +35,14 @@ public:
 	void confirmAction();
 };
 
-struct TalkButton : public Button
+struct SpecialAttackButton : public Button
 {
 public:
-	TalkButton(UIEngine* eng) : Button("TALK", eng) {}
+	std::string name;
+
+	SpecialAttackButton(std::string n, UIEngine* eng) : Button(n, eng) {}
 	void confirmAction();
+	void backAction();
 };
 
 struct MenuButton : public Button

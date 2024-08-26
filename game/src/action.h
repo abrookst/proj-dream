@@ -9,5 +9,6 @@ void Attack(Entity&, Entity&);
 void Block(Entity&);
 void Talk(Monster&);
 void Other(Entity&, Entity&, Action);
+std::string GetActionName(Action act);
 
 #endif
