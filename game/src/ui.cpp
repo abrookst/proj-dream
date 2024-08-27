@@ -138,7 +138,7 @@ void UIEngine::SetButtonsSpecialAttack() {
     std::vector<Button*> specialButtons = {};
     std::vector<Action> actions = player.GetActions();
     for (int i = 0; i < actions.size(); i++) {
-        specialButtons.push_back(new SpecialAttackButton(GetActionName(actions[i]), this));
+        specialButtons.push_back(new SpecialAttackButton(actions[i], this));
     }
     SetButtons(specialButtons);
 }
@@ -147,12 +147,10 @@ void UIEngine::SetButtons(
         std::vector<Button*>& buttons) 
 {
     currentUIData->selectedElement = 0;
-    std::cout << "SetButtons " << currentUIData->scrollableList.size() << std::endl;
     for (int i = 0; i < currentUIData->scrollableList.size(); i++) {
         delete currentUIData->scrollableList[i];
     }
     currentUIData->scrollableList.clear();
-    std::cout << "SetButtons After Delete" << currentUIData->scrollableList.size() << std::endl;
     for (int i = 0; i < buttons.size(); i++) {
         currentUIData->scrollableList.push_back(buttons[i]);
     }

@@ -38,9 +38,9 @@ public:
 struct SpecialAttackButton : public Button
 {
 public:
-	std::string name;
+	Action action;
 
-	SpecialAttackButton(std::string n, UIEngine* eng) : Button(n, eng) {}
+	SpecialAttackButton(Action act, UIEngine* eng) : Button(GetActionName(act), eng) { action = act; }
 	void confirmAction();
 	void backAction();
 };

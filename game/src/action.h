@@ -5,9 +5,9 @@
 #include "text_engine.h"
 #include "entity/monster.h"
 
-void Attack(Entity&, Entity&);
+void Attack(Entity&, Entity&, int power);
 void Block(Entity&);
-void Talk(Monster&);
+void ConsumeMana(Monster&);
 void Other(Entity&, Entity&, Action);
 std::string GetActionName(Action act);
 

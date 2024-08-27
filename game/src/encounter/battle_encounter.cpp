@@ -18,15 +18,15 @@ void BattleEncounter::Next(
     switch (act)
     {
         case ATTACK:
-            Attack(*player, *monster);
+            Attack(*player, *monster, player->GetAttackPower());
             break;
         case BLOCK:
             Block(*player);
             break;
-        case TALK:
-            Talk(*monster);
         default:
-            Other(*monster, *player, act);
+            std::cout << "default" << std::endl;
+            Other(*player, *monster, act);
+            break;
     }
 
     if (monster->GetBlock()) { monster->SetBlock(false); }
@@ -43,7 +43,7 @@ void BattleEncounter::Next(
     switch (monsterAction)
     {
         case ATTACK:
-            Attack(*monster, *player);
+            Attack(*monster, *player, monster->GetAttackPower());
             break;
         case BLOCK:
             Block(*monster);

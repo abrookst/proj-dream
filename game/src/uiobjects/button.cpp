@@ -24,7 +24,7 @@ void BlockButton::confirmAction()
 
 void SpecialAttackButton::confirmAction()
 {
-    if ( name == "HEAVY" ) {}
+    GameManager::GetInstance()->Next(action);
 }
 
 void SpecialAttackButton::backAction()

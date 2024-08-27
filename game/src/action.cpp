@@ -1,20 +1,20 @@
 #include "action.h"
+#include <iostream>
 
 
-void Attack(Entity& e1, Entity& e2)
+void Attack(Entity& e1, Entity& e2, int power)
 {
     TextEngine &textEngine = *TextEngine::GetInstance();
-    uint8_t attackerPower = e1.GetAttackPower() * 
+    uint8_t attackerPower = power * 
         (rand() % 100 > e1.GetAccuracy() 
          ? 0 
          : 1);
-    if (e2.GetBlock()) { attackerPower = 1; }
+    if (e2.GetBlock()) { attackerPower = 0; }
     int16_t newHealth = e2.GetHealth() - attackerPower;
     if (newHealth < 0) { e2.SetHealth(0); }
     else { e2.SetHealth(newHealth); }
     textEngine.Write(e1.GetName() + " did " + std::to_string(attackerPower) + " dmg to " + e2.GetName() + ".");
 }
-
 
 void Block(Entity& entity)
 {
@@ -23,34 +23,24 @@ void Block(Entity& entity)
     textEngine.Write(entity.GetName() + " is now blocking.");
 }
 
-void Talk(Monster& mon)
-{
-    TextEngine &textEngine = *TextEngine::GetInstance();
-
+void ConsumeMana(Entity& e, int mana)
+{   
+    int16_t newMana = e.GetMana() - mana;
+    if (newMana < 0) { e.SetMana(0); }
+    else { e.SetMana(newMana); }
 }
+
 void Other(Entity& e1, Entity& e2, Action act) 
 {
     TextEngine &textEngine = *TextEngine::GetInstance();
 
+    std::cout << "other" << (act) << std::endl;
     switch (act)
     {
-        case HEALTH_POTION:
-            break;
         case HEAVY:
-            uint8_t attackerPower = 2 * e1.GetAttackPower() *
-                (rand() % 100 > e1.GetAccuracy()
-                 ? 0
-                 : 1);
-            if (e2.GetBlock()) { attackerPower = 1; }
-
-            int16_t newMana = e1.GetMana() - 2;
-            if (newMana < 0) { e1.SetMana(0); }
-            else { e1.SetMana(newMana); }
-
-
-            int16_t newHealth = e2.GetHealth() - attackerPower;
-            if (newHealth < 0) { e2.SetHealth(0); }
-            else { e2.SetHealth(newHealth); }
+            std::cout << "heavy" << std::endl;
+            ConsumeMana(e1, 2);
+            Attack(e1, e2, e1.GetAttackPower()*2);
             break;
     }
 }

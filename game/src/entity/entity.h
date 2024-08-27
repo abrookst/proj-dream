@@ -9,8 +9,6 @@ enum Action
 {
     ATTACK,
     BLOCK,
-    TALK,
-    HEALTH_POTION,
     HEAVY,
 };
 
